@@ -1,6 +1,38 @@
 # DataScience1Autumn2023
 Repository for UM6Ps Masters in Collective Intelligence Autumn 2023 class in Data Science, Programming, and Statistics I
 
+**Before each class: **
+
+Sync your machine with the repo, either in the VSCode GUI or by running
+
+    git fetch
+    
+in the terminal
+
+Checkout a branch with your name in the branch name by clicking '... -> Branch -> Checkout' in the 'Souce control' tab or running
+
+    git checkout -b <newbranchname>
+    
+for the branch creation and
+
+    git checkout  <branchname>
+    
+if you have created the branch before.
+
+If you make any changes to any files, make sure to save as a new file that includes your name in the filename.
+
+When you are ready to commit, you can stage the changes using the + symbol or running
+
+    git add <filename_or_directory>
+
+and you can commit the changes to the branch by writing a message (e.g. Ed Seabright Lab 1) and clicking 'commit' or by running
+
+    git commit -am "commit message"
+
+
+When you have commit changes to the repo on your branch initiate a pull request either on github directly (https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request), or using the VSCode interface.
+
+
 
 **First week instructions** 
 
