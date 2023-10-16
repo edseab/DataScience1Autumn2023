@@ -14,12 +14,14 @@
 
 
 # On the right is the console. You can input code directly into the console line by line - you do not need to run an entire file. Try running a simple calculation in the console, like 5+9. Type it in and press enter. 
-
 5+9
-
 # You can also write code in this, the code editor, and run it from here. Try highlighting the following line and clicking 'Run':
-
 12 * 4 - 6
+
+
+
+
+
 
 # You can also press 'Ctrl (Cmd) + Enter' to run the code you have highlighted.
 
@@ -44,6 +46,8 @@ rep(4,3)
 # Each argument has a name. By explicitly referring to these names when calling the function, we can avoid  any problems with order. For example:
 rep(x=3, times=4)
 rep(times=4, x=3)
+sum(8-4)
+4+5
 
 # produce the same result, because we inputed the arguments by name using the 'argname = x' construction. When we don't use this construction, the function defaults each input to an argument according to a predefined order.
 
@@ -86,6 +90,7 @@ class (y)
 
 Salaam -> y
 
+# One final very important class of object is the 'logical' class, a.k.a. Boolean. 
 
 # One final very important class of object is the 'logical' class, a.k.a. Boolean. 
 # Boolean objects can take one of two values
@@ -118,6 +123,8 @@ FALSE | FALSE
 
 z <- 50:80
 z
+w <- 20:30
+w
 
 # The numbers in square brackets tell you the INDEX of the element to their right. The index is simply the position number of that element. You will notice that, unlike in Python, the first element of an object in R has the index number 1 and not 0. This is one of the most important syntactical differences between Python and R (if you think this is not a very important difference, you are correct. The two languages are very similar in syntax.)
 
@@ -125,28 +132,32 @@ z
 
 my.vector <- c('this','is','a','vector')
 my.vector
+c(my.vector)
 length(my.vector)
 class(my.vector)
 
 # You can use square brackets to isolate elements in a vector by putting their index between the brackets:
 my.vector[1]
 my.vector[4]
-my.vector[2:4]
+my.vector[2]
 my.vector[c(1,4)]
+my.vector[7]
 
 ### 1.1
 # You can assign values to specific elements. Try writing a line of code below that changes the 4th element of my.vector to the word 'test'
-my.vector[4] <- 'test'
+my.vector[4]<-"test"
 my.vector
+
 
 ### 1.2
 # You can even assign values to elements of a vector that don't exist yet, thus creating them. Try assigning the word 'example' to the (as yet non-existent) 5th element of my.vector.
-my.vector[5] <- 'example'
+my.vector[5]<-"example"
 my.vector
 
 # Instead of indices, you can select elements of a vector using a logical vector of the same length, e.g.
 
 my.vector[c(TRUE,TRUE,FALSE,FALSE,FALSE)]
+my.vector
 
 
 ####################################
@@ -163,19 +174,19 @@ my.vector == 'is'
 ### 2.1
 digits <- 0:10
 # Using the least amount of code possible, write a line of code that returns only the odd values of the digits object.
+digits[digits %% 2 !=0]
 
 # Another important logical operator is the %in% operator. It tells you if the elements on the left are found in the elements on the right. E.G.
 group1 <- c('Arthur', 'Fatima', 'Suleiman', 'Marco')
 group2 <- c('Marco','Maria', 'Victor','Fatima', 'Antonio')
-group1 %in% group2
+group2 %in% group1
 
 ## 2.2 
 # intersect is a function which returns the elements that all of its arguments have in common. For example:
 intersect(group1,group2)
-
 # Write a line of code that replicates this output using only group1, group2, square brackets, and logical operators.
-
 group1[group1 %in% group2]
+
 
 ####################################
 ####     Writing functions      ####
@@ -197,23 +208,23 @@ f2 <- function(x,y){
   return(z == 0)
 }
 
+
 f2(8,9)
 f2(14,7)
 
-### 3.1 What is the purpose of function f2? Write in comments below.
 
-# f2 tells us whether one number is a multiple of another
+### 3.1 What is the purpose of function f2? Write in comments below.
+# The purpose of f2 is to check wether the division between the first number on the second number is divisible.
 
 ### 3.2
 # Based on the definition of the mean from today's lecture, write a function that calculates the mean of all of the elements of a vector. assign it to the object my.mean. You will find the functions 'sum' and 'length' useful here.
-
+my.mean <- function(x) sum(x)/length(x)
+my.mean(ex.vector)
 # compare your function to the native function in R. Does it produce the same results?
-
-my.mean <- function(x) sum(x)/length(x) 
 
 my.mean(ex.vector)
 mean(ex.vector)
-
+#Exactly! It produces the same results.
 ####################################
 ####      Randomness in R       ####
 ####################################
@@ -235,6 +246,17 @@ sample(1:10, 20, replace = TRUE)
 # and the output is a vector of length x, where each element corresponds to the sum of the two sides of the dice.
 # HINT: one way to do this is to start by writing a function for a single 6-sided die, then create a new function 
 # that repeats the first function twice and adds up the result.
+
+roll_single_die <- function() {
+  return(sample(1:6, 1))
+}
+roll_single_die()
+roll_two_dice <- function(x) {
+  if (x <= 0) {
+    return(NULL)  # Return NULL if x is not a positive integer
+  }
+
+
 
 ### 4.2
 # Using the function hist, create histograms of the results of double dice rolls when you roll them 10 times, 
