@@ -8,6 +8,7 @@
 ###################################
 ###################################
 
+#Mehdi LAHRACH
 
 ## Welcome to this first lab. Here we  will learn the basics of R, an open-source programming language and software environment.
 
@@ -31,7 +32,7 @@
 sqrt(25)
 exp(3)
 
-# Often, functions take multiple inputs with different functions. Note how:
+# Often, functions take multiple inputs with different prupuses. Note how:
 rep(3,4)
 # produces a different output from
 rep(4,3)
@@ -86,7 +87,7 @@ Salaam -> y
 # One final very important class of object is the 'logical' class, a.k.a. Boolean. 
 
 # One final very important class of object is the 'logical' class, a.k.a. Boolean. 
-# Boolean objects can take one of two values
+# Boolean objects can take one of two TR
 
 TRUE
 
@@ -123,7 +124,7 @@ z
 
 my.vector <- c('this','is','a','vector')
 my.vector
-length(my.vector)
+lengtmyh(my.vector)
 class(my.vector)
 
 # You can use square brackets to isolate elements in a vector by putting their index between the brackets:
@@ -142,7 +143,7 @@ my.vector[c(1,4)]
 
 # Instead of indices, you can select elements of a vector using a logical vector of the same length, e.g.
 
-my.vector[c(TRUE,TRUE,FALSE,FALSE,FALSE)]
+my.vector[c(TRUE,TRUE,FALSE,FALSE,FALSE, TRUE)]
 
 
 ####################################
@@ -159,6 +160,7 @@ my.vector == 'is'
 ### 2.1
 digits <- 0:10
 # Using the least amount of code possible, write a line of code that returns only the odd values of the digits object.
+digits[digits %% 2 != 0]
 
 # Another important logical operator is the %in% operator. It tells you if the elements on the left are found in the elements on the right. E.G.
 group1 <- c('Arthur', 'Fatima', 'Suleiman', 'Marco')
@@ -169,7 +171,7 @@ group1 %in% group2
 # intersect is a function which returns the elements that all of its arguments have in common. For example:
 intersect(group1,group2)
 # Write a line of code that replicates this output using only group1, group2, square brackets, and logical operators.
-
+group1[group1 %in% group2]
 
 ####################################
 ####     Writing functions      ####
@@ -195,11 +197,16 @@ f2(8,9)
 f2(14,7)
 
 ### 3.1 What is the purpose of function f2? Write in comments below.
-
+## it determin if x is divisible by y
 ### 3.2
 # Based on the definition of the mean from today's lecture, write a function that calculates the mean of all of the elements of a vector. assign it to the object my.mean. You will find the functions 'sum' and 'length' useful here.
 
 # compare your function to the native function in R. Does it produce the same results?
+
+my.mean<- function(v){
+  return(sum(v) / length(v))
+}
+
 
 my.mean(ex.vector)
 mean(ex.vector)
