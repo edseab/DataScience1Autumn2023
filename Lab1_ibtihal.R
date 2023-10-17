@@ -230,7 +230,7 @@ sample(1:10, 1)
 sample(1:10, 3)
 # However, by default, sample won't let the same number repeat when you do this. This is called sampling without replacement, 
 # because it is as if, each time you pick out a number, it is now gone from the pool of possible numbers and has not been replaced.
-# If you want to sample randomly between 1 and 10 20 times, each time choosing between all 10 numbers, you have to write:
+# If you want to samplbe randomly between 1 and 10 20 times, each time choosing between all 10 numbers, you have to write:
 sample(1:10, 20, replace = TRUE)
 
 ### 4.1
