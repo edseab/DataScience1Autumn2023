@@ -237,31 +237,27 @@ cast.die <- function(x) {
   sample(1:6,x,replace=TRUE)
 }
 
-result.die <- function(y){
-  print(y[1])
-  print(y[2])
-  return (sum(y))
+cast.2.dice <- function(y){
+  return (cast.die(y)+cast.die(y))
 }
 
-result.die(cast.die(2))
+cast.2.dice(20)
+
+set.seed(105)
+hist(cast.2.dice(10), breaks=1:12)
+hist(cast.2.dice(50), breaks=1:12)
+hist(cast.2.dice(100), breaks=1:12)
+hist(cast.2.dice(1000), breaks=1:12)
+hist(cast.2.dice(10000), breaks=1:12)
+
 
 
 ### 4.2
 # Using the function hist, create histograms of the results of double dice rolls when you roll them 10 times, 
 #then 50, then 100, then 1000, then 10000. Use breaks=1:12 as an argument within the hist function. 
 # What do you notice? Write it in comments below your code.
+#The more sample, the well distributed the graph.
 
-hist.die(10)
-
-hist.result <- function(z) return(z)
-hist.die <- function(x) hist(hist.result(cast.die(x)), breaks = 1:12)
-hist.die(10)
-hist.die(50)
-hist.die(100)
-hist.die(1000)
-hist.die(10000)
-
-#There seem to be high occurence of getting 1 when the dice is rolled than any other number
 
 # Another way to generate randomness is to sample from a pdf, which is a continuous distribution. 
 # The simplest pdf is the uniform function. The uniform function is a flat line bounded between 2 numbers. 
@@ -274,7 +270,29 @@ runif(5,0,1)
 
 ### 4.3
 # Using runif, write a function that returns TRUE 22% of the time and FALSE 78% of the time
-runif(100,0,1)
+generate.bool.22 <- function(){
+  sample <- runif(1,0,1)
+  return(sample<=0.22)
+}
+
+generate.bool.22()
+
+
+generate.bool.22 <- function(x){
+  sample <- runif(x,0,1)
+  return(sample<=0.22)
+}
+
+generate.bool.22(10)
+
+ol <- generate.bool.22(10)
+hist(as.numeric(ol))
+
+o2 <- generate.bool.22(100000)
+sum(o2==TRUE)
+hist(as.numeric(02))
+
+
 ### 4.4
 # Based on today's lecture about pdfs, what is the probability density for a uniform pdf bounded between 
 # 0 and 1 associated with all values of x between 0 and 1? Explain why.
@@ -299,3 +317,10 @@ dunif(1.3,0,2)
 
 # Based on the results of this code and your answers above, what can you conclude about the purpose of the dunif function?
 # dunif provides the density of a uniform distribution on the interval from min to max. 
+
+x.values <- seq(-5,+5,0.01)
+y.values <- dunif(x.values,0,1)
+plot(x.values,y.values,type='l')
+
+
+
