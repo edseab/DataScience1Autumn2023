@@ -231,6 +231,14 @@ sample(1:10, 20, replace = TRUE)
 #then 50, then 100, then 1000, then 10000. Use breaks=1:12 as an argument within the hist function. 
 # What do you notice? Write it in comments below your code.
 
+set.seed(105)
+hist(cast.2.dice(50), breaks = 1:12)
+hist(cast.2.dice(100), breaks = 1:12)
+hist(cast.2.dice(1000), breaks = 1:12)
+hist(cast.2.dice(10000), breaks = 1:12)
+
+
+
 
 # Another way to generate randomness is to sample from a pdf, which is a continuous distribution. 
 # The simplest pdf is the uniform function. The uniform function is a flat line bounded between 2 numbers. 
@@ -243,7 +251,21 @@ runif(5,0,1)
 
 ### 4.3
 # Using runif, write a function that returns TRUE 22% of the time and FALSE 78% of the time
+random_boolean <- function() {
+  generate_number <- runif(1, 0, 1)
+  return(generate_number < 0.22)
+}
+random_boolean()
 
+#Dynamic
+
+random_boolean <- function(x) {
+  generate_number <- runif(x, 0, 1)
+  return(generate_number < 0.22)
+}
+random_boolean(2)
+
+hist(as.numeric(random_boolean(100000)))
 ### 4.4
 # Based on today's lecture about pdfs, what is the probability density for a uniform pdf bounded between 
 # 0 and 1 associated with all values of x between 0 and 1? Explain why.
