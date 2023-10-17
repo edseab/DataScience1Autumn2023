@@ -236,8 +236,16 @@ sample(1:10, 20, replace = TRUE)
 # HINT: one way to do this is to start by writing a function for a single 6-sided die, then create a new function 
 # that repeats the first function twice and adds up the result.
 
+set.seed(105)
+hist(cast.2.dice(10), breaks = 1:12, main = "Histogram of 10 Rolls")
+hist(cast.2.dice(50), breaks = 1:12, main = "Histogram of 50 Rolls")
+hist(cast.2.dice(100), breaks = 1:12, main = "Histogram of 100 Rolls")
+hist(cast.2.dice(1000), breaks = 1:12, main = "Histogram of 1000 Rolls")
+hist(cast.2.dice(10000), breaks = 1:12, main = "Histogram of 10000 Rolls")
+
+
 ### 4.2
-# Using the function hist, create histograms of the results of double dice rolls when you roll them 10 times, 
+#
 #then 50, then 100, then 1000, then 10000. Use breaks=1:12 as an argument within the hist function. 
 # What do you notice? Write it in comments below your code.
 
@@ -254,6 +262,15 @@ runif(5,0,1)
 ### 4.3
 # Using runif, write a function that returns TRUE 22% of the time and FALSE 78% of the time
 
+generate.bool.22 <- function(x){
+  s <- runif(x,0,1)
+  return(s<0.22)
+}
+
+o1 <-  generate.bool.22(10)
+hist(as.numeric(o1))
+o2 <- generate.bool.22(10000000)
+hist(as.numeric(o2))
 ### 4.4
 # Based on today's lecture about pdfs, what is the probability density for a uniform pdf bounded between 
 # 0 and 1 associated with all values of x between 0 and 1? Explain why.
@@ -275,3 +292,7 @@ dunif(0.2,0,0.5)
 dunif(1.3,0,2)
 
 # Based on the results of this code and your answers above, what can you conclude about the purpose of the dunif function?
+
+x.values <- seq(0, 1, 0.01)
+y.values <- dunif(x.values, 0, 1)
+plot(x.values, y.values, type = 'l', xlab = "x", ylab = "Density", main = "PDF of Uniform Distribution")
