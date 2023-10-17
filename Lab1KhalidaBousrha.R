@@ -273,9 +273,13 @@ runif(5,0,1)
 
 ### 4.3
 # Using runif, write a function that returns TRUE 22% of the time and FALSE 78% of the time
-generate_boolean <- function() {
-  return(runif(1) <= 0.22)
+generate_boolean <- function(x) {
+  s <- runif(x,0,1)
+  return(s<0.22)
 }
+
+o1 <- generate_boolean(10000)
+hist(as.numeric(o1))
 
 # Testing the function
 result <- generate_boolean()
@@ -285,17 +289,17 @@ print(result)
 ### 4.4
 # Based on today's lecture about pdfs, what is the probability density for a uniform pdf bounded between 
 # 0 and 1 associated with all values of x between 0 and 1? Explain why.
-
+#1
 
 ### 4.5
 # Similarly, what is the probability density for a uniform pdf bounded between 5 and 6 associated with all values of x between 5 and 6?
-
+#1
 ### 4.6
 # What is the probability density for a uniform pdf bounded between 0 and 0.5 associated with all values of x between 0 and 0.5?
-
+#2
 ### 4.7
 # What is the probability density for a uniform pdf bounded between 0 and 2 associated with all values of x between 0 and 2?
-
+#0.5
 ### 4.8
 # run the following code:
 dunif(0.5,0,1)
@@ -303,4 +307,7 @@ dunif(2,0,1)
 dunif(0.2,0,0.5)
 dunif(1.3,0,2)
 
+x.values <- seq(-5,+5,0.01)
+y.values <- dunif(x.values,0,1)
+plot(x.values , y.values, type='l', ylim=c(0,5))
 # Based on the results of this code and your answers above, what can you conclude about the purpose of the dunif function?
