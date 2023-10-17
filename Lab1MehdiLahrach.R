@@ -257,7 +257,6 @@ runif(5, 0, 1)
 ### 4.7
 # What is the probability density for a uniform pdf bounded between 0 and 2 associated with all values of x between 0 and 2?
 
-### 4.8
 # run the following code:
 dunif(0.5, 0, 1)
 dunif(2, 0, 1)
