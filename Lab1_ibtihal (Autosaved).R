@@ -246,12 +246,18 @@ cast.2.dice <- function(x){
   return(cast.die(x)+ cast.die(x))
 }
 cast.2.dice(20)
+
 ### 4.2
 # Using the function hist, create histograms of the results of double dice rolls when you roll them 10 times, 
 #then 50, then 100, then 1000, then 10000. Use breaks=1:12 as an argument within the hist function. 
 # What do you notice? Write it in comments below your code.
 set.seed(105)
 hist(cast.2.dice(10),breaks=1:12)
+hist(cast.2.dice(50),breaks=1:12)
+hist(cast.2.dice(100),breaks=1:12)
+hist(cast.2.dice(1000),breaks=1:12)
+hist(cast.2.dice(10000),breaks=1:12)
+
 # Another way to generate randomness is to sample from a pdf, which is a continuous distribution. 
 # The simplest pdf is the uniform function. The uniform function is a flat line bounded between 2 numbers. 
 # Because it is flat, the probability of drawing a sample from any interval of given width between the two bounds 
@@ -263,7 +269,13 @@ runif(5,0,1)
 
 ### 4.3
 # Using runif, write a function that returns TRUE 22% of the time and FALSE 78% of the time
+generate.bool.22 <- function(x){
+  data <- runif(x,0,1)
+  return(data <0.22 ) 
+} 
 
+o1 <- generate.bool.22(10)
+hist(as.numeric(o1))
 ### 4.4
 # Based on today's lecture about pdfs, what is the probability density for a uniform pdf bounded between 
 # 0 and 1 associated with all values of x between 0 and 1? Explain why.
@@ -284,4 +296,7 @@ dunif(2,0,1)
 dunif(0.2,0,0.5)
 dunif(1.3,0,2)
 
+x.values <- seq(-5,+5,0.1)
+y.values <- dunif(x.values,0,1)
+plot(x.values,y.values, type = 'l')
 # Based on the results of this code and your answers above, what can you conclude about the purpose of the dunif function?

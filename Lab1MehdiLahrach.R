@@ -8,6 +8,7 @@
 ###################################
 ###################################
 
+#Mehdi LAHRACH
 
 ## Welcome to this first lab. Here we  will learn the basics of R, an open-source programming language and software environment.
 
@@ -31,7 +32,7 @@
 sqrt(25)
 exp(3)
 
-# Often, functions take multiple inputs with different functions. Note how:
+# Often, functions take multiple inputs with different prupuses. Note how:
 rep(3,4)
 # produces a different output from
 rep(4,3)
@@ -74,20 +75,19 @@ class(x)
 # We can also store text into an object, by surrounding it with quote marks:
 
 "Hello" -> y
-
+y
+class (y)
 
 # y is now a 'character' object (R does not use the term 'string')
 
 # If we forget to use quote marks R will search for a stored object with that name and return an error if it doesn't find it:
 
-'Salaam' -> y
-y
-
+Salaam -> y
 
 # One final very important class of object is the 'logical' class, a.k.a. Boolean. 
 
 # One final very important class of object is the 'logical' class, a.k.a. Boolean. 
-# Boolean objects can take one of two values
+# Boolean objects can take one of two TR
 
 TRUE
 
@@ -122,13 +122,11 @@ z
 
 # Vectors can be created from singular elements using the function c(), which stands for combine or concatenate.
 
-my.vector <- ('this','is','a','vector')
-c(my.vector)
-cat(my.vector)
-paste(my.vector)
-length(my.vector)
+my.vector <- c('this','is','a','vector')
+my.vector
+lengtmyh(my.vector)
 class(my.vector)
-?class
+
 # You can use square brackets to isolate elements in a vector by putting their index between the brackets:
 my.vector[1]
 my.vector[4]
@@ -137,17 +135,15 @@ my.vector[c(1,4)]
 
 ### 1.1
 # You can assign values to specific elements. Try writing a line of code below that changes the 4th element of my.vector to the word 'test'
-my.vector[4] = 'test' 
-my.vector
+
 
 ### 1.2
 # You can even assign values to elements of a vector that don't exist yet, thus creating them. Try assigning the word 'example' to the (as yet non-existent) 5th element of my.vector.
-my.vector[5] = 'example'
-my.vector
+
 
 # Instead of indices, you can select elements of a vector using a logical vector of the same length, e.g.
 
-my.vector[c(TRUE,TRUE,FALSE,FALSE,FALSE)]
+my.vector[c(TRUE,TRUE,FALSE,FALSE,FALSE, TRUE)]
 
 
 ####################################
@@ -163,9 +159,8 @@ my.vector == 'is'
 
 ### 2.1
 digits <- 0:10
-digits
-digits[(digits %% 2)==0]
 # Using the least amount of code possible, write a line of code that returns only the odd values of the digits object.
+digits[digits %% 2 != 0]
 
 # Another important logical operator is the %in% operator. It tells you if the elements on the left are found in the elements on the right. E.G.
 group1 <- c('Arthur', 'Fatima', 'Suleiman', 'Marco')
@@ -202,17 +197,16 @@ f2(8,9)
 f2(14,7)
 
 ### 3.1 What is the purpose of function f2? Write in comments below.
-      #this function return true if the 1 number is multiple of the 2 number and false if they're not
+## it determin if x is divisible by y
 ### 3.2
 # Based on the definition of the mean from today's lecture, write a function that calculates the mean of all of the elements of a vector. assign it to the object my.mean. You will find the functions 'sum' and 'length' useful here.
-f3 <- function(x){
-  my.mean = sum(x)/ length(x)
-  return(my.mean)
+
+# compare your function to the native function in R. Does it produce the same results?
+
+my.mean<- function(v){
+  return(sum(v) / length(v))
 }
 
-
-f3(ex.vector)
-# compare your function to the native function in R. Does it produce the same results?
 
 my.mean(ex.vector)
 mean(ex.vector)
@@ -238,20 +232,13 @@ sample(1:10, 20, replace = TRUE)
 # and the output is a vector of length x, where each element corresponds to the sum of the two sides of the dice.
 # HINT: one way to do this is to start by writing a function for a single 6-sided die, then create a new function 
 # that repeats the first function twice and adds up the result.
-cast.die <- function(x){
-  sample(1:6,x,replace=TRUE)
-}
 
-cast.2.dice <- function(x){
-  return(cast.die(x)+ cast.die(x))
-}
-cast.2.dice(20)
 ### 4.2
 # Using the function hist, create histograms of the results of double dice rolls when you roll them 10 times, 
 #then 50, then 100, then 1000, then 10000. Use breaks=1:12 as an argument within the hist function. 
 # What do you notice? Write it in comments below your code.
-set.seed(105)
-hist(cast.2.dice(10),breaks=1:12)
+
+
 # Another way to generate randomness is to sample from a pdf, which is a continuous distribution. 
 # The simplest pdf is the uniform function. The uniform function is a flat line bounded between 2 numbers. 
 # Because it is flat, the probability of drawing a sample from any interval of given width between the two bounds 
