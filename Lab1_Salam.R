@@ -242,6 +242,7 @@ mean(ex.vector)
 
 #which randomly draws WITHOUT replacement from a specified vector. For example, to choose a number at random between 1 and 10:
 sample(1:10, 1)
+sample(1:10, 3)
 # You can run this several times and notice that you get a different answer each time. You can also sample several times at once
 
 
@@ -256,11 +257,25 @@ sample(1:10, 20, replace = TRUE)
 # HINT: one way to do this is to start by writing a function for a single 6-sided die, then create a new function 
 # that repeats the first function twice and adds up the result.
 
+cast.die<- function(x){
+  sample(1:6,x,replace=TRUE)
+}
+cast.2.dice <- function(x){
+return(cast.die(x)+cast.die(x))
+}
+cast.2.dice(5)
+
 ### 4.2
 # Using the function hist, create histograms of the results of double dice rolls when you roll them 10 times, 
 #then 50, then 100, then 1000, then 10000. Use breaks=1:12 as an argument within the hist function. 
 # What do you notice? Write it in comments below your code.
 
+set.seed(105)
+hist(cast.2.dice(10), breaks=1:12)
+hist(cast.2.dice(50), breaks=1:12)
+hist(cast.2.dice(100), breaks=1:12)
+hist(cast.2.dice(1000), breaks=1:12)
+hist(cast.2.dice(10000), breaks=1:12)
 
 # Another way to generate randomness is to sample from a pdf, which is a continuous distribution. 
 # The simplest pdf is the uniform function. The uniform function is a flat line bounded between 2 numbers. 
@@ -271,8 +286,22 @@ sample(1:10, 20, replace = TRUE)
 # For example, try
 runif(5,0,1)
 
+
+
+
 ### 4.3
 # Using runif, write a function that returns TRUE 22% of the time and FALSE 78% of the time
+
+generate.bool.22<-function(x){
+   s<- runif(x,0,1)
+return(s<0.22)
+}
+ 
+ o1<- generate.bool.22(10)
+ hist(as.numeric(o1))
+ o2<- generate.bool.22(1000)
+hist(as.numeric(o2))
+
 
 ### 4.4
 # Based on today's lecture about pdfs, what is the probability density for a uniform pdf bounded between 
@@ -295,3 +324,8 @@ dunif(0.2,0,0.5)
 dunif(1.3,0,2)
 
 # Based on the results of this code and your answers above, what can you conclude about the purpose of the dunif function?
+
+x.values<- seq(-5,+5, 0.01)
+y.values<- dunif(x.values,0,1)
+
+plot(x.values,y.values, type='l', ylim=c(0,5))
