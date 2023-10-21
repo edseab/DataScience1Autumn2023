@@ -3,7 +3,6 @@
 ########                   ########
 ########   Data Science 2  ########
 ########       Lab 2       ########
-########       Lab 2       ########
 ########  7th Feb. 2023    ########
 ########                   ########
 ###################################
@@ -36,6 +35,7 @@ return_jedi <- c(309.306, 165.8)
 # Create box_office vector
 box_office <- c(new_hope, empire_strikes, return_jedi)
 
+box_office
 # Construct star_wars_matrix
 star_wars_matrix <- matrix(box_office, byrow = T, nrow = 3)
 star_wars_matrix
@@ -44,16 +44,18 @@ star_wars_matrix
 
 rownames(star_wars_matrix) <- c("A new hope", "The empire strikes back", "Return of the Jedi")
 colnames(star_wars_matrix) <- c("US revenue", "International revenue")
-
+star_wars_matrix
 ### 1.1
 # Some important base R functions to know: colSums, rowSums, colMeans, rowMeans
 # Use one of the above functions to calculate the total revenue for each movie (the sum of the US and international revenue)
 # and save it in an object called total_revenue
 
-
+total_revenue <- rowSums(star_wars_matrix)
+total_revenue
 # We can now add this vector as a new column using the function cbind (column bind)
 
 star_wars_matrix <- cbind(star_wars_matrix, total_revenue)
+star_wars_matrix
 
 ### 1.2
 # Rename the 3rd element of the column names of star_wars_matrix to "Total revenue"
@@ -61,20 +63,42 @@ colnames(star_wars_matrix)[3]
 colnames(star_wars_matrix)[3] <- "Total revenue"
 
 star_wars_matrix
-
 # Now lets create vectors for the box office returns of the prequel trilogy
 
 phantom_menace <- c(474.5, 552.5)
 attack_of_clones <- c(310.7, 338.7)
 revenge_of_sith <- c(380.3, 468.5)
 
+prequel_trilogy <- c(phantom_menace, attack_of_clones, revenge_of_sith)
+
+prequel_trilogy
+
 ### 1.3
 # Turn these 3 vectors into a matrix, add a column for total revenue,
+
+star_wars_matrix <- matrix(prequel_trilogy, byrow = T, nrow = 3)
+star_wars_matrix
+
+rownames(star_wars_matrix) <- c("phantom_menace", "attack_of_clones", "revenge_of_sith")
+colnames(star_wars_matrix) <- c("US revenue", "International Revenue")
+star_wars_matrix
+
+Total_revenue <- rowSums(star_wars_matrix)
+
+
+Total_revenue
 # and append them to star_wars_matrix using the function rbind (row bind)
+
+star_wars_matrix <- cbind(star_wars_matrix, Total_revenue)
+
+star_wars_matrix
 
 # Matrices are understood by R to be both one-dimensional, because they are vectors folded onto themselves
 # into columns, but also 2 dimensional, because they have rows and columns.
 # So you can index them like this:
+
+star_wars_matrix
+
 star_wars_matrix[4]
 
 # but also like this
@@ -85,7 +109,7 @@ star_wars_matrix[3, 1]
 
 ### 1.4
 # Write a line of code to extract the international revenue of the Phantom Menace (the 4th movie) using numbers to index the matrix
-
+star_wars_matrix[1, 2]
 # Compare this to the following:
 star_wars_matrix["The Phantom Menace", "Total revenue"]
 
@@ -131,7 +155,9 @@ my_list
 my_list$boolean
 
 ### 2.1
-# Using the $ operator, replace the "matrix" element of my_list with the star_wars_matrix
+# Using the $ operator, replace the "matrix" element of my_list with the star_wars_matrix # nolint
+my_list$matrix <- "star_wars_matrix"
+my_list
 
 # Finally, you can turn any list into a vector with unlist().
 unlist(my_list)
@@ -217,10 +243,27 @@ sample(1:100, 1)
 # To do this you will need to use either the factorial() function
 # or the choose() function
 
+?choose()
+
+calculate_probability <- function(n, k, p) {
+  binomial_coefficient <- choose(n, k)
+
+  probability <- binomial_coefficient * p^k * (1 - p)^(n - k)
+
+  return(probability)
+}
 # use your function to calculate the probability that when the aliens send 10 probes to Earth (probability of water = 0.7),
 # exactly 8 of those probes will send a signal of water
+get_probability <- calculate_probability(10, 8, 0.7)
 
+get_probability
 # compare this to dbinom(8,10,0.7)
+
+dbinom(8, 10, 0.7)
+
+# My function calculate_probability() and dbinom () both give the probability of success
+# to be 0.2334744. This means that dbinom() is a built-in function
+# that calculates the PMF of a binomial distributions
 
 ### PROBABILITY FUNCTIONS IN R
 # dbinom, dnorm, dunif, dbeta, .... all of these functions calculate f(x) for any given x
