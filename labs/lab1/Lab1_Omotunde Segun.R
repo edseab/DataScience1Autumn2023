@@ -239,12 +239,24 @@ sample(1:10, 20, replace = TRUE)
 # and the output is a vector of length x, where each element corresponds to the sum of the two sides of the dice.
 # HINT: one way to do this is to start by writing a function for a single 6-sided die, then create a new function 
 # that repeats the first function twice and adds up the result.
-
+cast.die <- function(x){
+    sample(1:6, x, replace = TRUE)
+}
+cast.2.dice <- function(x) {
+    return(cast.die(x) + cast.die(x))
+}
+cast.2.dice(20)
 ### 4.2
 # Using the function hist, create histograms of the results of double dice rolls when you roll them 10 times, 
 #then 50, then 100, then 1000, then 10000. Use breaks=1:12 as an argument within the hist function. 
 # What do you notice? Write it in comments below your code.
-
+set.seed(105)
+hist(cast.2.dice(10), breaks = 1:12)
+hist(cast.2.dice(50), breaks = 1:12)
+hist(cast.2.dice(100), breaks = 1:12)
+hist(cast.2.dice(1000), breaks = 1:12)
+hist(cast.2.dice(10000), breaks = 1:12)
+# i observed that the more you increase the number of times you roll the dice the more distributed the data
 
 # Another way to generate randomness is to sample from a pdf, which is a continuous distribution. 
 # The simplest pdf is the uniform function. The uniform function is a flat line bounded between 2 numbers. 
@@ -258,18 +270,31 @@ runif(5,0,1)
 ### 4.3
 # Using runif, write a function that returns TRUE 22% of the time and FALSE 78% of the time
 
+bool.22 <- function(x){
+    s<- runif(x, 0, 1)
+    return(s<0.22)
+}
+o1<-bool.22(10)
+hist(as.numeric(o1))
+o2<-bool.22(1000000)
+hist(as.numeric(o2))
+
 ### 4.4
 # Based on today's lecture about pdfs, what is the probability density for a uniform pdf bounded between 
 # 0 and 1 associated with all values of x between 0 and 1? Explain why.
+# The probability density is 1, because the area under the curve of a probability function is always equal to 1
 
 ### 4.5
 # Similarly, what is the probability density for a uniform pdf bounded between 5 and 6 associated with all values of x between 5 and 6?
+# The probability density is 1. 
 
 ### 4.6
 # What is the probability density for a uniform pdf bounded between 0 and 0.5 associated with all values of x between 0 and 0.5?
+#  The probability density is 2
 
 ### 4.7
 # What is the probability density for a uniform pdf bounded between 0 and 2 associated with all values of x between 0 and 2?
+# The probability density is 1/2
 
 ### 4.8
 # run the following code:
@@ -279,3 +304,4 @@ dunif(0.2,0,0.5)
 dunif(1.3,0,2)
 
 # Based on the results of this code and your answers above, what can you conclude about the purpose of the dunif function?
+#To calculate the probability density
