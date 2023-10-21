@@ -252,6 +252,8 @@ calculate_probability <- function(n, k, p) {
 
   return(probability)
 }
+
+
 # use your function to calculate the probability that when the aliens send 10 probes to Earth (probability of water = 0.7),
 # exactly 8 of those probes will send a signal of water
 get_probability <- calculate_probability(10, 8, 0.7)
