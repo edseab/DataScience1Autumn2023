@@ -124,7 +124,7 @@ z
 
 my.vector <- c('this','is','a','vector')
 my.vector
-lengtmyh(my.vector)
+length(my.vector)
 class(my.vector)
 
 # You can use square brackets to isolate elements in a vector by putting their index between the brackets:
@@ -135,15 +135,15 @@ my.vector[c(1,4)]
 
 ### 1.1
 # You can assign values to specific elements. Try writing a line of code below that changes the 4th element of my.vector to the word 'test'
-
-
+my.vector[1] <- "Khalida"
+my.vector[1]
 ### 1.2
 # You can even assign values to elements of a vector that don't exist yet, thus creating them. Try assigning the word 'example' to the (as yet non-existent) 5th element of my.vector.
 
 
 # Instead of indices, you can select elements of a vector using a logical vector of the same length, e.g.
 
-my.vector[c(TRUE,TRUE,FALSE,FALSE,FALSE, TRUE)]
+my.vector[c(TRUE,TRUE,FALSE,FALSE)]
 
 
 ####################################
@@ -233,11 +233,32 @@ sample(1:10, 20, replace = TRUE)
 # HINT: one way to do this is to start by writing a function for a single 6-sided die, then create a new function 
 # that repeats the first function twice and adds up the result.
 
+dicef <- function(x){
+  myV <- replicate(x, sample(1:6, 1) + sample(1:6, 1))
+  return( myV)
+}
+ dicef(4)
+
+
+cast.2.dice <- function(x){
+ return(sample (1:6,x, replace =TRUE)+sample (1:6,x, replace =TRUE))
+}
+ hist(cast.2.dice(1e8))
+
+
 ### 4.2
 # Using the function hist, create histograms of the results of double dice rolls when you roll them 10 times, 
 #then 50, then 100, then 1000, then 10000. Use breaks=1:12 as an argument within the hist function. 
 # What do you notice? Write it in comments below your code.
 
+?hist
+
+
+cast.2.dice(10)
+hist(cast.2.dice(10))
+hist(cast.2.dice(50))
+hist(cast.2.dice(100))
+hist(cast.2.dice(1e6),breaks = 1:12)
 
 # Another way to generate randomness is to sample from a pdf, which is a continuous distribution. 
 # The simplest pdf is the uniform function. The uniform function is a flat line bounded between 2 numbers. 
@@ -251,6 +272,21 @@ runif(5,0,1)
 ### 4.3
 # Using runif, write a function that returns TRUE 22% of the time and FALSE 78% of the time
 
+generate.bool.22 <- function(x){
+s <- runif(x,0,1)
+print(s)
+return(s<0.22)
+}
+
+o1 <- generate.bool.22(10)
+o1
+hist(as.numeric(o1))
+
+o2 <- generate.bool.22(1000000)
+
+hist(as.numeric(o2))
+
+table(sample(0:1,1000000, replace = TRUE, prob = c(2.2 ,7.8)))/1000000
 ### 4.4
 # Based on today's lecture about pdfs, what is the probability density for a uniform pdf bounded between 
 # 0 and 1 associated with all values of x between 0 and 1? Explain why.
