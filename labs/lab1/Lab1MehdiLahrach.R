@@ -234,17 +234,31 @@ sample(1:10, 20, replace = TRUE)
 # that repeats the first function twice and adds up the result.
 
 dicef <- function(x){
-  myV <- c(1,x)
-  myV <-(sample(1:6,1)+sample(1:6,1))
+  myV <- replicate(x, sample(1:6, 1) + sample(1:6, 1))
   return( myV)
 }
  dicef(4)
+
+
+cast.2.dice <- function(x){
+ return(sample (1:6,x, replace =TRUE)+sample (1:6,x, replace =TRUE))
+}
+ hist(cast.2.dice(1e8))
+
 
 ### 4.2
 # Using the function hist, create histograms of the results of double dice rolls when you roll them 10 times, 
 #then 50, then 100, then 1000, then 10000. Use breaks=1:12 as an argument within the hist function. 
 # What do you notice? Write it in comments below your code.
 
+?hist
+
+
+cast.2.dice(10)
+hist(cast.2.dice(10))
+hist(cast.2.dice(50))
+hist(cast.2.dice(100))
+hist(cast.2.dice(1e6),breaks = 1:12)
 
 # Another way to generate randomness is to sample from a pdf, which is a continuous distribution. 
 # The simplest pdf is the uniform function. The uniform function is a flat line bounded between 2 numbers. 
@@ -258,6 +272,21 @@ runif(5,0,1)
 ### 4.3
 # Using runif, write a function that returns TRUE 22% of the time and FALSE 78% of the time
 
+generate.bool.22 <- function(x){
+s <- runif(x,0,1)
+print(s)
+return(s<0.22)
+}
+
+o1 <- generate.bool.22(10)
+o1
+hist(as.numeric(o1))
+
+o2 <- generate.bool.22(1000000)
+
+hist(as.numeric(o2))
+
+table(sample(0:1,1000000, replace = TRUE, prob = c(2.2 ,7.8)))/1000000
 ### 4.4
 # Based on today's lecture about pdfs, what is the probability density for a uniform pdf bounded between 
 # 0 and 1 associated with all values of x between 0 and 1? Explain why.
