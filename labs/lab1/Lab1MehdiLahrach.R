@@ -124,7 +124,7 @@ z
 
 my.vector <- c('this','is','a','vector')
 my.vector
-lengtmyh(my.vector)
+length(my.vector)
 class(my.vector)
 
 # You can use square brackets to isolate elements in a vector by putting their index between the brackets:
@@ -135,15 +135,15 @@ my.vector[c(1,4)]
 
 ### 1.1
 # You can assign values to specific elements. Try writing a line of code below that changes the 4th element of my.vector to the word 'test'
-
-
+my.vector[1] <- "Khalida"
+my.vector[1]
 ### 1.2
 # You can even assign values to elements of a vector that don't exist yet, thus creating them. Try assigning the word 'example' to the (as yet non-existent) 5th element of my.vector.
 
 
 # Instead of indices, you can select elements of a vector using a logical vector of the same length, e.g.
 
-my.vector[c(TRUE,TRUE,FALSE,FALSE,FALSE, TRUE)]
+my.vector[c(TRUE,TRUE,FALSE,FALSE)]
 
 
 ####################################
@@ -232,6 +232,13 @@ sample(1:10, 20, replace = TRUE)
 # and the output is a vector of length x, where each element corresponds to the sum of the two sides of the dice.
 # HINT: one way to do this is to start by writing a function for a single 6-sided die, then create a new function 
 # that repeats the first function twice and adds up the result.
+
+dicef <- function(x){
+  myV <- c(1,x)
+  myV <-(sample(1:6,1)+sample(1:6,1))
+  return( myV)
+}
+ dicef(4)
 
 ### 4.2
 # Using the function hist, create histograms of the results of double dice rolls when you roll them 10 times, 
