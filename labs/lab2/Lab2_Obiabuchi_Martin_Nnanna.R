@@ -220,7 +220,7 @@ p_w_k <- function(p,N,k){
 # exactly 8 of those probes will send a signal of water
 
 
-n
+p_w_k(0.7,10,8)
 # compare this to dbinom(8,10,0.7)
 
 dbinom(8,10,0.7)
@@ -246,6 +246,10 @@ dbinom(8,10,0.7)
 # Using rbinom(), simulate 100,000 universes where the aliens sent out 20 probes to Earth
 # and calculate in what percentage of these universes the number of probes signalling Water is 11 or fewer
 # What do you conclude to the astronomer?
+
+set.seed(123)
+sims <-rbinom(100000,20,0.7)
+sum(sims<=11)/100000
 
 # pbinom, pnorm, punif, pbeta, .... all calculate the area under the curve of a given distribution,
 # in the LOWER tail (if lower.tail=TRUE, by default), or the UPPER tail (if you set it to false)
