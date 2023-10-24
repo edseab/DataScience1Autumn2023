@@ -211,10 +211,19 @@ sample(1:100,1)
 # To do this you will need to use either the factorial() function
 # or the choose() function
 
+
+p_w_k <- function(p,N,k){
+  n_choose_k <- factorial(N)/(factorial(k)*factorial(N-k))
+  return(p^k*(1-p)*(N-k)*n_choose_k)
+}
 # use your function to calculate the probability that when the aliens send 10 probes to Earth (probability of water = 0.7),
 # exactly 8 of those probes will send a signal of water
 
+
+p_w_k(0.7,10,8)
 # compare this to dbinom(8,10,0.7)
+
+dbinom(8,10,0.7)
 
 ### PROBABILITY FUNCTIONS IN R 
 # dbinom, dnorm, dunif, dbeta, .... all of these functions calculate f(x) for any given x
