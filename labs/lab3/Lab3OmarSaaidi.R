@@ -16,6 +16,8 @@
 #    Amir is 194cm tall. In what height percentile of the population is he? Round to the nearest integer number.
 #    (Remember: 1st percentile = shortest 1 percent of the population, 99th percentile: tallest 1 percent of the population)
 
+example example
+
 # 2. A group of Examplians start a club called the Tall and Short Club (TSC), where you have to be in the tallest 2.5% of the population 
 #    OR the bottom 2.5% of the population in height to be let in. 
 #    How tall or how short do you have to be to be accepted into the TSC? Would Amir be accepted?
