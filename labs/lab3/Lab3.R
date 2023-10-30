@@ -31,3 +31,9 @@
 # 5. What is the probability that exactly 2 are eligible to join the APC and the rest are not?
 
 # 6. What is the probability that at least 3 of them are eligible to join the TSC?
+
+
+
+
+
+

@@ -282,13 +282,15 @@ runif(5,0,1)
 
 ### 4.5
 # Similarly, what is the probability density for a uniform pdf bounded between 5 and 6 associated with all values of x between 5 and 6?
+dunif(10,5,6)
 
 ### 4.6
 # What is the probability density for a uniform pdf bounded between 0 and 0.5 associated with all values of x between 0 and 0.5?
+dunif(1,0,0.5)
 
 ### 4.7
 # What is the probability density for a uniform pdf bounded between 0 and 2 associated with all values of x between 0 and 2?
-
+dunif(2,0,2)
 ### 4.8
 # run the following code:
 dunif(0.5,0,1)
@@ -297,3 +299,6 @@ dunif(0.2,0,0.5)
 dunif(1.3,0,2)
 
 # Based on the results of this code and your answers above, what can you conclude about the purpose of the dunif function?
+x.values <- seq(-5,+5,0.01)
+y.values <- dunif(x.values,0,1)
+plot(x.values,y.values,type='l')
