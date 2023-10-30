@@ -18,7 +18,7 @@
 # In R, a MATRIX is a vector that has folded onto itself into a series of rows and columns. You can construct one from a normal vector:
 matrix(1:9, nrow = 3)
 
-# By default matrices get filled column by column, as you can see from the output. To fill them row by row instead, change the argument brow to TRUE:
+# By default matrices get filled column by column, as you can see from the output. To fill them row by row instead, change the argument byrow to TRUE:
 matrix(1:9, byrow = T, nrow = 3)
 
 # Now is a good time to point out that R will automatically read T as TRUE and F as FALSE, which can be a time-saver.
@@ -43,19 +43,24 @@ star_wars_matrix
 
 rownames(star_wars_matrix) <- c("A new hope", "The empire strikes back", "Return of the Jedi")
 colnames(star_wars_matrix) <- c("US revenue", "International revenue")
+star_wars_matrix
 
 ### 1.1
 # Some important base R functions to know: colSums, rowSums, colMeans, rowMeans
 # Use one of the above functions to calculate the total revenue for each movie (the sum of the US and international revenue)
 # and save it in an object called total_revenue
+ total_revenue <- rowSums(star_wars_matrix)
+  total_revenue
 
 # We can now add this vector as a new column using the function cbind (column bind)
 
 star_wars_matrix <- cbind(star_wars_matrix, total_revenue)
+star_wars_matrix
 
 ### 1.2
 # Rename the 3rd element of the column names of star_wars_matrix to "Total revenue"
-
+colnames(star_wars_matrix)[3]<- "Total revenue"
+star_wars_matrix
 # Now lets create vectors for the box office returns of the prequel trilogy
 
 phantom_menace <- c(474.5,552.5)
@@ -65,6 +70,17 @@ revenge_of_sith <- c(380.3, 468.5)
 ### 1.3
 # Turn these 3 vectors into a matrix, add a column for total revenue, 
 # and append them to star_wars_matrix using the function rbind (row bind)
+box_office_returns<-c(phantom_menace, attack_of_clones, revenge_of_sith)
+box_office_returns_matrix<-matrix(box_office_returns, byrow=T, nrow =3)
+box_office_returns_matrix
+rownames(box_office_returns_matrix)<-c("phantom_menace", "attack_of_clones", "revenge_of_sith")
+box_office_returns_matrix
+box_office_returns_matrix<-cbind(box_office_returns_matrix, rowSums(box_office_returns_matrix))
+box_office_returns_matrix
+star_wars_matrix <- rbind(star_wars_matrix, box_office_returns_matrix)
+star_wars_matrix
+#Above is the break down of my solution in steps
+
 
 # Matrices are understood by R to be both one-dimensional, because they are vectors folded onto themselves
 # into columns, but also 2 dimensional, because they have rows and columns. 
@@ -79,9 +95,10 @@ star_wars_matrix[3,1]
 
 ### 1.4 
 # Write a line of code to extract the international revenue of the Phantom Menace (the 4th movie) using numbers to index the matrix
+star_wars_matrix[4,2]
 
 # Compare this to the following:
-star_wars_matrix["The Phantom Menace", "Total revenue"]
+star_wars_matrix["phantom_menace", "International revenue"]
 
 # This works because our matrix has row and column names.
 
@@ -97,7 +114,7 @@ star_wars_matrix[4,]
 # Just like multiplying 2 vectors of the same length together will multiply each of the corresponding elements
 # the same will work with 2 matrices of the same dimensions
 
-star_wars_matrix[1:3,] * star_wars_matrix[4:6,] 
+star_wars_matrix[1:3,]* star_wars_matrix[4:6,] 
 
 # But for matrix multiplication (the kind used in linear algebra), you must use %*%
 
@@ -124,9 +141,11 @@ my_list
 # and you can access each element of a list with the $ operator
 my_list$boolean
 
+
 ### 2.1
 # Using the $ operator, replace the "matrix" element of my_list with the star_wars_matrix
-
+my_list$matrix<- star_wars_matrix
+my_list
 # Finally, you can turn any list into a vector with unlist().
 unlist(my_list)
 
@@ -190,10 +209,11 @@ sample(1:100,1)
 set.seed(123)
 sample(1:100,1)
 
-# You got 31, right? Run it again and see:
+# You got 31, right? Run it again and see: Yes
 
 set.seed(123)
 sample(1:100,1)
+sample(1:100,)
 
 # Any time we want to make sure we get the same results as one another despite having some
 # element of random sampling in out code, we will set the seed to be the same.
@@ -211,11 +231,18 @@ sample(1:100,1)
 # To do this you will need to use either the factorial() function
 # or the choose() function
 
+p_w_k <- function (p, n, k){
+  n_choose_k <- factorial(n)/(factorial(k)*factorial(n-k))
+  return(p^k*(1-p)^(n-k)*n_choose_k)
+}
+
 # use your function to calculate the probability that when the aliens send 10 probes to Earth (probability of water = 0.7),
 # exactly 8 of those probes will send a signal of water
 
+p_w_k(0.7, 10, 8)
 # compare this to dbinom(8,10,0.7)
-
+dbinom(8,10,0.7)
+?dbinom
 ### PROBABILITY FUNCTIONS IN R 
 # dbinom, dnorm, dunif, dbeta, .... all of these functions calculate f(x) for any given x
 # for each of their relative distributions
@@ -237,6 +264,15 @@ sample(1:100,1)
 # Using rbinom(), simulate 100,000 universes where the aliens sent out 20 probes to Earth
 # and calculate in what percentage of these universes the number of probes signalling Water is 11 or fewer
 # What do you conclude to the astronomer?
+?rbinom
+?pbinom
+
+set.seed(123)
+sims<-rbinom(100000, 20, 0.7)
+sum(sims<=11)
+sum(sims<=11)/100000
+pbinom(11, 20, 0.7)
+?pbinom
 
 # pbinom, pnorm, punif, pbeta, .... all calculate the area under the curve of a given distribution,
 # in the LOWER tail (if lower.tail=TRUE, by default), or the UPPER tail (if you set it to false)
@@ -244,12 +280,14 @@ sample(1:100,1)
 # So for example, if a person of 195 cm was drawn from a gaussian distribution of heights,
 # with mean 175cm and standard deviation 10cm, What percentile would they be in?
 pnorm(195, 175, 10, lower.tail=FALSE)
+#Or use the formula below, since the total area under the curve is 1.
+1-pnorm(195, 175, 10)
 # They would be in the upper 2.3 percentile
 
 # qbinom, qnorm, qunif, qbeta, .... all calculate value of x for which
 # the area under the curve of a given distribution in the lower tail 
 # is equal to the given number
-
+qnorm(0.5, 175, 10)
 # For example, in a Gaussian distribution of people's heights with mean 175cm and standard deviation 10cm,
 # How tall is someone in the bottom 10th percentile? 
 qnorm(0.1, 175, 10)
@@ -261,41 +299,59 @@ qnorm(0.1,175, 10, lower.tail=FALSE)
 ### 4.3
 # Let's compare the box office returns of the og and prequel trilogies
 og_trilogy <- star_wars_matrix[1:3,3]
+og_trilogy
 preq_trilogy <- star_wars_matrix[4:6,3]
+preq_trilogy
 
 # Write a Welch's t-test function for any two samples x1 and x2
 my_t <- function(x1,x2){
   # first, extract the means, variances and Ns of the two samples and save thel to
-  n1 <- 
-  m1 <-
-  s1 <- 
-  n2 <-
-  m2 <- 
-  s2 <- 
+  n1 <- length(x1)
+  m1 <-mean(x1)
+  s1 <- sd(x1)
+  n2 <-length(x2)
+  m2 <- mean(x2)
+  s2 <- sd(x2)
  
   # next, calculate the average standard deviation using the formula shown in the class on slide 44:
  
-  s <- 
+  s <- sqrt((s1^2/n1)+(s2^2/n2))
 
   # next, calculate the t-statistic, again as shown on slide 44
  
-  t <- 
+  t <- (m1-m2)/s
  
  
   # next, calculate the degrees of freedom (again see slide 44)
   # make sure you use parentheses correctly here
  
-  df <- 
+  df <- (s^2)/((s1^2/n1)^2/(n1-1) + (s2^2/n2)^2/(n2-1))
  
   # next, calculate the probability that the t-statistic would be greater than the absolute value of the t-statistic that you calculated if the TRUE difference between the groups was 0
   # to do this, you can use function pt
   p_value <- pt(abs(t), df=df, lower.tail = F)*2
 
   return(list(t = t, df = df, p_value=p_value))
+
+
+  p1<- pt(abs(t), df=df, lower.tail = F)
+  p2<- pt(abs(t), df=df, lower.tail = F)
+  p_value = p1+p2
+  return(list(t = t, df = df, p_value=p_value))
   }
 
-# compare this function to the in-built t-test
-t.test(og_trilogy,preq_trilogy)
-my_t(og_trilogy,preq_trilogy)
+#OR
 
+  
+
+# compare this function to the in-built t-test
+
+men<- c(190, 192, 190, 175, 173, 171, 170, 187, 169, 171, 176, 173)
+women <- c(163, 169, 165, 155, 159, 164, 164)
+my_t(men,women)
+t.test(men,women)
+
+pnorm(175, mean(men), sd(men))
+#1-the result are taller than me i.e 1-0.3644759
 # One last question to ponder before next class: Why did we multiply the p-value by 2?
+#because the normal distribution curve is symmetrical
