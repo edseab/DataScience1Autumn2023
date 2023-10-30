@@ -49,13 +49,17 @@ colnames(star_wars_matrix) <- c("US revenue", "International revenue")
 # Use one of the above functions to calculate the total revenue for each movie (the sum of the US and international revenue)
 # and save it in an object called total_revenue
 
+total_revenue <- rowSums(star_wars_matrix)
+
 # We can now add this vector as a new column using the function cbind (column bind)
+
 
 star_wars_matrix <- cbind(star_wars_matrix, total_revenue)
 
 ### 1.2
 # Rename the 3rd element of the column names of star_wars_matrix to "Total revenue"
 
+colnames(star_wars_matrix)[3] <- "Total revenue"
 # Now lets create vectors for the box office returns of the prequel trilogy
 
 phantom_menace <- c(474.5,552.5)
@@ -66,6 +70,15 @@ revenge_of_sith <- c(380.3, 468.5)
 # Turn these 3 vectors into a matrix, add a column for total revenue, 
 # and append them to star_wars_matrix using the function rbind (row bind)
 
+prequel_matrix <- matrix (c(phantom_menace, attack_of_clones,revenge_of_sith), byrow = T, nrow =3)
+
+prequel_matrix <- cbind(prequel_matrix, rowSums(prequel_matrix))
+prequel_matrix
+row.names(prequel_matrix) <- c("The phantom menace", 
+"Attack of the clones", "Revenge of the Sith")
+
+star_wars_matrix <- rbind(star_wars_matrix, prequel_matrix)
+star_wars_matrix
 # Matrices are understood by R to be both one-dimensional, because they are vectors folded onto themselves
 # into columns, but also 2 dimensional, because they have rows and columns. 
 # So you can index them like this:
@@ -73,15 +86,17 @@ star_wars_matrix[4]
 
 # but also like this
 star_wars_matrix[3,1]
-
+star_wars_matrix[2,3]
 # When you put a comma in between square brackets, you are indexing both the rows (to the left of the comma),
 # and the columns (to the right of the comma).
 
 ### 1.4 
 # Write a line of code to extract the international revenue of the Phantom Menace (the 4th movie) using numbers to index the matrix
 
+star_wars_matrix[4,2]
+
 # Compare this to the following:
-star_wars_matrix["The Phantom Menace", "Total revenue"]
+star_wars_matrix["The Phantom Menace", "International revenue"]
 
 # This works because our matrix has row and column names.
 
