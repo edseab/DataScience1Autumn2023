@@ -220,12 +220,16 @@ sample(1:100,1)
 # where n, k and p are arguments of the function
 # To do this you will need to use either the factorial() function
 # or the choose() function
-
+p_W_k <- function(p,N,k){
+  n_choose_k <- factorial(N)/(factorial(k)*factorial(N-k))
+  return(p^k*(1-p)^(N-k)*n_choose_k)
+}
+p_W_k(0.7,10,8)
 # use your function to calculate the probability that when the aliens send 10 probes to Earth (probability of water = 0.7),
 # exactly 8 of those probes will send a signal of water
 
 # compare this to dbinom(8,10,0.7)
-
+dbinom(8,10,0.7)
 ### PROBABILITY FUNCTIONS IN R 
 # dbinom, dnorm, dunif, dbeta, .... all of these functions calculate f(x) for any given x
 # for each of their relative distributions
@@ -247,6 +251,13 @@ sample(1:100,1)
 # Using rbinom(), simulate 100,000 universes where the aliens sent out 20 probes to Earth
 # and calculate in what percentage of these universes the number of probes signalling Water is 11 or fewer
 # What do you conclude to the astronomer?
+set.seed(123)
+sims <- rbinom(1e6,20,0.7)
+ 
+sum(sims<= 11)/1e6
+
+pbinom(11,20,0.7)
+pbinom(9,10,0.5,lower.tail = F)
 
 # pbinom, pnorm, punif, pbeta, .... all calculate the area under the curve of a given distribution,
 # in the LOWER tail (if lower.tail=TRUE, by default), or the UPPER tail (if you set it to false)
@@ -276,36 +287,47 @@ preq_trilogy <- star_wars_matrix[4:6,3]
 # Write a Welch's t-test function for any two samples x1 and x2
 my_t <- function(x1,x2){
   # first, extract the means, variances and Ns of the two samples and save thel to
-  n1 <- 
-  m1 <-
-  s1 <- 
-  n2 <-
-  m2 <- 
-  s2 <- 
+  n1 <- length(x1)
+  m1 <- mean(x1)
+  s1 <- sd(x1)
+  n2 <- length(x2)
+  m2 <- mean(x2)
+  s2 <- sd(x2)
  
   # next, calculate the average standard deviation using the formula shown in the class on slide 44:
  
-  s <- 
+  s <- sqrt((s1^2/n1)+(s2^2/n2))
 
   # next, calculate the t-statistic, again as shown on slide 44
  
-  t <- 
+  t <- (m1-m2)/s
  
  
   # next, calculate the degrees of freedom (again see slide 44)
   # make sure you use parentheses correctly here
  
-  df <- 
- 
+  df <- (s^2)^2/((s1^2/n1)^2/(n1-1)+(s2^2/n2)^2/(n2-1))
+
   # next, calculate the probability that the t-statistic would be greater than the absolute value of the t-statistic that you calculated if the TRUE difference between the groups was 0
   # to do this, you can use function pt
-  p_value <- pt(abs(t), df=df, lower.tail = F)*2
+  p1 <- pt(abs(t), df=df, lower.tail = F)
+  p2 <- pt(-abs(t), df=df, lower.tail = T)
+
+  p_value = p1 + p2
 
   return(list(t = t, df = df, p_value=p_value))
   }
 
+
+men <- c(190,192, 190,175,173,171,170,187,169,171, 176,173)
+women <- c(163, 169,165,155,159,164,164)
+
+my_t(men, women)
+
+pnorm(163,mean(women), sd(women))
+
 # compare this function to the in-built t-test
 t.test(og_trilogy,preq_trilogy)
-my_t(og_trilogy,preq_trilogy)
+
 
 # One last question to ponder before next class: Why did we multiply the p-value by 2?
