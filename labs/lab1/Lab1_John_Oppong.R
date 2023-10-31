@@ -9,7 +9,8 @@
 ###################################
 
 
-Welcome to this first lab. Here we  will learn the basics of R, an open-source programming language and software environme##nt. # nolint
+## Welcome to this first lab. Here we  will learn the basics of R, an open-source programming language and software environment.
+
 
 
 # On the right is the console. You can input code directly into the console line by line - you do not need to run an entire file. Try running a simple calculation in the console, like 5+9. Type it in and press enter. 
@@ -76,7 +77,7 @@ class(x)
 # We can also store text into an object, by surrounding it with quote marks:
 
 "Hello" -> y
-
+y
 class (y)
 
 # y is now a 'character' object (R does not use the term 'string')
@@ -163,6 +164,8 @@ my.vector == 'is'
 digits <- 0:10
 # Using the least amount of code possible, write a line of code that returns only the odd values of the digits object.
 
+digits[c(digits %% 2 != 0)]
+
 # Another important logical operator is the %in% operator. It tells you if the elements on the left are found in the elements on the right. E.G.
 group1 <- c('Arthur', 'Fatima', 'Suleiman', 'Marco')
 group2 <- c('Marco','Maria', 'Victor','Fatima', 'Antonio')
@@ -189,7 +192,7 @@ f1(7)
 ex.vector <- c(2,7,4,24,13,8,12)
 f1(ex.vector)
 
-# You can write several lines of code in a function by enclosing all of the in curly brackets {}. The function 'return' can then specify what the output can be. For example:
+# You can write several lines of code in a function by enclosing all of the code in curly brackets {}. The function 'return' can then specify what the output can be. For example:
 
 f2 <- function(x,y){
   z = x %% y
@@ -198,7 +201,6 @@ f2 <- function(x,y){
 
 f2(8,9)
 f2(14,7)
-
 ### 3.1 What is the purpose of function f2? Write in comments below.
 
 # f2 tells us whether one number is a multiple of another
@@ -232,84 +234,98 @@ sample(1:10, 20, replace = TRUE)
 ### 4.1
 # Write a function that simulates the roll of 2 6-sided dice, where the argument x is the number of times you roll the 2 dice, 
 # and the output is a vector of length x, where each element corresponds to the sum of the two sides of the dice.
-# HINT: one way to do this is to start by writing a function for a single 6-sided die, then create a new function 
-# that repeats...
 
-cast.die <- function(x){
-  sample(1:6,x,replace=TRUE)
-}
-cast.2.dice <- function(x){
-  return(cast.die(x)+cast.die(x))
-}
-cast.2.dice(100)
+# HINT: one way to do this is to start by writing a function for a single 6-sided die, then create a new function 
+# that repeats the first function twice and adds up the result.
+two.dice.roll <- function(times){
+  return (sample(1:6, times, replace=TRUE) + 
+          sample(1:6, times, replace=TRUE)
+        )
+  }
+
+# Test results
+# ------------
+# two.dice.roll(3) -> 5 7 7
+# two.dice.roll(10) -> 4 2 8 7 8 7 7 7 8 7
 
 ### 4.2
 # Using the function hist, create histograms of the results of double dice rolls when you roll them 10 times, 
 #then 50, then 100, then 1000, then 10000. Use breaks=1:12 as an argument within the hist function. 
 # What do you notice? Write it in comments below your code.
 
-hist(cast.2.dice(10), breaks=1:12)
-hist(cast.2.dice(50), breaks=1:12)
-hist(cast.2.dice(1000), breaks=1:12)
-hist(cast.2.dice(10000), breaks=1:12)
-hist(cast.2.dice(100000), breaks=1:12)
-hist(cast.2.dice(1000000), breaks=1:12)
+ hist(two.dice.roll(10), breaks=1:12)
+ hist(two.dice.roll(50), breaks=1:12)
+ hist(two.dice.roll(100), breaks=1:12)
+ hist(two.dice.roll(1000), breaks=1:12)
+ hist(two.dice.roll(10000), breaks=1:12)
+
+# Obervation: As the value number of times the dice are rolled increases, the histogram gets more symmetrical.
 
 # Another way to generate randomness is to sample from a pdf, which is a continuous distribution. 
 # The simplest pdf is the uniform function. The uniform function is a flat line bounded between 2 numbers. 
 # Because it is flat, the probability of drawing a sample from any interval of given width between the two bounds 
 # is the same as from any other interval of given width.
-sample(c("Life", "Love", "Land", "Loan", "Logic"),6,replace=TRUE)
-
 
 # The function runif(n, min,max) samples n times from a uniform function bounded between the values of min and max.
 # For example, try
 runif(5,0,1)
-runif(10,0,1)
-runif(10,0,1)[1]
 
 ### 4.3
-# Using runif, write a function that returns TRUE 22% of the time and FALSE 78% of the time
+# Using runif, write a function that returns TRUE 22% of the time and FALSE 78% of the time.
 
-runbool <- function(x){
-  s <- runif(x,0,1)
-  return(s<0.22)
+true.false.runif <- function(){
+   if(runif(1,min=0, max=1)<=0.22) T else F
 }
-runbool(1)
-
-T <- runbool(15)
-hist(as.numeric(T))
-T2 <- runbool(1000)
-hist(as.numeric(T2))
-T2 <- runbool(10000)
-hist(as.numeric(T2))
-T2 <- runbool(100000)
-hist(as.numeric(T2))
-T2 <- runbool(1000000)
-hist(as.numeric(T2))
-T2 <- runbool(1000)
-sum(T2==TRUE)
-
+# If the generated random number is less than or equal to 0.22 (which happens with a 22% chance because 0.22 represents 22% of the interval [0, 1]), the function returns TRUE. Otherwise, it returns FALSE.
 
 ### 4.4
 # Based on today's lecture about pdfs, what is the probability density for a uniform pdf bounded between 
 # 0 and 1 associated with all values of x between 0 and 1? Explain why.
 
+# Answer: The probability density is 1.
+
+# Explanation:
+ A uniform function is characterised by a flat constant probability density across a specified range. So, all the points between 0 and 1 are going to share the total probability(1) equally. When I count all the values of x between 0 and 1, I get 1.
+
+Probabity Density = (Total probability)/(number of x values)
+     PD = 1/1 = 1
+From this, we can see that, when one people share one thing, each person gets one. No skewness occurs.
+
 ### 4.5
 # Similarly, what is the probability density for a uniform pdf bounded between 5 and 6 associated with all values of x between 5 and 6?
+
+Answer: The probability Density = 1
+Explanation: The total probability is 1.
+Values starting from 5 to 6 want to equally share the total probability.
+Probability Density = 1/6-5 = 1.
+Therefore, the probability density(likelihood) of each value of x is 1.
 
 ### 4.6
 # What is the probability density for a uniform pdf bounded between 0 and 0.5 associated with all values of x between 0 and 0.5?
 
+Answer: Probability density = 1/(0.5 - 0)
+                            = 1/0.5
+                            = 2
+Each value of x within the range 0 and 0.5 has a probability desnity of 2. Each value of x is twice as likely to occur as it would be in a uniform distribution spanning between 0 and 1.
+
+This explains the fact that, probability density is relative likelihood( not likelihood/probability)
+
+
 ### 4.7
 # What is the probability density for a uniform pdf bounded between 0 and 2 associated with all values of x between 0 and 2?
 
+Probability density = 1/2-0 
+                    = 0.5
+
+
 ### 4.8
 # run the following code:
-dunif(0.5,0,1)
-dunif(2,0,1)
-dunif(0.2,0,0.5)
-dunif(1.3,0,2)
+dunif(0.5,0,1) # 1
+dunif(2,0,1) # 0
+dunif(0.2,0,0.5) # 2
+dunif(1.3,0,2) # 0.5
 
 # Based on the results of this code and your answers above, what can you conclude about the purpose of the dunif function?
-dunif function is used for finding the probability for an uniform pdf bounded between an inerval assoiated with all values of x between this interval
+
+in dunif(0.5,0,1), 0.5 lies in the interval [0,1]. The return value of the function also happens to be 1, the probability density of all values in [0,1]. 
+The same observation is made for the other functions. Hence, I conclude that the function dunif(x,min,max) is used to evaluate the probability density of value(s) x in the interval [min,max] of a uniform distribution. 
