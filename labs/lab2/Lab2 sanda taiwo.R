@@ -341,7 +341,7 @@ men<- c(190,192,190,175,173,171,170,187,169,171,176,173)
 women <- c(163,169,165,155,159,164,164)
 t.test(men,women)
 t.test(og_trilogy,preq_trilogy)
-my_t(og_trilogy,preq_trilogy)
+my_t(men,women)
 
 # One last question to ponder before next class: Why did we multiply the p-value by 2?
 ##professor Ed's height percentile
