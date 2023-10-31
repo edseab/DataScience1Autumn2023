@@ -318,9 +318,9 @@ my_t <- function(x1,x2){
   # next, calculate the probability that the t-statistic would be greater than the absolute value of the t-statistic that you calculated if the TRUE difference between the groups was 0
   # to do this, you can use function pt
 
-p1<- pt(abs(t), df=df, lower.tail=F)*2
+p1<- pt(abs(t), df=df, lower.tail=F)
 
-#p2<- pt(-abs(t), df=df,lower.tail=T)
+p2<- pt(-abs(t), df=df,lower.tail=T)
 
 p_value= p1 + p2
 
@@ -332,9 +332,9 @@ p_value= p1 + p2
 # compare this function to the in-built t-test
 
 men <- c(190,192,190,175,173,171,170,187,169,171,176,173)
-women<- c(163,169,165,155,159,,164,164)
+women<- c(163,169,165,155,159,164,164)
 
 my_t(men,women)
 t.test(men,women)
 
-# One last question to ponder before next class: Why did we multiply the p-value by 2?
+# One last question to ponder before next class: Why did we multiply the p-value by 2? 
