@@ -8,7 +8,6 @@
 ###################################
 ###################################
 
-#Mehdi LAHRACH
 
 ## Welcome to this first lab. Here we  will learn the basics of R, an open-source programming language and software environment.
 
@@ -32,16 +31,19 @@
 sqrt(25)
 exp(3)
 
-# Often, functions take multiple inputs with different prupuses. Note how:
-rep(3,4)
+# Often, functions take multiple inputs with different functions. Note how:
+?rep(3,4)
 # produces a different output from
-rep(4,3)
-# If you can't remember in which order you have to input the arguments of a function, or if you just want to learn what a function does, you can type in ? followed by the function name in the console:
+rep(4,3) 
 ?rep
+
+# If you can't remember in which order you have to input the arguments of a function, or if you just want to learn what a function does, you can type in ? followed by the function name in the console:
+
 
 # Each argument has a name. By explicitly referring to these names when calling the function, we can avoid  any problems with order. For example:
 rep(x=3, times=4)
 rep(times=4, x=3)
+
 
 # produce the same result, because we inputed the arguments by name using the 'argname = x' construction. When we don't use this construction, the function defaults each input to an argument according to a predefined order.
 
@@ -54,6 +56,7 @@ rep(times=4, x=3)
 # Functions are one example of OBJECTS, which are stored within the main (global) ENVIRONMENT of the console. We can create new objects by using the 'assign' operator:
 
 x <- 4
+
 
 # You can now see in the 'Environment' tab below that the object 'x'  is stored with the value 4.
 
@@ -78,6 +81,8 @@ class(x)
 y
 class (y)
 
+"Salaam" -> y
+
 # y is now a 'character' object (R does not use the term 'string')
 
 # If we forget to use quote marks R will search for a stored object with that name and return an error if it doesn't find it:
@@ -87,7 +92,7 @@ Salaam -> y
 # One final very important class of object is the 'logical' class, a.k.a. Boolean. 
 
 # One final very important class of object is the 'logical' class, a.k.a. Boolean. 
-# Boolean objects can take one of two TR
+# Boolean objects can take one of two values
 
 TRUE
 
@@ -113,6 +118,7 @@ FALSE | FALSE
 ####     Vectors and indices    ####
 ####################################
 
+
 # YOu will have noticed that the console has always returned a [1] in front of it's output so far. This is because R has considered all these objects to be 'vectors' (in Python, this is the same thing as an array). Vectors are objects that can contain multiple elements. For example:
 
 z <- 50:80
@@ -124,14 +130,17 @@ z
 
 my.vector <- c('this','is','a','vector')
 my.vector
-lengtmyh(my.vector)
+length(my.vector)
 class(my.vector)
 
 # You can use square brackets to isolate elements in a vector by putting their index between the brackets:
 my.vector[1]
 my.vector[4]
 my.vector[2:4]
-my.vector[c(1,4)]
+my.vector[c(1,4)] 
+
+
+
 
 ### 1.1
 # You can assign values to specific elements. Try writing a line of code below that changes the 4th element of my.vector to the word 'test'
@@ -143,7 +152,7 @@ my.vector[c(1,4)]
 
 # Instead of indices, you can select elements of a vector using a logical vector of the same length, e.g.
 
-my.vector[c(TRUE,TRUE,FALSE,FALSE,FALSE, TRUE)]
+my.vector[c(TRUE,TRUE,FALSE,FALSE,FALSE)]
 
 
 ####################################
@@ -154,24 +163,30 @@ my.vector[c(TRUE,TRUE,FALSE,FALSE,FALSE, TRUE)]
 
 # For example:
 my.vector == 'is'
-1:10 >= 5
+
+1:10 >= 5&
 1:10 %% 2 == 0    ## %% is the remainder operator, it returns the remainder when you divide the left argument by the right argument.
 
 ### 2.1
 digits <- 0:10
+digits
 # Using the least amount of code possible, write a line of code that returns only the odd values of the digits object.
-digits[digits %% 2 != 0]
 
 # Another important logical operator is the %in% operator. It tells you if the elements on the left are found in the elements on the right. E.G.
 group1 <- c('Arthur', 'Fatima', 'Suleiman', 'Marco')
 group2 <- c('Marco','Maria', 'Victor','Fatima', 'Antonio')
 group1 %in% group2
+group1
 
+group1[group1 %in% group2]
 ## 2.2 
 # intersect is a function which returns the elements that all of its arguments have in common. For example:
 intersect(group1,group2)
+
 # Write a line of code that replicates this output using only group1, group2, square brackets, and logical operators.
-group1[group1 %in% group2]
+
+Group1[group1 %in% group2] 
+
 
 ####################################
 ####     Writing functions      ####
@@ -179,7 +194,7 @@ group1[group1 %in% group2]
 
 # Functions can be written and stored as objects. e.g:
 f1 <- function(x) x*2 + 1
-f1
+f1 
 # This function has only 1 argument, x. Try out this new function:
 f1(3)
 f1(7)
@@ -196,20 +211,27 @@ f2 <- function(x,y){
 f2(8,9)
 f2(14,7)
 
+
+
 ### 3.1 What is the purpose of function f2? Write in comments below.
-## it determin if x is divisible by y
+
+# its role is to determine if ine number is the multiple of other, to return FALSA or TRUE#
+
+
 ### 3.2
 # Based on the definition of the mean from today's lecture, write a function that calculates the mean of all of the elements of a vector. assign it to the object my.mean. You will find the functions 'sum' and 'length' useful here.
 
 # compare your function to the native function in R. Does it produce the same results?
 
-my.mean<- function(v){
-  return(sum(v) / length(v))
-}
 
+my.mean <- function(x) sum(x)/ length(x)
 
 my.mean(ex.vector)
 mean(ex.vector)
+
+
+
+
 
 ####################################
 ####      Randomness in R       ####
@@ -220,8 +242,10 @@ mean(ex.vector)
 
 #which randomly draws WITHOUT replacement from a specified vector. For example, to choose a number at random between 1 and 10:
 sample(1:10, 1)
-# You can run this several times and notice that you get a different answer each time. You can also sample several times at once
 sample(1:10, 3)
+# You can run this several times and notice that you get a different answer each time. You can also sample several times at once
+
+
 # However, by default, sample won't let the same number repeat when you do this. This is called sampling without replacement, 
 # because it is as if, each time you pick out a number, it is now gone from the pool of possible numbers and has not been replaced.
 # If you want to sample randomly between 1 and 10 20 times, each time choosing between all 10 numbers, you have to write:
@@ -233,11 +257,25 @@ sample(1:10, 20, replace = TRUE)
 # HINT: one way to do this is to start by writing a function for a single 6-sided die, then create a new function 
 # that repeats the first function twice and adds up the result.
 
+cast.die<- function(x){
+  sample(1:6,x,replace=TRUE)
+}
+cast.2.dice <- function(x){
+return(cast.die(x)+cast.die(x))
+}
+cast.2.dice(5)
+
 ### 4.2
 # Using the function hist, create histograms of the results of double dice rolls when you roll them 10 times, 
 #then 50, then 100, then 1000, then 10000. Use breaks=1:12 as an argument within the hist function. 
 # What do you notice? Write it in comments below your code.
 
+set.seed(105)
+hist(cast.2.dice(10), breaks=1:12)
+hist(cast.2.dice(50), breaks=1:12)
+hist(cast.2.dice(100), breaks=1:12)
+hist(cast.2.dice(1000), breaks=1:12)
+hist(cast.2.dice(10000), breaks=1:12)
 
 # Another way to generate randomness is to sample from a pdf, which is a continuous distribution. 
 # The simplest pdf is the uniform function. The uniform function is a flat line bounded between 2 numbers. 
@@ -248,8 +286,22 @@ sample(1:10, 20, replace = TRUE)
 # For example, try
 runif(5,0,1)
 
+
+
+
 ### 4.3
 # Using runif, write a function that returns TRUE 22% of the time and FALSE 78% of the time
+
+generate.bool.22<-function(x){
+   s<- runif(x,0,1)
+return(s<0.22)
+}
+ 
+ o1<- generate.bool.22(10)
+ hist(as.numeric(o1))
+ o2<- generate.bool.22(1000)
+hist(as.numeric(o2))
+
 
 ### 4.4
 # Based on today's lecture about pdfs, what is the probability density for a uniform pdf bounded between 
@@ -272,3 +324,8 @@ dunif(0.2,0,0.5)
 dunif(1.3,0,2)
 
 # Based on the results of this code and your answers above, what can you conclude about the purpose of the dunif function?
+
+x.values<- seq(-5,+5, 0.01)
+y.values<- dunif(x.values,0,1)
+
+plot(x.values,y.values, type='l', ylim=c(0,5))
