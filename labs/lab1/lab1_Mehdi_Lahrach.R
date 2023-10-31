@@ -227,15 +227,25 @@ sample(1:10, 3)
 # If you want to sample randomly between 1 and 10 20 times, each time choosing between all 10 numbers, you have to write:
 sample(1:10, 20, replace = TRUE)
 
+
+
 ### 4.1
 # Write a function that simulates the roll of 2 6-sided dice, where the argument x is the number of times you roll the 2 dice, 
 # and the output is a vector of length x, where each element corresponds to the sum of the two sides of the dice.
 # HINT: one way to do this is to start by writing a function for a single 6-sided die, then create a new function 
 # that repeats the first function twice and adds up the result.
 
+rolldice <- function(x){
+  simple(1:6, x, replace = TRUE)
+}
+
+cast.2.dice <- function(x){
+  return(rolldice(x) + rolldice(x))
+}
+
 ### 4.2
 # Using the function hist, create histograms of the results of double dice rolls when you roll them 10 times, 
-#then 50, then 100, then 1000, then 10000. Use breaks=1:12 as an argument within the hist function. 
+#then 50, then 100, then 1000, then 10000. Use breaks=1:12 as an argument within the hist function.  # nolint
 # What do you notice? Write it in comments below your code.
 
 
