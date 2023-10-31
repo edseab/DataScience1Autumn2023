@@ -138,9 +138,15 @@ my_list
 
 # and you can access each element of a list with the $ operator
 my_list$boolean
+my_list[[2]]
+
+#if you use an element in the list that is not there, it will return NULL
+my_list$hello
 
 ### 2.1
 # Using the $ operator, replace the "matrix" element of my_list with the star_wars_matrix
+
+my_list$matrix <- star_wars_matrix
 
 # Finally, you can turn any list into a vector with unlist().
 unlist(my_list)
