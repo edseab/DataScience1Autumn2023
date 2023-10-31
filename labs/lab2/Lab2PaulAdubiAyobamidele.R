@@ -381,6 +381,7 @@ my_t <- function(x1, x2) {
 }
 
 # compare this function to the in-built t-test
+?t.test
 # t.test(og_trilogy, preq_trilogy)
 # my_t(og_trilogy, preq_trilogy)
 
