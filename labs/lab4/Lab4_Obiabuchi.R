@@ -89,12 +89,9 @@ lot(dnorm(seq(-4,4,0.2)),type='o', col='#f03b20')
 # use hist() and density() 
 hist(mtcars$wt, pch=20)
 
-
-
-
 # For barplots and boxplots, we use barplot() and boxplot()
-
-
+barplot(mtcars$wt, pch=20)
+boxplot(mtcars$wt, pch=10)
 # Axes can be removed from the original plot using xaxt='n' and yaxt = 'n'
 # New axes can be added using the axis() function
 # text(), segments(), arrows(), polygon(), legend(), add these respective elements to your plot. 
