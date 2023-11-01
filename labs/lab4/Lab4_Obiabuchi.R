@@ -115,7 +115,6 @@ plot(mtcars$wt,mtcars$mpg, pch=20, ylim = c(0,40), xlim = c(0,7),
 
 # The par() function sets the graphical parameters for the device.
 # You can use it to set the margins of the graph (in inches) using mar
-par(mar=c(5,5,5,5))
 plot(mtcars$wt,mtcars$mpg)
 
 # These parameters will remain attached to the graphical device until you turn them off, with:
