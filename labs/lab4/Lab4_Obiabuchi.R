@@ -32,7 +32,8 @@ data()
 
 # To load one into your environment, run for example
 data(mtcars)
-
+df <- data(iris)
+df
 ########################
 ####    Plotting    ####
 ########################
