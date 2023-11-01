@@ -81,11 +81,16 @@ plot(dnorm(seq(-4,4,0.2)),type='o', col='red')
 # You can also use hex codes, such as:
 plot(dnorm(seq(-4,4,0.2)),type='o', col='#6D1ACF')
 
+lot(dnorm(seq(-4,4,0.2)),type='o', col='#f03b20')
 # Pick your own color and find its hex code here:
 # https://htmlcolorcodes.com/color-picker/
 
 # For turning frequencies into histograms or density plots,
 # use hist() and density() 
+hist(mtcars$wt, pch=20)
+
+
+
 
 # For barplots and boxplots, we use barplot() and boxplot()
 
