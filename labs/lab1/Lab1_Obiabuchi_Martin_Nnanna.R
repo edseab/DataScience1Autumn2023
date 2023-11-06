@@ -212,7 +212,8 @@ f2(14,7)
 
 ### 3.1 What is the purpose of function f2? Write in comments below.
 #f2 tells us whether one number is a multiple of another
-#the purpose of the function name f2 is to take two parameters x and y, which will z
+#or
+#the purpose of the function name f2 is to take two parameters x and y, which will return z==0
 
 
 ### 3.2
@@ -220,11 +221,16 @@ f2(14,7)
 
 # compare your function to the native function in R. Does it produce the same results?
 
-my.mean <- function(x) sum(x)/length(x) 
+my.mean <- function(x) {sum(x)/length(x) 
+                }
+my.vector <- c(1:100)
+my.vector
+
+my.mean(my.vector)
 
 my.mean(ex.vector)
 mean(ex.vector)
-
+mean(my.vector)
 ####################################
 ####      Randomness in R       ####
 ####################################
