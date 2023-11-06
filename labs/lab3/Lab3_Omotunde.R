@@ -51,7 +51,7 @@ dbinom(0,10,0.13)
 dbinom(2,10,0.08)
 
 dbinom(2,10,0.08)
-# 6. What is the probability that at least 3 of them are eligible to join the TSC?
+## 6. What is the probability that at least 3 of them are eligible to join the TSC?
 
 1-pbinom(2,10,0.05) #or
 pbinom(10,10,0.05)-pbinom(2,10,0.05) #or
