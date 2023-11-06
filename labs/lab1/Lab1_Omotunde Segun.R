@@ -127,7 +127,7 @@ my.vector <- c('this','is','a','vector')
 my.vector
 length(my.vector)
 class(my.vector)
-
+?paste
 # You can use square brackets to isolate elements in a vector by putting their index between the brackets:
 my.vector[1]
 my.vector[4]
