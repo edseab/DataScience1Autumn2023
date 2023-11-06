@@ -16,7 +16,7 @@
 # On the right is the console. You can input code directly into the console line by line - you do not need to run an entire file. Try running a simple calculation in the console, like 5+9. Type it in and press enter. 
 
 5+9
-
+9-9
 # You can also write code in this, the code editor, and run it from here. Try highlighting the following line and clicking 'Run':
 
 12 * 4 - 6
@@ -92,14 +92,17 @@ class(x)
 
 "Hello" -> y
 y
+w<-"KAY"
+w <-"hay"
+w
 class (y)
 
 # y is now a 'character' object (R does not use the term 'string')
 
 # If we forget to use quote marks R will search for a stored object with that name and return an error if it doesn't find it:
 
-Salaam -> y
-
+Salaam <- y
+Salaam
 TRUE
 FALSE
 TRUE&FALSE
@@ -142,32 +145,32 @@ z[20]
 
 # Vectors can be created from singular elements using the function c(), which stands for combine or concatenate.
 
-my.vector <- c('this','is','a','vector')
-my.vector
-length(my.vector)
-class(my.vector)
+my_vector <- c('this','is','a','vector')
+my_vector
+length(my_vector)
+class(my_vector)
 
 # You can use square brackets to isolate elements in a vector by putting their index between the brackets:
-my.vector[1]
-my.vector[4]
-my.vector[2:4]
-my.vector[c(1,4)]
+my_vector[1]
+my_vector[4]
+my_vector[2:4]
+my_vector[c(1,4)]
 
 
 ### 1.1
 # You can assign values to specific elements. Try writing a line of code below that changes the 4th element of my.vector to the word 'test'
-my.vector[4] <- 'test'
-my.vector
+my_vector[4] <- 'test'
+my_vector
 
 ### 1.2
 # You can even assign values to elements of a vector that don't exist yet, thus creating them. Try assigning the word 'example' to the (as yet non-existent) 5th element of my.vector.
-my.vector[5] <- 'example'
-my.vector
+my_vector[5] <- 'example'
+my_vector
 
 # Instead of indices, you can select elements of a vector using a logical vector of the same length, e.g.
 
-my.vector[c(TRUE,TRUE,FALSE,FALSE,FALSE)]
-
+my_vector[c(TRUE,TRUE,FALSE,FALSE,FALSE)]
+my_vector[c(FALSE,TRUE,FALSE,TRUE,FALSE)]
 
 ####################################
 ####     Logical operators      ####
@@ -176,14 +179,20 @@ my.vector[c(TRUE,TRUE,FALSE,FALSE,FALSE)]
 # LOGICAL OPERATORS are operators that return logical vectors of the same length as the left argument. Examples include '==', the equality operator (not to be confused with the single = which is an assignment operator), >, <, >=, <=, and != (the 'different from' operator).
 
 # For example:
-my.vector == 'is'
+my_vector == 'is'
+my_vector == 'this'
+new_vector<- c('This is a test example')
+new_vector[1]
+new_vector == 'is'
 1:10 >= 5
-1:10 %% 2 == 0    ## %% is the remainder operator, it returns the remainder when you divide the left argument by the right argument.
+1:10 %% 2 == 0   
+ ## %% is the remainder operator, it returns the remainder when you divide the left argument by the right argument.
 
 ### 2.1
 digits <- 0:10
-digits
-digits(TRUE,FALSE)
+digits%%2!=0
+digits[digits%%2==0]
+digits[digits%%2!=0]
 digits[digits%%2!=0]
 
 # Using the least amount of code possible, write a line of code that returns only the odd values of the digits object.
