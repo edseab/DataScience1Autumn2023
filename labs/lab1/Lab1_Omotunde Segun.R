@@ -127,7 +127,7 @@ my.vector <- c('this','is','a','vector')
 my.vector
 length(my.vector)
 class(my.vector)
-
+?paste
 # You can use square brackets to isolate elements in a vector by putting their index between the brackets:
 my.vector[1]
 my.vector[4]
@@ -274,6 +274,7 @@ bool.22 <- function(x){
     s<- runif(x, 0, 1)
     return(s<0.22)
 }
+bool.22(10)
 o1<-bool.22(10)
 hist(as.numeric(o1))
 o2<-bool.22(1000000)
@@ -298,6 +299,7 @@ hist(as.numeric(o2))
 
 ### 4.8
 # run the following code:
+?dunif
 dunif(0.5,0,1)
 dunif(2,0,1)
 dunif(0.2,0,0.5)

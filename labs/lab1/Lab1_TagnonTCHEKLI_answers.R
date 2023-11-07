@@ -310,6 +310,12 @@ dunif(0.5,0,1)
 dunif(2,0,1)
 dunif(0.2,0,0.5)
 dunif(1.3,0,2)
+dunif(1.3,0,0.25)
 
 # Based on the results of this code and your answers above, what can you conclude about the purpose of the dunif function?
 dunif function is used for finding the probability for an uniform pdf bounded between an inerval assoiated with all values of x between this interval
+
+x.values <- seq(-5,+5,0.1)
+y.values <- dunif(x.values,0,1)
+
+plot(x.values, y.values, type="l")

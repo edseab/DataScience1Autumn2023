@@ -8,8 +8,10 @@
 ###################################
 ###################################
 
+## Rafiat Mojisola BAMIMORE AKODU
 
 ## Welcome to this first lab. Here we  will learn the basics of R, an open-source programming language and software environment.
+
 
 
 
@@ -84,7 +86,7 @@ class (y)
 
 # If we forget to use quote marks R will search for a stored object with that name and return an error if it doesn't find it:
 
-Salaam -> y
+Rafiat -> y
 
 
 # One final very important class of object is the 'logical' class, a.k.a. Boolean. 
@@ -163,6 +165,11 @@ my.vector == 'is'
 ### 2.1
 digits <- 0:10
 # Using the least amount of code possible, write a line of code that returns only the odd values of the digits object.
+digits[c(TRUE,FALSE,TRUE,FALSE,TRUE,FALSE,TRUE,FALSE,TRUE,FALSE)]
+digits[c(FALSE,TRUE,FALSE,TRUE,FALSE,TRUE,FALSE,TRUE,FALSE,TRUE)]
+digits
+digits[digits%%2 !=0]
+digits[digits%%2 ==1]
 
 # Another important logical operator is the %in% operator. It tells you if the elements on the left are found in the elements on the right. E.G.
 group1 <- c('Arthur', 'Fatima', 'Suleiman', 'Marco')
@@ -176,6 +183,10 @@ intersect(group1,group2)
 # Write a line of code that replicates this output using only group1, group2, square brackets, and logical operators.
 
 group1[group1 %in% group2]
+group2[group2 %in% group1]
+c(group1[2], group2[1])
+group1 %in% group2 
+
 
 ####################################
 ####     Writing functions      ####
@@ -202,10 +213,11 @@ f2(14,7)
 
 ### 3.1 What is the purpose of function f2? Write in comments below.
 
-# f2 tells us whether one number is a multiple of another
+# The purpose of f2 is to tell us whether one number is a multiple of another
 
 ### 3.2
 # Based on the definition of the mean from today's lecture, write a function that calculates the mean of all of the elements of a vector. assign it to the object my.mean. You will find the functions 'sum' and 'length' useful here.
+
 
 # compare your function to the native function in R. Does it produce the same results?
 
@@ -236,18 +248,27 @@ sample(1:10, 20, replace = TRUE)
 # HINT: one way to do this is to start by writing a function for a single 6-sided die, then create a new function 
 # that repeats the first function twice and adds up the result.
 
-set.seed(105)
-hist(cast.2.dice(10), breaks = 1:12, main = "Histogram of 10 Rolls")
-hist(cast.2.dice(50), breaks = 1:12, main = "Histogram of 50 Rolls")
-hist(cast.2.dice(100), breaks = 1:12, main = "Histogram of 100 Rolls")
-hist(cast.2.dice(1000), breaks = 1:12, main = "Histogram of 1000 Rolls")
-hist(cast.2.dice(10000), breaks = 1:12, main = "Histogram of 10000 Rolls")
+cast.die <- function(x){
+  sample(1:6,x,replace = TRUE)
+}
 
+cast.2.dice <- function(x){
+return(cast.die(x)+cast.die(x))
+}
+
+cast.2.dice(5)
 
 ### 4.2
-#
+# Using the function hist, create histograms of the results of double dice rolls when you roll them 10 times, 
 #then 50, then 100, then 1000, then 10000. Use breaks=1:12 as an argument within the hist function. 
 # What do you notice? Write it in comments below your code.
+
+set.seed(105)
+hist(cast.2.dice(10), breaks=1:12)
+hist(cast.2.dice(50), breaks=1:12)
+hist(cast.2.dice(100), breaks=1:12)
+hist(cast.2.dice(1000), breaks=1:12)
+hist(cast.2.dice(10000), breaks=1:12)
 
 
 # Another way to generate randomness is to sample from a pdf, which is a continuous distribution. 
@@ -258,7 +279,7 @@ hist(cast.2.dice(10000), breaks = 1:12, main = "Histogram of 10000 Rolls")
 # The function runif(n, min,max) samples n times from a uniform function bounded between the values of min and max.
 # For example, try
 runif(5,0,1)
-
+runif(5,0,1)[1]
 ### 4.3
 # Using runif, write a function that returns TRUE 22% of the time and FALSE 78% of the time
 
@@ -266,11 +287,13 @@ generate.bool.22 <- function(x){
   s <- runif(x,0,1)
   return(s<0.22)
 }
+generate.bool.22
 
-o1 <-  generate.bool.22(10)
+o1 <- generate.bool.22(10)
 hist(as.numeric(o1))
-o2 <- generate.bool.22(10000000)
+o2 <- generate.bool.22(1000)
 hist(as.numeric(o2))
+
 ### 4.4
 # Based on today's lecture about pdfs, what is the probability density for a uniform pdf bounded between 
 # 0 and 1 associated with all values of x between 0 and 1? Explain why.
@@ -290,9 +313,13 @@ dunif(0.5,0,1)
 dunif(2,0,1)
 dunif(0.2,0,0.5)
 dunif(1.3,0,2)
-
+dunif(0.8,0,1)
+dunif(0.1,0,1)
+dunif(1,0,1)
+dunif(1.01,0,1)
 # Based on the results of this code and your answers above, what can you conclude about the purpose of the dunif function?
 
-x.values <- seq(0, 1, 0.01)
-y.values <- dunif(x.values, 0, 1)
-plot(x.values, y.values, type = 'l', xlab = "x", ylab = "Density", main = "PDF of Uniform Distribution")
+x.values <- seq(-5, +5, 0.01)
+y.values <- dunif(x.values,0,1)
+
+plot(x.values, y.values, type='l', ylim = c(0, 5))

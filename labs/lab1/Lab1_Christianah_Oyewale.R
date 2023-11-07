@@ -14,11 +14,8 @@
 
 
 # On the right is the console. You can input code directly into the console line by line - you do not need to run an entire file. Try running a simple calculation in the console, like 5+9. Type it in and press enter. 
-
 5+9
-
 # You can also write code in this, the code editor, and run it from here. Try highlighting the following line and clicking 'Run':
-
 12 * 4 - 6
 
 # You can also press 'Ctrl (Cmd) + Enter' to run the code you have highlighted.
@@ -34,13 +31,14 @@
 sqrt(25)
 exp(3)
 
-# Often, functions take multiple inputs with different purposes. Note how:
+# Often, functions take multiple inputs with different purpose. Note how:
 rep(3,4)
 # produces a different output from
 rep(4,3)
 # If you can't remember in which order you have to input the arguments of a function, or if you just want to learn what a function does, you can type in ? followed by the function name in the console:
 ?rep
 
+rep_len(4,5)
 # Each argument has a name. By explicitly referring to these names when calling the function, we can avoid  any problems with order. For example:
 rep(x=3, times=4)
 rep(times=4, x=3)
@@ -56,7 +54,7 @@ rep(times=4, x=3)
 # Functions are one example of OBJECTS, which are stored within the main (global) ENVIRONMENT of the console. We can create new objects by using the 'assign' operator:
 
 x <- 4
-
+x=4
 # You can now see in the 'Environment' tab below that the object 'x'  is stored with the value 4.
 
 x*5
@@ -86,6 +84,7 @@ class (y)
 
 Salaam -> y
 
+# One final very important class of object is the 'logical' class, a.k.a. Boolean. 
 
 # One final very important class of object is the 'logical' class, a.k.a. Boolean. 
 # Boolean objects can take one of two values
@@ -143,7 +142,6 @@ my.vector
 # You can even assign values to elements of a vector that don't exist yet, thus creating them. Try assigning the word 'example' to the (as yet non-existent) 5th element of my.vector.
 my.vector[5] <- 'example'
 my.vector
-
 # Instead of indices, you can select elements of a vector using a logical vector of the same length, e.g.
 
 my.vector[c(TRUE,TRUE,FALSE,FALSE,FALSE)]
@@ -163,7 +161,7 @@ my.vector == 'is'
 ### 2.1
 digits <- 0:10
 # Using the least amount of code possible, write a line of code that returns only the odd values of the digits object.
-
+digits[digits%%2==1]
 # Another important logical operator is the %in% operator. It tells you if the elements on the left are found in the elements on the right. E.G.
 group1 <- c('Arthur', 'Fatima', 'Suleiman', 'Marco')
 group2 <- c('Marco','Maria', 'Victor','Fatima', 'Antonio')
@@ -172,11 +170,10 @@ group1 %in% group2
 ## 2.2 
 # intersect is a function which returns the elements that all of its arguments have in common. For example:
 intersect(group1,group2)
-
 # Write a line of code that replicates this output using only group1, group2, square brackets, and logical operators.
-
 group1[group1 %in% group2]
-
+c(group1, group2)
+c(group1[2], group2[1])
 ####################################
 ####     Writing functions      ####
 ####################################
@@ -201,15 +198,17 @@ f2(8,9)
 f2(14,7)
 
 ### 3.1 What is the purpose of function f2? Write in comments below.
-
-# f2 tells us whether one number is a multiple of another
+#f2 tells us whether one number is the multiple of another.
 
 ### 3.2
 # Based on the definition of the mean from today's lecture, write a function that calculates the mean of all of the elements of a vector. assign it to the object my.mean. You will find the functions 'sum' and 'length' useful here.
+ex.vector
+my.mean <- function(x){
+  sum(x)/length(x)
+}
+
 
 # compare your function to the native function in R. Does it produce the same results?
-
-my.mean <- function(x) sum(x)/length(x) 
 
 my.mean(ex.vector)
 mean(ex.vector)
@@ -236,20 +235,35 @@ sample(1:10, 20, replace = TRUE)
 # HINT: one way to do this is to start by writing a function for a single 6-sided die, then create a new function 
 # that repeats the first function twice and adds up the result.
 
-set.seed(105)
-hist(cast.2.dice(10), breaks = 1:12, main = "Histogram of 10 Rolls")
-hist(cast.2.dice(50), breaks = 1:12, main = "Histogram of 50 Rolls")
-hist(cast.2.dice(100), breaks = 1:12, main = "Histogram of 100 Rolls")
-hist(cast.2.dice(1000), breaks = 1:12, main = "Histogram of 1000 Rolls")
-hist(cast.2.dice(10000), breaks = 1:12, main = "Histogram of 10000 Rolls")
+cast.die <- function(x){
+  sample(1:6,x,replace = TRUE)
+}
+
+#cast.die(5)
 
 
+cast.2.dice <- function(x){
+  one.die <- cast.die(x)
+  second.die <- cast.die(x)
+  two.dice <- one.die + second.die
+  print(one.die)
+  print(second.die)
+  return(two.dice)
+}
+
+cast.2.dice(20)
 ### 4.2
-#
+# Using the function hist, create histograms of the results of double dice rolls when you roll them 10 times, 
 #then 50, then 100, then 1000, then 10000. Use breaks=1:12 as an argument within the hist function. 
 # What do you notice? Write it in comments below your code.
 
-
+set.seed(105) #to get the same answer as the instructor
+hist(cast.2.dice(10), breaks=1:12)
+hist(cast.2.dice(50), breaks=1:12)
+hist(cast.2.dice(100), breaks=1:12)
+hist(cast.2.dice(1000), breaks=1:12)
+hist(cast.2.dice(10000), breaks=1:12)
+#We get distribution different, the bigger the sample size the more consistently. Break determines what the x-axis will look like
 # Another way to generate randomness is to sample from a pdf, which is a continuous distribution. 
 # The simplest pdf is the uniform function. The uniform function is a flat line bounded between 2 numbers. 
 # Because it is flat, the probability of drawing a sample from any interval of given width between the two bounds 
@@ -261,16 +275,19 @@ runif(5,0,1)
 
 ### 4.3
 # Using runif, write a function that returns TRUE 22% of the time and FALSE 78% of the time
-
 generate.bool.22 <- function(x){
-  s <- runif(x,0,1)
-  return(s<0.22)
+    s <- runif(x,0,1)
+    return(s<0.22)
 }
 
-o1 <-  generate.bool.22(10)
+o1 <- generate.bool.22(10)
 hist(as.numeric(o1))
-o2 <- generate.bool.22(10000000)
+
+o2 <- generate.bool.22(1000)
 hist(as.numeric(o2))
+
+o3 <- generate.bool.22(1000000)
+hist(as.numeric(o3))
 ### 4.4
 # Based on today's lecture about pdfs, what is the probability density for a uniform pdf bounded between 
 # 0 and 1 associated with all values of x between 0 and 1? Explain why.
@@ -290,9 +307,13 @@ dunif(0.5,0,1)
 dunif(2,0,1)
 dunif(0.2,0,0.5)
 dunif(1.3,0,2)
-
+dunif(0.8,0,1)
+dunif(0.1,0,1)
+dunif(1,0,1)
+dunif(1.01,0,1)
 # Based on the results of this code and your answers above, what can you conclude about the purpose of the dunif function?
 
-x.values <- seq(0, 1, 0.01)
-y.values <- dunif(x.values, 0, 1)
-plot(x.values, y.values, type = 'l', xlab = "x", ylab = "Density", main = "PDF of Uniform Distribution")
+x.values <- seq(-5,+5,0.01)
+y.values <- dunif(x.values,0,1)
+
+plot(x.values, y.values, type='l', ylim=c(0,5)) #type means it should be line
