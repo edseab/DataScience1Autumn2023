@@ -242,7 +242,7 @@ binomial_distribute(10, 8, 0.7)
 # return value is 0.2334744
 
 # compare this to dbinom(8,10,0.7)
-# return valueis 0.2334744. The return values are same. This means the in-built function for calculating binomail distribution is dbinom(k,n,p)
+# return value is 0.2334744. The return values are same. This means the in-built function for calculating binomial distribution is dbinom(k,n,p)
 #where k in the number of successes whose probability we want to find, n is the number of trials and p is the known probability of success.
 
 ### PROBABILITY FUNCTIONS IN R 
@@ -266,6 +266,7 @@ binomial_distribute(10, 8, 0.7)
 # Using rbinom(), simulate 100,000 universes where the aliens sent out 20 probes to Earth
 # and calculate in what percentage of these universes the number of probes signalling Water is 11 or fewer
 # What do you conclude to the astronomer?
+
 
 # pbinom, pnorm, punif, pbeta, .... all calculate the area under the curve of a given distribution,
 # in the LOWER tail (if lower.tail=TRUE, by default), or the UPPER tail (if you set it to false)
