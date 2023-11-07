@@ -8,7 +8,7 @@
 ###################################
 ###################################
 
-## Welcome to lab #4. Today we will start with an introduction to base R plotting and ggplot2
+## Welcome to lab number 4. Today we will start with an introduction to base R plotting and ggplot2
 
 ########################
 ####    Factors     ####
