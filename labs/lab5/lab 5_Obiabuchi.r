@@ -209,7 +209,7 @@ summarise(mn_sepal_length = mean(Sepal.Length),
           sd_petal_area = sd(Petal.Area),
           n = n()) %>%
           arrange(desc(mn_petal_area)) -> final_iris_db
-
+view(final_iris_db)
 #######################
 ####    ggplot2    ####
 #######################
