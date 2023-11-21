@@ -2,12 +2,12 @@
 ###################################
 ########                   ########
 ########   Data Science 3  ########
-########       Lab 6       ######## 
+########       Lab 6 -     ######## 
 ########  21st Nov. 2023    ########
 ########                   ########
 ###################################
 ###################################
-
+#Samuel Kobina Gyasi
 
 # Welcome to lab number 6. Today we'll be learning a few more 
 # R/general programming concepts before moving onto lecture examples
