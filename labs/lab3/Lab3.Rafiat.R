@@ -1,0 +1,63 @@
+###################################
+###################################
+########                   ########
+########   Data Science 2  ########
+########       Lab 3       ######## 
+########  24th Oct. 2023   ########
+########                   ########a
+###################################
+###################################
+
+pnorm(194,170,15 lower.tail = F)
+# Some excercise to practice what we learned this week.
+
+# 1. In the country of Examplia, it is known that people's heights are precisely normally distributed,
+#    with a mean of 170cm and a standard deviation of 15cm.
+#    Amir is 194cm tall. In what height percentile of the population is he? Round to the nearest integer number.
+#    (Remember: 1st percentile = shortest 1 percent of the population, 99th percentile: tallest 1 percent of the population)
+pnorm(194,170,15)
+1-pnorm(194,170,15) 
+pnorm(145,175,20)  #class exercise/quiz
+
+# pnorm(145,175, 20, lower.tail = TRUE)
+# round(pnorm(145, 175, 120 * 100)
+# pnorm(145, 175, 20)
+# pnorm(-1.5, 0, 1)
+# pnorm(2.5)
+# pnorm(1)
+# 1-pnorm(1)
+# pnorm(1.5, lower.tail = F) #Class exercise
+# 1-pnorm(1.5)
+# pnorm(1.96, lower.tail = F) + pnorm(-1.96, lower.tail = T)
+# 2. A group of Examplians start a club called the Tall and Short Club (TSC), where you have to be in the tallest 2.5% of the population 
+#    OR the bottom 2.5% of the population in height to be let in. 
+#    How tall or how short do you have to be to be accepted into the TSC? Would Amir be accepted?
+
+qnorm(0.025, 170, 15) # Amir has to be in 141 short or 199cm tall)
+qnorm(0.025, 170, 15, lower.tail = F)
+
+# 3. In response to the Tall and Short club, another group of Examplians start the Average People's Club (APC), where you have to be
+#    within 0.1 standard deviations from the mean in height in order to get in.
+#    What is the range of heights acceptable to join the APC? What percentage of the total population is eligible to join?
+0.1 * 15 # 15 is the standard deviation and this gives 1.5
+170 + 1.5 = 171.5 #upper tail 
+170 - 1.5 = 168.5 #lower tail
+pnorm(171.5, 170, 15) - pnorm(168.5, 170, 15)
+# 0.08
+# 4. If we selected 10 Examplians at random from the population, what is the probability that none of them are eligible to join either
+#   the TSC or the APC? 
+TSC <- 0.025 + 0.025 
+TSC
+APC <- 0.08
+TSC + APC # gives 0.13
+dbinom(0, 10, 0.13) #or use these one  
+dbinom(10, 10, 0.87)
+
+# 5. What is the probability that exactly 2 are eligible to join the APC and the rest are not?
+
+dbinom(2, 10, 0.08)
+
+# 6. What is the probability that at least 3 of them are eligible to join the TSC?
+
+pbinom(3,10,0.05, lower.tail = F)
+1-pbinom(2,10,0.05)

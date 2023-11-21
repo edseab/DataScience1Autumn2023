@@ -54,7 +54,7 @@ total_revenue
 # We can now add this vector as a new column using the function cbind (column bind)
 
 star_wars_matrix <- cbind(star_wars_matrix, total_revenue)
-
+star_wars_matrix
 ### 1.2
 # Rename the 3rd element of the column names of star_wars_matrix to "Total revenue"
 
@@ -93,7 +93,6 @@ star_wars_matrix[2,3]
 # Write a line of code to extract the international revenue of the Phantom Menace (the 4th movie) using numbers to index the matrix
 
 star_wars_matrix[4,2]
-
 # Compare this to the following:
 star_wars_matrix["The Phantom Menace", "Total revenue"]
 
@@ -110,7 +109,9 @@ star_wars_matrix[4,]
 
 # Just like multiplying 2 vectors of the same length together will multiply each of the corresponding elements
 # the same will work with 2 matrices of the same dimensions
-
+star_wars_matrix
+star_wars_matrix[1:3,]
+star_wars_matrix[4:6,]
 star_wars_matrix[1:3,] * star_wars_matrix[4:6,] 
 
 # But for matrix multiplication (the kind used in linear algebra), you must use %*%
@@ -163,7 +164,7 @@ unlist(my_list)
 
 data("iris")
 class(iris)
-
+iris
 # just like with functions, we can learn about these in-built data frames with the ? sign
 ?iris
 
@@ -240,7 +241,8 @@ p_W_k <- function(p,N,k) {
 
 p_W_k(0.7,10,8)
 # compare this to dbinom(8,10,0.7)
-
+dbinom(8,10,0.7)
+dbinom(1,3,0.7)
 ### PROBABILITY FUNCTIONS IN R 
 # dbinom, dnorm, dunif, dbeta, .... all of these functions calculate f(x) for any given x
 # for each of their relative distributions
@@ -263,9 +265,15 @@ p_W_k(0.7,10,8)
 # and calculate in what percentage of these universes the number of probes signalling Water is 11 or fewer
 # What do you conclude to the astronomer?
 
+# set.seed(123)
+# sims <- rbinom(100000,20,0.7)
+# pbinom(11,20,0.7)
 set.seed(123)
-sims <- rbinom(100000,20,0.7)
-pbinom(11,20,0.7)
+sims<-rbinom(100000, 20, 0.7)
+sum(sims<=11)
+sum(sims<=11)/100000
+pbinom(11, 20, 0.7)
+?pbinom
 
 # pbinom, pnorm, punif, pbeta, .... all calculate the area under the curve of a given distribution,
 # in the LOWER tail (if lower.tail=TRUE, by default), or the UPPER tail (if you set it to false)
@@ -276,7 +284,6 @@ pnorm(195, 175, 10, lower.tail=FALSE)
 1 - pnorm(195, 175, 10)
 1-pbinom(9,10,0.5)
 pbinom(4, 10, 0.5, lower.tail=FALSE)
-
 
 
 # They would be in the upper 2.3 percentile
@@ -295,9 +302,11 @@ qnorm(0.1,175, 10, lower.tail=FALSE)
 
 ### 4.3
 # Let's compare the box office returns of the og and prequel trilogies
+star_wars_matrix
 og_trilogy <- star_wars_matrix[1:3,3]
+og_trilogy
 preq_trilogy <- star_wars_matrix[4:6,3]
-
+preq_trilogy
 # Write a Welch's t-test function for any two samples x1 and x2
 my_t <- function(x1,x2){
   # first, extract the means, variances and Ns of the two samples and save thel to
@@ -335,7 +344,6 @@ my_t <- function(x1,x2){
 # compare this function to the in-built t-test
 men <- c(190, 192, 190, 175, 173, 171, 170, 187, 169, 171, 176, 173)
 women <- c(163, 169, 165, 155, 159, 164, 164)
-
 my_t(men, women)
 t.test(men, women)
 

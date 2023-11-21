@@ -58,7 +58,7 @@ rep(times=4, x=3)
 # Functions are one example of OBJECTS, which are stored within the main (global) ENVIRONMENT of the console. We can create new objects by using the 'assign' operator:
 
 x <- 4
-
+x
 # You can now see in the 'Environment' tab below that the object 'x'  is stored with the value 4.
 
 x*5
@@ -86,8 +86,8 @@ class (y)
 
 # If we forget to use quote marks R will search for a stored object with that name and return an error if it doesn't find it:
 
-Rafiat -> y
-
+"Rafiat" -> y
+y
 
 # One final very important class of object is the 'logical' class, a.k.a. Boolean. 
 # Boolean objects can take one of two values

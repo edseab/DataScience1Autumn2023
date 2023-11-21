@@ -49,9 +49,12 @@ colnames(star_wars_matrix) <- c("US revenue", "International revenue")
 # Use one of the above functions to calculate the total revenue for each movie (the sum of the US and international revenue)
 # and save it in an object called total_revenue
 
+total_revenue <- rowSums(star_wars_matrix)
+total_revenue
 # We can now add this vector as a new column using the function cbind (column bind)
 
 star_wars_matrix <- cbind(star_wars_matrix, total_revenue)
+star_wars_matrix
 
 ### 1.2
 # Rename the 3rd element of the column names of star_wars_matrix to "Total revenue"
@@ -188,8 +191,17 @@ sample(1:100,1)
 # As a result, we can set our own seed and generate our own randomness:
 
 set.seed(123)
-sample(1:100,1)
+roll_one <- function(x) {
+   return (sample(1:6,x))
 
+}
+roll_one(2)
+
+roll_two <- function(x) {
+  return(roll_one(x) + roll_one(x))
+}
+roll_two(2)
+hist(roll_two(10), breaks = 1:12)
 # You got 31, right? Run it again and see:
 
 set.seed(123)
