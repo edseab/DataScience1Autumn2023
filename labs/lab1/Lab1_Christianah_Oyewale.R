@@ -234,12 +234,9 @@ sample(1:10, 20, replace = TRUE)
 # and the output is a vector of length x, where each element corresponds to the sum of the two sides of the dice.
 # HINT: one way to do this is to start by writing a function for a single 6-sided die, then create a new function 
 # that repeats the first function twice and adds up the result.
-
 cast.die <- function(x){
   sample(1:6,x,replace = TRUE)
 }
-
-#cast.die(5)
 
 
 cast.2.dice <- function(x){
@@ -250,6 +247,7 @@ cast.2.dice <- function(x){
   print(second.die)
   return(two.dice)
 }
+
 
 cast.2.dice(20)
 ### 4.2
@@ -263,7 +261,6 @@ hist(cast.2.dice(50), breaks=1:12)
 hist(cast.2.dice(100), breaks=1:12)
 hist(cast.2.dice(1000), breaks=1:12)
 hist(cast.2.dice(10000), breaks=1:12)
-#We get distribution different, the bigger the sample size the more consistently. Break determines what the x-axis will look like
 # Another way to generate randomness is to sample from a pdf, which is a continuous distribution. 
 # The simplest pdf is the uniform function. The uniform function is a flat line bounded between 2 numbers. 
 # Because it is flat, the probability of drawing a sample from any interval of given width between the two bounds 
@@ -288,6 +285,7 @@ hist(as.numeric(o2))
 
 o3 <- generate.bool.22(1000000)
 hist(as.numeric(o3))
+
 ### 4.4
 # Based on today's lecture about pdfs, what is the probability density for a uniform pdf bounded between 
 # 0 and 1 associated with all values of x between 0 and 1? Explain why.
@@ -307,13 +305,5 @@ dunif(0.5,0,1)
 dunif(2,0,1)
 dunif(0.2,0,0.5)
 dunif(1.3,0,2)
-dunif(0.8,0,1)
-dunif(0.1,0,1)
-dunif(1,0,1)
-dunif(1.01,0,1)
+
 # Based on the results of this code and your answers above, what can you conclude about the purpose of the dunif function?
-
-x.values <- seq(-5,+5,0.01)
-y.values <- dunif(x.values,0,1)
-
-plot(x.values, y.values, type='l', ylim=c(0,5)) #type means it should be line
