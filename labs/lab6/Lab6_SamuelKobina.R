@@ -131,16 +131,31 @@ summary(model)
 # What does the Estimate for the (Intercept) number represent?
 plot(mtcars$wt,mtcars$mpg ,pch=20)
 abline(model)
+#Intercept:It is the predicted value fuel efficiency of a car that weighs 0lbs
+
 ### 5.2
 # What does the Estimate for the mtcars$wt number represent?
+#Answer
+#It is the predicted change in fuel efficiency associated with 1 unit change in weight(1000lbs change in weights)
 
 ### 5.3 
 # Is the relationship between these two variables positive or negative? Why do you think that might be?
+#Answer :the relationship is negative ,because the slope is negative .The bigger the car the more fuel it takes to move.
+#bigger cars use more energy
 
 ### 5.4 What is the predicted average efficiency in miles per gallon of a 4000 pound (2000kg) car?
+37.2851+(-5.3445)*4  #=15.9071
 
 # Let's transform the independent variable:
 mtcars$wt_centred <- mtcars$wt - mean(mtcars$wt)
+
+mean(mtcars$wt)
+var(mtcars$wt)
+
+
+mean(mtcars$wt_centered)
+var(mtcars$wt_centered)
+
 
 ### 5.5
 # compare the mean and variance of the new variable with the untransformed variable. What do you notice?
@@ -149,6 +164,12 @@ mtcars$wt_centred <- mtcars$wt - mean(mtcars$wt)
 # Run a new regression with new independent variable
 # What do you notice about the estimates?
 # What is the interpretation of the (Intercept) estimate in this regression?
+
+model2 <- lm(mtcars$mpg ~ mtcars$wt_centered)
+summary(model2)
+
+#The slope stays the same but the intercept changes
+#The new intercepts represents the predicted fuel efficiency for a car of average weight
 
 ### 5.7
 # Run the following code:
