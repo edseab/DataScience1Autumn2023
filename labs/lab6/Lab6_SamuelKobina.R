@@ -129,6 +129,8 @@ model <- lm(mtcars$mpg ~ mtcars$wt)
 summary(model)
 ### 5.1
 # What does the Estimate for the (Intercept) number represent?
+plot(mtcars$wt,mtcars$mpg ,pch=20)
+abline(model)
 ### 5.2
 # What does the Estimate for the mtcars$wt number represent?
 
