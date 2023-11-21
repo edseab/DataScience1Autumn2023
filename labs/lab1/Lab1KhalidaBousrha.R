@@ -241,7 +241,13 @@ roll_two_dice <- function(x) {
   return(results)
 }
 
-
+dicef <- function(x) {
+  rolls <- replicate(x, sample(1:6, 1) + sample(1:6, 1))
+  return(rolls)
+}
+roll_two_dice(3)
+dicef(3)
+set.seed(123)
 ### 4.2
 # Using the function hist, create histograms of the results of double dice rolls when you roll them 10 times, 
 #then 50, then 100, then 1000, then 10000. Use breaks=1:12 as an argument within the hist function. 
@@ -308,6 +314,10 @@ dunif(0.2,0,0.5)
 dunif(1.3,0,2)
 
 x.values <- seq(-5,+5,0.01)
+seq(1,10,by=2)
+seq(0, 1, length.out = 5)
+seq(along.with = c(10, 20, 30, 40, 50))
+
 y.values <- dunif(x.values,0,1)
 plot(x.values , y.values, type='l', ylim=c(0,5))
 # Based on the results of this code and your answers above, what can you conclude about the purpose of the dunif function?

@@ -21,7 +21,7 @@
 # It signifies: take the element on the left and use it as the first argument in the function on the right
 
 # Example
-
+set.seed(123)
 hist(rnorm(200), breaks=seq(-4,4,0.5))
 # is equivalent to
 
@@ -34,11 +34,26 @@ rnorm(200) |> hist(breaks=seq(-4,4,0.5))
 ### 1.1 Rewrite the following expression using pipes:
 set.seed(123)
 round(sqrt(log(runif(10,1,10))),2)
-
+10 |> runif(1,10) |> log() |> sqrt() |> round(2) 
 
               
 # Pipes were initially created in a package called magrittr, part of the 'tidyverse' group of packages
 
+########################
+####    IF\ELSE     ####
+########################
+
+x <- sample(0:10,1)
+if (x>5){
+  print("high")
+  y<- x*2
+  print(c(x,y))
+}else {
+   print("low")
+}
+
+
+ifelse(x>5,print("HIGH"),print("low"))
 
 ########################
 ####    Packages    ####
@@ -90,17 +105,25 @@ runif(10,1,10) %>%
 # Instead we use the functions 'select', to choose specific columns in a data frame, and 'filter', to choose specific rows.
 
 data(mtcars)
+view(mtcars)
 
 # so instead of:
 mtcars[mtcars$cyl == 6, 1:5]
 # we would write:
 mtcars %>%
-  filter(cyl==6) %>%
-  select(1:5)
+  filter(cyl==6) %>%  #rows
+  select(1:5)         #colomes
+
+select(filter(mtcars,(cyl==6)),1:5)
 
 ### 2.1
 # using select() and filter(), create a new database of cars that are over 4000 lbs in weight, retaining only the wt and mpg columns. Save this database to an object called 'df'.
 
+df <- mtcars%>%
+      filter(wt > 4) %>%
+      select(1, 6)
+     
+df
 
 # After you have selected the rows and columns you are interested in, you can 
 # change the order of the rows using arrange
@@ -154,7 +177,7 @@ mtcars %>%
   ) %>%
   arrange(
     c('high','medium','low')
-  )
+  ) %>% View()
 
 # You can group by multiple variables
 
@@ -164,14 +187,28 @@ mtcars %>%
     wt_kg=mean(wt),
     n=length(hp)
   )
-
+ungroup()
 # After grouping a tibble, remember to ungroup it later using ungroup(), or you may have issues down the line.
 
 # 3.1
 data(iris)
 # using the dplyr functions do the following:
 # create a new column called Petal.Area which is the product of the petal width and petal length columns.
+
+iris <- iris %>% mutate(Petal.Area = Petal.Width*Petal.Length )
+
 # For each of the different species of iris, present the mean and standard deviation for the sepal length, sepal width, and petal area, as well as the number of samples (n)
+
+iris %>% group_by(Species) %>% summarise(
+ mnSL= mean(Sepal.Length),
+ mnSW = mean(Sepal.Width),
+ mnPA = mean(Petal.Area),
+ sdSL= sd(Sepal.Length),
+ sdSW = sd(Sepal.Width),
+ sdPA = sd(Petal.Area),
+ n=n()) %>% arrange(desc(mnPA)) -> final_iris_db
+
+View(final_iris_db)
 # Order this database in decreasing order of average petal length.
 
 #######################

@@ -41,6 +41,6 @@ InTeam =  (pnorm(171.5, 170, 15)-pnorm(168.5, 170, 15)) +(0.025*2)
 dbinom(0, size = 10, prob = InTeam ) 
 # 5. What is the probability that exactly 2 are eligible to join the APC and the rest are not?
 dbinom(2, size = 10, prob =  (pnorm(171.5, 170, 15)-pnorm(168.5, 170, 15))) 
-
+rbinom(10, size = 5, prob = 0.5)
 # 6. What is the probability that at least 3 of them are eligible to join the TSC?
 pbinom(2, size = 10, prob = (0.025*2), lower.tail = F ) 
