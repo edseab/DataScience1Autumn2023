@@ -139,7 +139,7 @@ df <- df %>% mutate(wt_kg=wt*453.592,
 
 # And we can use ifelse() within mutate()
 mtcars <- mtcars %>%
-            mutate(wt_class = ifelse(wt>=4, 'Oversized','Standard'))
+            mutate(transmission = ifelse(am==4, 'Automatic','Manual'))
 
 # We can even do a sultiple ifelse statment using case_when()
 mtcars <- mtcars %>%
@@ -168,7 +168,7 @@ mtcars %>% group_by(efficiency)
 # Tibbles are basically tidyverse dataframes, that display information slightly differently, and are a bit more particular about certain things like not wanting empty cells.
 # Tibbles can also be grouped, which allows for further operations down the line
 # For example:
-
+mtcars$mpg
 mtcars %>% 
   group_by(efficiency) %>%
   summarise(
