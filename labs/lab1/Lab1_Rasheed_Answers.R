@@ -32,26 +32,12 @@
 
 # FUNCTIONS are commands that take in inputs and produce outputs. They mostly take in the inputs in brackets, like this:
 sqrt(25)
-
 exp(3)
 
 # Often, functions take multiple inputs with different purposes. Note how:
 rep(3,4)
-
 # produces a different output from
-
 rep(4,3)
-
-rep("olomi",10)
-rep("odun",20)
-rep(x=4, times=2)
-rep(times=2, x=4)
-x<-4
-x*5
-class(x)
-class('a')
-
-rep_len(3,4)
 # If you can't remember in which order you have to input the arguments of a function, or if you just want to learn what a function does, you can type in ? followed by the function name in the console:
 ?rep
 
@@ -100,10 +86,7 @@ class (y)
 
 Salaam -> y
 
-TRUE
-FALSE
-TRUE&FALSE
-TRUE&TRUE
+
 # One final very important class of object is the 'logical' class, a.k.a. Boolean. 
 # Boolean objects can take one of two values
 
@@ -118,7 +101,6 @@ FALSE
 TRUE & TRUE
 TRUE & FALSE
 FALSE & FALSE
-
 
 TRUE | TRUE
 TRUE | FALSE
@@ -135,9 +117,8 @@ FALSE | FALSE
 # YOu will have noticed that the console has always returned a [1] in front of it's output so far. This is because R has considered all these objects to be 'vectors' (in Python, this is the same thing as an array). Vectors are objects that can contain multiple elements. For example:
 
 z <- 50:80
-
 z
-z[20]
+
 # The numbers in square brackets tell you the INDEX of the element to their right. The index is simply the position number of that element. You will notice that, unlike in Python, the first element of an object in R has the index number 1 and not 0. This is one of the most important syntactical differences between Python and R (if you think this is not a very important difference, you are correct. The two languages are very similar in syntax.)
 
 # Vectors can be created from singular elements using the function c(), which stands for combine or concatenate.
@@ -182,13 +163,11 @@ my.vector == 'is'
 
 ### 2.1
 digits <- 0:10
-digits
-digits(TRUE,FALSE)
-digits[digits%%2!=0]
-
 # Using the least amount of code possible, write a line of code that returns only the odd values of the digits object.
-1:10 %% 2 !=0
-1:10%%2
+digits[digits %% 2 == 1]
+# This can also be written as digits[digits %% 2 !=0] as tested below
+digits[digits %% 2 != 0]
+
 # Another important logical operator is the %in% operator. It tells you if the elements on the left are found in the elements on the right. E.G.
 group1 <- c('Arthur', 'Fatima', 'Suleiman', 'Marco')
 group2 <- c('Marco','Maria', 'Victor','Fatima', 'Antonio')
@@ -225,14 +204,9 @@ f2 <- function(x,y){
 f2(8,9)
 f2(14,7)
 
-mean <- function(x){
-  return sum(x)/length(x)
-}
-mean(c(2,2,3))
-mean(ex.vector)
 ### 3.1 What is the purpose of function f2? Write in comments below.
+#f2 tells us whether one number is a multiple of another
 
-# f2 tells us whether one number is a multiple of another
 
 ### 3.2
 # Based on the definition of the mean from today's lecture, write a function that calculates the mean of all of the elements of a vector. assign it to the object my.mean. You will find the functions 'sum' and 'length' useful here.
@@ -265,12 +239,24 @@ sample(1:10, 20, replace = TRUE)
 # and the output is a vector of length x, where each element corresponds to the sum of the two sides of the dice.
 # HINT: one way to do this is to start by writing a function for a single 6-sided die, then create a new function 
 # that repeats the first function twice and adds up the result.
-
+cast.die <- function(x){
+    sample(1:6, x, replace = TRUE)
+}
+cast.2.dice <- function(x) {
+    return(cast.die(x) + cast.die(x))
+}
+cast.2.dice(20)
 ### 4.2
 # Using the function hist, create histograms of the results of double dice rolls when you roll them 10 times, 
 #then 50, then 100, then 1000, then 10000. Use breaks=1:12 as an argument within the hist function. 
 # What do you notice? Write it in comments below your code.
-
+set.seed(105)
+hist(cast.2.dice(10), breaks = 1:12)
+hist(cast.2.dice(50), breaks = 1:12)
+hist(cast.2.dice(100), breaks = 1:12)
+hist(cast.2.dice(1000), breaks = 1:12)
+hist(cast.2.dice(10000), breaks = 1:12)
+# i observed that the more you increase the number of times you roll the dice the more distributed the data
 
 # Another way to generate randomness is to sample from a pdf, which is a continuous distribution. 
 # The simplest pdf is the uniform function. The uniform function is a flat line bounded between 2 numbers. 
@@ -284,18 +270,32 @@ runif(5,0,1)
 ### 4.3
 # Using runif, write a function that returns TRUE 22% of the time and FALSE 78% of the time
 
+bool.22 <- function(x){
+    s<- runif(x, 0, 1)
+    return(s<0.22)
+}
+o1<-bool.22(10)
+o1
+hist(as.numeric(o1))
+o2<-bool.22(1000000)
+hist(as.numeric(o2))
+
 ### 4.4
 # Based on today's lecture about pdfs, what is the probability density for a uniform pdf bounded between 
 # 0 and 1 associated with all values of x between 0 and 1? Explain why.
+# The probability density is 1, because the area under the curve of a probability function is always equal to 1
 
 ### 4.5
 # Similarly, what is the probability density for a uniform pdf bounded between 5 and 6 associated with all values of x between 5 and 6?
+# The probability density is 1. 
 
 ### 4.6
 # What is the probability density for a uniform pdf bounded between 0 and 0.5 associated with all values of x between 0 and 0.5?
+#  The probability density is 2
 
 ### 4.7
 # What is the probability density for a uniform pdf bounded between 0 and 2 associated with all values of x between 0 and 2?
+# The probability density is 1/2
 
 ### 4.8
 # run the following code:
@@ -305,3 +305,4 @@ dunif(0.2,0,0.5)
 dunif(1.3,0,2)
 
 # Based on the results of this code and your answers above, what can you conclude about the purpose of the dunif function?
+#To calculate the probability density function
