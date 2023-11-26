@@ -29,7 +29,6 @@
 # R contains a number of inbuilt datasets
 # To see a list of them, run
 data()
-
 # To load one into your environment, run for example
 data(mtcars)
 
@@ -49,8 +48,10 @@ plot(mtcars$wt, mtcars$mpg)
 plot(mtcars$mpg ~ mtcars$wt)
 
 # You can change the shape of the points in a scatterplot with the 'pch' argument
-plot(mtcars$wt, mtcars$mpg, pch = 20)
+plot(mtcars$wt, mtcars$mpg, pch = 8)
 # There are 25 preset values for the scatterplot points. To see them all run:
+
+png(height = 450, width = 450, "C:/Users/user/desktop/plot.png")
 plot(1:25, rep(1, 25), pch = 1:25)
 
 # You can also put in any symbol you like in quote marks:
@@ -160,3 +161,16 @@ dev.off()
 #########################
 ####    EXERCISES    ####
 #########################
+
+
+
+example <- c("a", "b", "c")
+ex_factor <- as.factor(example)
+c(ex_factor, "d")
+c(ex_factor, as.factor("d"))
+c(ex_factor, as.factor("a"))
+
+2 * pnorm(1.5, lower.tail = F)
+
+
+qnorm()
