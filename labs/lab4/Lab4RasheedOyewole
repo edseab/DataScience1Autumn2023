@@ -40,13 +40,14 @@ data(mtcars)
 # Base R has a lot of good functions for plotting, and can be very powerful.
 
 # run the following:
+dev.off()
 example("plot")
 # to get a series of examples of things you can do with the plot() function
 
 # Plot() is the most basic function, and with no arguments it creates a scatterplot.
 # it can either take an x variable and a y variable as its 2 first arguments, or it can take a formula
 plot(mtcars$wt,mtcars$mpg)
-plot(mtcars$mpg~mtcars$wt)
+plot(mtcars$mpg ~ mtcars$wt)
 
 # You can change the shape of the points in a scatterplot with the 'pch' argument
 plot(mtcars$wt,mtcars$mpg, pch=20)
@@ -85,6 +86,8 @@ plot(dnorm(seq(-4,4,0.2)),type='o', col='#6D1ACF')
 
 # For turning frequencies into histograms or density plots,
 # use hist() and density() 
+hist()(mtcars$wt)
+density()
 
 # For barplots and boxplots, we use barplot() and boxplot()
 
@@ -101,7 +104,7 @@ plot(mtcars$wt,mtcars$mpg, pch=20, ylim = c(0,40), xlim = c(0,7),
      abline(v=0,h=0,lm(mpg~wt,data=mtcars)))
 
 # Other plots can be made using barplot(), 
-
+barplot(mtcars$mpg)
 
 #######################
 ####    Devices    ####
@@ -109,6 +112,7 @@ plot(mtcars$wt,mtcars$mpg, pch=20, ylim = c(0,40), xlim = c(0,7),
 
 # When you create a plot, it gets stored to a graph device. This gets opened automatically when you plot, and in Rstudio is displayed on one of the panes.
 # You can also open a graphics device manually using quartz() on Mac and Linux and windows() on Windows
+windows()
 
 # The par() function sets the graphical parameters for the device.
 # You can use it to set the margins of the graph (in inches) using mar
