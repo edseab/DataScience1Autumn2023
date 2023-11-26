@@ -8,7 +8,7 @@
 ###################################
 ###################################
 
-
+?qbinom()
 # Some excercise to practice what we learned this week.
 
 # 1. In the country of Examplia, it is known that people's heights are precisely normally distributed,
@@ -21,7 +21,7 @@
 mean <- 170
 sd <- 15
 
-
+# dbinom(7, 10, 0.6)
 prod_density <- pnorm(194, mean, sd)
 round_prod_density <- round(prod_density * 100)
 round_prod_density
@@ -79,14 +79,24 @@ for_ten_examplians <- non_eligible_for_APC_and_TSC^10
 for_ten_examplians
 
 
+dbinom(10, 10, 0.87)
+dbinom(0, 10, 0.13)
 
 
 # 5. What is the probability that exactly 2 are eligible to join the APC and the rest are not?
 
-probability_three_apc <- dbinom(2, 10, 0.8)
+probability_three_apc <- dbinom(2, 10, 0.08)
 
 
 # 6. What is the probability that at least 3 of them are eligible to join the TSC?
 
-probability_three_tsc <- 1 - pbinom(2, 10, 0.05)
+probability_three_tsc <- 1 - pbinom(3, 10, 0.05)
+
+
+
+# OR we can use
+# 1 - sum(dbinom(x=0:2, 10, 0.05))
+# sum(dbinom(x=3:10, 10, 0.05))
+
+
 probability_three_tsc

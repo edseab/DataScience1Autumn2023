@@ -2,7 +2,7 @@
 ###################################
 ########                   ########
 ########   Data Science 1  ########
-########       Lab 5       ######## 
+########       Lab 5       ########
 ########  07th Nov. 2023   ########
 ########                   ########
 ###################################
@@ -10,7 +10,23 @@
 
 ## Welcome to lab #5. Today will be an introduction to the tidyverse, specifically dplyr and ggplot2
 
+# IF/ELSE STATEMENT
+x <- sample(0:10, 1)
+x
+if (x <- sample(0:10, 1) > 5) {
+  print("High")
 
+  y <- x * 2
+  print(x(x, y))
+}
+
+# IFELSE()
+
+ifelse(sample(0:10, 1) > 5, print("HIGH"), print("LOW"))
+
+for (x in sample(1:6, 4, replace = TRUE)) {
+  print(x)
+}
 
 
 #####################
@@ -22,10 +38,13 @@
 
 # Example
 
-hist(rnorm(200), breaks=seq(-4,4,0.5))
+
+set.seed(123)
+hist(rnorm(200), breaks = seq(-4, 4, 0.5))
 # is equivalent to
 
-rnorm(200) |> hist(breaks=seq(-4,4,0.5))
+set.seed(123)
+rnorm(200) |> hist(breaks = seq(-4, 4, 0.5))
 
 # The purpose of the pipe is mostly aesthetic, in particular to avoid large numbers of parentheses when something needs to be transformed using multiple functions:
 
@@ -33,10 +52,20 @@ rnorm(200) |> hist(breaks=seq(-4,4,0.5))
 
 ### 1.1 Rewrite the following expression using pipes:
 set.seed(123)
-round(sqrt(log(runif(10,1,10))),2)
+round(sqrt(log(runif(10, 1, 10))), 2)
 
 
-              
+set.seed(123)
+10 |>
+  runif(1, 10) |>
+  log() |>
+  sqrt() |>
+  round(2)
+
+
+
+
+
 # Pipes were initially created in a package called magrittr, part of the 'tidyverse' group of packages
 
 
@@ -48,7 +77,7 @@ round(sqrt(log(runif(10,1,10))),2)
 
 # Here we will install tidyverse, which is not one but a series of packages written by the same group of people, which share a number of syntactical features
 
-install.packages('tidyverse')
+install.packages("tidyverse")
 
 # After you have installed tidyverse into your packages, you must also load it into your environment
 
@@ -68,11 +97,11 @@ library(tidyverse)
 # Often actually more verbose than base R (ie. requires more lines of code to do the same thing)
 # Using tidyverse is a matter of preference!
 
-# The pipe operator was originally introduced in the tidyverse package magrittr. 
+# The pipe operator was originally introduced in the tidyverse package magrittr.
 # The tidyverse pipe operator looks like this: %>%
 
 set.seed(123)
-runif(10,1,10) %>% 
+runif(10, 1, 10) %>%
   log() %>%
   sqrt() %>%
   round(2)
@@ -95,14 +124,23 @@ data(mtcars)
 mtcars[mtcars$cyl == 6, 1:5]
 # we would write:
 mtcars %>%
-  filter(cyl==6) %>%
+  filter(cyl == 6) %>%
   select(1:5)
+
+
+filter(select(mtcars, 1:5), cyl == 6)
+
 
 ### 2.1
 # using select() and filter(), create a new database of cars that are over 4000 lbs in weight, retaining only the wt and mpg columns. Save this database to an object called 'df'.
 
+df <- mtcars %>%
+  filter(wt > 4) %>%
+  select(1, 6)
 
-# After you have selected the rows and columns you are interested in, you can 
+df
+
+# After you have selected the rows and columns you are interested in, you can
 # change the order of the rows using arrange
 
 df %>% arrange(wt)
@@ -111,32 +149,41 @@ df %>% arrange(desc(wt))
 
 
 # To change variables, we can use mutate()
-df <- df %>% mutate(wt_kg=wt*453.592,
-                    km_per_l = mpg*1.60934/3.78541)
+df <- df %>% mutate(
+  wt_kg = wt * 453.592,
+  km_per_l = mpg * 1.60934 / 3.78541
+)
 
+df
 # And we can use ifelse() within mutate()
 mtcars <- mtcars %>%
-            mutate(wt_class = ifelse(wt>=4, 'Oversized','Standard'))
+  mutate(wt_class = ifelse(wt >= 4, "Oversized", "Standard"))
 
-# We can even do a sultiple ifelse statment using case_when()
+mtcars
+
+# We can even do a multiple ifelse statment using case_when()
 mtcars <- mtcars %>%
-            mutate(
-              efficiency = case_when(
-                mpg<=15 ~ 'low',
-                mpg>15 & mpg<=20 ~ 'medium',
-                mpg>20 ~ 'high'
-                ))
+  mutate(
+    efficiency = case_when(
+      mpg <= 15 ~ "low",
+      mpg > 15 & mpg <= 20 ~ "medium",
+      mpg > 20 ~ "high"
+    )
+  )
+mtcars
 
 # Next, summarise (or summarize) is a useful function which collapses a dataframe into a single row and can calculate summary statistics, eg:
 
-mtcars %>% 
+mtcars %>%
   summarise(
     mean_wt = mean(wt),
     sd_wt = sd(wt),
     n = length(mpg)
-  )
+  ) -> summarise
 
-# We can also use summarise to collapse a data frame not into one single row, but into as many rows as we have groups of interest. 
+summarise
+
+# We can also use summarise to collapse a data frame not into one single row, but into as many rows as we have groups of interest.
 # To do this, first we need to use group_by()
 
 mtcars %>% group_by(efficiency)
@@ -146,24 +193,30 @@ mtcars %>% group_by(efficiency)
 # Tibbles can also be grouped, which allows for further operations down the line
 # For example:
 
-mtcars %>% 
+mtcars %>%
   group_by(efficiency) %>%
   summarise(
-    wt_kg=mean(wt),
-    n=length(hp)
+    wt_kg = mean(wt),
+    n = length(hp)
   ) %>%
   arrange(
-    c('high','medium','low')
-  )
+    c("high", "medium", "low")
+  ) -> summary_tabel_efficiency
 
+View(summary_tabel_efficiency)
 # You can group by multiple variables
 
-mtcars %>% 
-  group_by(efficiency,cyl) %>%
+mtcars %>%
+  group_by(efficiency, cyl) %>%
   summarise(
-    wt_kg=mean(wt),
-    n=length(hp)
-  )
+    wt_kg = mean(wt),
+    n = length(hp),
+    median = median(wt),
+    mode = mode(hp)
+  ) %>%
+  View()
+
+?mode()
 
 # After grouping a tibble, remember to ungroup it later using ungroup(), or you may have issues down the line.
 
@@ -171,6 +224,23 @@ mtcars %>%
 data(iris)
 # using the dplyr functions do the following:
 # create a new column called Petal.Area which is the product of the petal width and petal length columns.
+View(iris)
+
+iris %>%
+  mutate(Petal.Area = Petal.Length * Petal.Width) %>%
+  group_by(Species) %>%
+  summarise(
+    mn_sepal_length = mean(Sepal.Length),
+    sd_sepal_length = sd(Sepal.Length),
+    mn_sepal_width = mean(Sepal.Width),
+    sd_sepal_width = sd(Sepal.Width), mn_petal_area = mean(Petal.Area),
+    sd_petal_area = sd(Petal.Area),
+    n = n()
+  ) %>%
+  arrange(desc(mn_petal_area)) -> final_iris_db
+View(final_iris_db)
+
+
 # For each of the different species of iris, present the mean and standard deviation for the sepal length, sepal width, and petal area, as well as the number of samples (n)
 # Order this database in decreasing order of average petal length.
 
@@ -185,7 +255,7 @@ data(iris)
 # The gold standard resource for learning ggplot2 is Hadley Wickham's 'ggplot2: Elegant graphics for data analysis'
 # which is available for FREE here: https://ggplot2-book.org/
 
-# I can provide no better introduction to ggplot2 than the 'First Steps' section of this book. 
+# I can provide no better introduction to ggplot2 than the 'First Steps' section of this book.
 
 # You can also find a cheat sheet here: https://rstudio.github.io/cheatsheets/html/data-visualization.html
 
@@ -203,5 +273,3 @@ data(iris)
 # Data standardization (scaling, centering, z-scoring)
 
 # Data manipulation and visualisation
-
-

@@ -335,7 +335,7 @@ hist(as.numeric(o1))
 
 ### 4.7
 # What is the probability density for a uniform pdf bounded between 0 and 2 associated with all values of x between 0 and 2?
-
+?punif()
 
 # since the area of the distribution is 1 and the width of horizontal axis representing the continuous variable is 1
 # For a uniform pdf bounded between 0 and 2 with all values of x between 0 and 2, the PDF is 0.5,
