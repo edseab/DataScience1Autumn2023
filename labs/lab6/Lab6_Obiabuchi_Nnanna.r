@@ -55,10 +55,18 @@ mtcars$powerful[mtcars$hp >= quantile(mtcars$hp, 0.75)] <-"high"
 
 mtcars$powerful
 
+#Cut
+mtcars$powerful<- cut(mtcars$hp, breaks= c(0,96.5, 180,1000), labels= c('low', 'medium'))
+mtcars$powerful
 
+mtcars$powerful<- cut(mtcars$hp, breaks= c(0,0.25, 0.75,1), labels= c('low', 'medium'))
+mtcars$powerful
 
+mtcars %>% mutate(powerful= case_when(hp <quantile(mtcars$hp,0.25)~'low',
+      hp< 96.5~'low', hp>= 96.5 & hp <= 180~'medium',
+       hp>180~'high'))->mtcars
 
-
+mtcars
 
 
 
