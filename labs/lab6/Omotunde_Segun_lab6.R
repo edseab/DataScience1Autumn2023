@@ -35,33 +35,6 @@ head(mtcars)
 # Using indexing (square brackets) and the & operator, write a line of code
 # that selects only the rows of mtcars with at least 6 cylinders (mtcars$cyl >= 6) and horsepower of at least 110 (mtcars$hp >= 110). Remember to include all the columns.
 
-
-d2 <- mtcars[mtcars$cyl >= 6 & mtcars$hp >= 110,]
-d2$newcolumn <- 0
-
-#Create a new categorical variable called 'powerful' that takes the value 'low' when the horsepower is in the bottom quartile,
-#'medium' when the horsepower is in the missle 2 quartiles, and high when the horsepower is in the top quartile.
-
-mtcars$powerful <- NA
-mtcars$powerful[mtcars$hp <= quantile(mtcars$hp, 0.25)] <-'low' 
-mtcars$powerful[mtcars$hp >= quantile(mtcars$hp, 0.25)& 
-mtcars$hp <= quantile(mtcars$hp,0.75) ] <-'medium'
-
-mtcars$powerful[mtcars$hp > quantile(mtcars$hp, 0.75)]<-'high'
-
-#another way
-
-mtcars$powerful <- cut(mtcars$hp, breaks= c(0, 96.5, 180, 1000), labels=c('low', 'medium', 'high'))
-mtcars$powerful <- cut(mtcars$hp, breaks= quantile(mtcars$hp, c(0,0.25, 0.75, 1)), labels= c('low','medium','high'))
-
-
-#We can also use mutate
-
-mtcars %>% mutate(powerful = case_when(hp <96.5 ~ 'low', hp>= 96.5 & hp <= 180 ~ 'medium', hp>180 ~ 'high')) <- mtcars
-
-mtcars <- mtcars [, colnames(mtcars)!='example']
-
-
 ### 1.2
 # Now select only those rows with either high efficiency (miles per gallon (mpg) of at least 25) or low weight (wt <= 2.5)
 
@@ -156,26 +129,20 @@ model <- lm(mtcars$mpg ~ mtcars$wt)
 summary(model)
 ### 5.1
 # What does the Estimate for the (Intercept) number represent?
-
-plot(mtcars$wt,mtcars$mpg, pch=20, xlim = c(-1, 6))
-abline(model)
-
-# It is the predicted fuel efficiency of a car that weighs 0 lbs
+plot(mtcars$mpg,mtcars$wt)#it represent predicted change efficiency associated with a 1 unit change in weight(1000lbs change in weights)
 
 ### 5.2
 # What does the Estimate for the mtcars$wt number represent?
+#it is negative because bigger cars use more energy
 
-# It is the predicted change in fuel efficiency associated with a 1 unit change in weight (1000lbs change in weight)
 
 ### 5.3 
 # Is the relationship between these two variables positive or negative? Why do you think that might be?
 
-# It is negative because bigger cars use more energy
-
 ### 5.4 What is the predicted average efficiency in miles per gallon of a 4000 pound (2000kg) car?
 
 37.2851 + (-5.3445)*4
-#  15.9071
+#15.9071
 
 # Let's transform the independent variable:
 mtcars$wt_centred <- mtcars$wt - mean(mtcars$wt)
@@ -187,13 +154,9 @@ mtcars$wt_centred <- mtcars$wt - mean(mtcars$wt)
 # Run a new regression with new independent variable
 # What do you notice about the estimates?
 # What is the interpretation of the (Intercept) estimate in this regression?
-
-model2 <- lm(mtcars$mpg ~ mtcars$wt_centred)
+model2<-lm(mtcars$mpg~mtcars$weight_centered)
 summary(model2)
-
-# The slope stays the same but the intercept changes
-
-# The new value of the intercept represents the predicted fuel efficiency for a car of average weight
+#the slope stays the same but the intercept changes
 
 ### 5.7
 # Run the following code:
@@ -208,6 +171,8 @@ x <- cbind(1,mtcars$wt)
 # (x'x)^(-1) * (x'y)
 # where ' means the transpose
 # Run the code you have written. What do you find?
+
+
 
 
 

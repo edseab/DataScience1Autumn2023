@@ -48,14 +48,15 @@ colnames(star_wars_matrix) <- c("US revenue", "International revenue")
 # Some important base R functions to know: colSums, rowSums, colMeans, rowMeans
 # Use one of the above functions to calculate the total revenue for each movie (the sum of the US and international revenue)
 # and save it in an object called total_revenue
-
+total_revenue <- rowSums(star_wars_matrix )
+total_revenue
 # We can now add this vector as a new column using the function cbind (column bind)
 
 star_wars_matrix <- cbind(star_wars_matrix, total_revenue)
-
+star_wars_matrix
 ### 1.2
 # Rename the 3rd element of the column names of star_wars_matrix to "Total revenue"
-
+colnames(star_wars_matrix) <- c("US revenue", "International revenue","Total revenue")
 # Now lets create vectors for the box office returns of the prequel trilogy
 
 phantom_menace <- c(474.5,552.5)
@@ -65,6 +66,14 @@ revenge_of_sith <- c(380.3, 468.5)
 ### 1.3
 # Turn these 3 vectors into a matrix, add a column for total revenue, 
 # and append them to star_wars_matrix using the function rbind (row bind)
+ p_matrix<- matrix(c(phantom_menace,
+                            attack_of_clones,
+                            revenge_of_sith), byrow = T, nrow = 3)
+
+p_matrix <- cbind(p_matrix, rowSums(p_matrix))
+
+row.names(p_matrix) <- c("The phantom Menance","Attack of the Colnes", "Revenge of the Sith")
+star_wars_matrix <- rbind(star_wars_matrix, p_matrix)
 
 # Matrices are understood by R to be both one-dimensional, because they are vectors folded onto themselves
 # into columns, but also 2 dimensional, because they have rows and columns. 
@@ -79,9 +88,9 @@ star_wars_matrix[3,1]
 
 ### 1.4 
 # Write a line of code to extract the international revenue of the Phantom Menace (the 4th movie) using numbers to index the matrix
-
+star_wars_matrix[4,2]
 # Compare this to the following:
-star_wars_matrix["The Phantom Menace", "Total revenue"]
+star_wars_matrix["The Phantom Menace", "Total revenue"] # this will use the column and row name to bring the object
 
 # This works because our matrix has row and column names.
 
@@ -126,7 +135,7 @@ my_list$boolean
 
 ### 2.1
 # Using the $ operator, replace the "matrix" element of my_list with the star_wars_matrix
-
+my_list$matrix <- star_wars_matrix
 # Finally, you can turn any list into a vector with unlist().
 unlist(my_list)
 
@@ -243,6 +252,7 @@ dbinom(8,10,0.7)
 # What do you conclude to the astronomer?
 set.seed(123)
 sims <- rbinom(100000,20,0.7)
+sum(sims<= 11)/100000
 pbinom(11,20,0.7)
 pbinom(9,10,0.5,lower.tail = F)
 # pbinom, pnorm, punif, pbeta, .... all calculate the area under the curve of a given distribution,
@@ -269,7 +279,8 @@ qnorm(0.1,175, 10, lower.tail=FALSE)
 # Let's compare the box office returns of the og and prequel trilogies
 og_trilogy <- star_wars_matrix[1:3,3]
 preq_trilogy <- star_wars_matrix[4:6,3]
-
+og_trilogy
+preq_trilogy
 # Write a Welch's t-test function for any two samples x1 and x2
 my_t <- function(x1,x2){
   # first, extract the means, variances and Ns of the two samples and save thel to
@@ -308,7 +319,6 @@ my_t <- function(x1,x2){
 
   return(list(t = t, df = df, p_value=p_value))
 }
-
 # compare this function to the in-built t-test
 men <- c(190,192,190,175,173,171,187,169,171,176,173)
 women <- c(163,169,165,155,159,164,164)
@@ -316,3 +326,4 @@ t.test(og_trilogy,preq_trilogy)
 my_t(og_trilogy,preq_trilogy)
 
 # One last question to ponder before next class: Why did we multiply the p-value by 2?
+

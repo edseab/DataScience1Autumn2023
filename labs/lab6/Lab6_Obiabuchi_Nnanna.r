@@ -32,39 +32,15 @@ xor(1==1 , 2==2)
 # mtcars is a database of cars with several variables such as horsepower, weight, number of cylinders etc.
 data(mtcars)
 head(mtcars)
+library('dplyr')
 # Using indexing (square brackets) and the & operator, write a line of code
 # that selects only the rows of mtcars with at least 6 cylinders (mtcars$cyl >= 6) and horsepower of at least 110 (mtcars$hp >= 110). Remember to include all the columns.
 
-
-d2 <- mtcars[mtcars$cyl >= 6 & mtcars$hp >= 110,]
-d2$newcolumn <- 0
-
-#Create a new categorical variable called 'powerful' that takes the value 'low' when the horsepower is in the bottom quartile,
-#'medium' when the horsepower is in the missle 2 quartiles, and high when the horsepower is in the top quartile.
-
-mtcars$powerful <- NA
-mtcars$powerful[mtcars$hp <= quantile(mtcars$hp, 0.25)] <-'low' 
-mtcars$powerful[mtcars$hp >= quantile(mtcars$hp, 0.25)& 
-mtcars$hp <= quantile(mtcars$hp,0.75) ] <-'medium'
-
-mtcars$powerful[mtcars$hp > quantile(mtcars$hp, 0.75)]<-'high'
-
-#another way
-
-mtcars$powerful <- cut(mtcars$hp, breaks= c(0, 96.5, 180, 1000), labels=c('low', 'medium', 'high'))
-mtcars$powerful <- cut(mtcars$hp, breaks= quantile(mtcars$hp, c(0,0.25, 0.75, 1)), labels= c('low','medium','high'))
-
-
-#We can also use mutate
-
-mtcars %>% mutate(powerful = case_when(hp <96.5 ~ 'low', hp>= 96.5 & hp <= 180 ~ 'medium', hp>180 ~ 'high')) <- mtcars
-
-mtcars <- mtcars [, colnames(mtcars)!='example']
-
-
+mtcars[mtcars$cyl >= 6 & mtcars$hp >= 110, ]
 ### 1.2
 # Now select only those rows with either high efficiency (miles per gallon (mpg) of at least 25) or low weight (wt <= 2.5)
-
+head(mtcars)
+mtcars[mtcars$mpg >= 25 & mtcars$wt <= 2.5, ]
 #############################
 ####    If statements    ####
 #############################
@@ -83,7 +59,16 @@ if(x-4==1){
 # The function should return a character vector of length n, consisting of 'Water' and 'Land', sampled with probability w. (so probability of sampling 'Water' is w)
 # If the p argument is not numeric, or if it is not between 0 and 1, the function should return the following message:
 # "Please input a probability between 0 and 1"
+<<<<<<< Updated upstream
 
+prob <- function(n, w) {
+  if (!is.numeric(w) || w < 0 || w > 1) {
+    return("Please input a probability between 0 and 1")
+  }
+
+=======
+prob <- function('Water', 'Land', 'sampled with probability w'){ for 'Water', 'Land', 'Land', 'sampled with probability w' in c(0:1), 'Land'/ }
+>>>>>>> Stashed changes
 
 # After the if statement we can put an else statement:
 if(x-4>1){
@@ -156,26 +141,13 @@ model <- lm(mtcars$mpg ~ mtcars$wt)
 summary(model)
 ### 5.1
 # What does the Estimate for the (Intercept) number represent?
-
-plot(mtcars$wt,mtcars$mpg, pch=20, xlim = c(-1, 6))
-abline(model)
-
-# It is the predicted fuel efficiency of a car that weighs 0 lbs
-
 ### 5.2
 # What does the Estimate for the mtcars$wt number represent?
-
-# It is the predicted change in fuel efficiency associated with a 1 unit change in weight (1000lbs change in weight)
 
 ### 5.3 
 # Is the relationship between these two variables positive or negative? Why do you think that might be?
 
-# It is negative because bigger cars use more energy
-
 ### 5.4 What is the predicted average efficiency in miles per gallon of a 4000 pound (2000kg) car?
-
-37.2851 + (-5.3445)*4
-#  15.9071
 
 # Let's transform the independent variable:
 mtcars$wt_centred <- mtcars$wt - mean(mtcars$wt)
@@ -187,13 +159,6 @@ mtcars$wt_centred <- mtcars$wt - mean(mtcars$wt)
 # Run a new regression with new independent variable
 # What do you notice about the estimates?
 # What is the interpretation of the (Intercept) estimate in this regression?
-
-model2 <- lm(mtcars$mpg ~ mtcars$wt_centred)
-summary(model2)
-
-# The slope stays the same but the intercept changes
-
-# The new value of the intercept represents the predicted fuel efficiency for a car of average weight
 
 ### 5.7
 # Run the following code:

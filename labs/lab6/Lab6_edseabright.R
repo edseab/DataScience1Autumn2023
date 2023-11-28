@@ -35,33 +35,6 @@ head(mtcars)
 # Using indexing (square brackets) and the & operator, write a line of code
 # that selects only the rows of mtcars with at least 6 cylinders (mtcars$cyl >= 6) and horsepower of at least 110 (mtcars$hp >= 110). Remember to include all the columns.
 
-
-d2 <- mtcars[mtcars$cyl >= 6 & mtcars$hp >= 110,]
-d2$newcolumn <- 0
-
-#Create a new categorical variable called 'powerful' that takes the value 'low' when the horsepower is in the bottom quartile,
-#'medium' when the horsepower is in the missle 2 quartiles, and high when the horsepower is in the top quartile.
-
-mtcars$powerful <- NA
-mtcars$powerful[mtcars$hp <= quantile(mtcars$hp, 0.25)] <-'low' 
-mtcars$powerful[mtcars$hp >= quantile(mtcars$hp, 0.25)& 
-mtcars$hp <= quantile(mtcars$hp,0.75) ] <-'medium'
-
-mtcars$powerful[mtcars$hp > quantile(mtcars$hp, 0.75)]<-'high'
-
-#another way
-
-mtcars$powerful <- cut(mtcars$hp, breaks= c(0, 96.5, 180, 1000), labels=c('low', 'medium', 'high'))
-mtcars$powerful <- cut(mtcars$hp, breaks= quantile(mtcars$hp, c(0,0.25, 0.75, 1)), labels= c('low','medium','high'))
-
-
-#We can also use mutate
-
-mtcars %>% mutate(powerful = case_when(hp <96.5 ~ 'low', hp>= 96.5 & hp <= 180 ~ 'medium', hp>180 ~ 'high')) <- mtcars
-
-mtcars <- mtcars [, colnames(mtcars)!='example']
-
-
 ### 1.2
 # Now select only those rows with either high efficiency (miles per gallon (mpg) of at least 25) or low weight (wt <= 2.5)
 
