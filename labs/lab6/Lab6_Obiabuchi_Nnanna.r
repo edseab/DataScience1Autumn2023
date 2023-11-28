@@ -67,9 +67,28 @@ mtcars %>% mutate(powerful= case_when(hp <quantile(mtcars$hp,0.25)~'low',
        hp>180~'high'))->mtcars
 
 mtcars<- mtcars[, colnames(mtcars)!= 'example']
-> View(mtcars)
+View(mtcars)
+
+mtcars<- mtcars[, colnames(mtcars)!= 'powerfull']
+View(mtcars)
+
+barplot(table(mtcars$powerful))
+summary(mtcars$hp)
+hist(mtcars$hp, breaks= c(0,96.5,180,335))
+
+barplot(table(mtcars))
+
+mtcars %>% mutate(powerful= case_when(hp <90~'low',
+      hp >90 & hp <= 180 ~'medium', hp >180 & hp <= 270 ~'high',
+       hp>270~'very high'))->mtcars
+
+mtcars$powerful <- factor(mtcars$powerful, levels =c('l
+ow', 'medium', ' high', 'very high'))
 
 
+barplot(table(mtcars$powerful))
+
+hist(mtcars$hp, breaks =c(0,90,180,270,360))
 
 #############################
 ####    If statements    ####
@@ -87,18 +106,25 @@ if(x-4==1){
 ### 2.1
 # Write a function called probe, that takes two arguments, n and w.
 # The function should return a character vector of length n, consisting of 'Water' and 'Land', sampled with probability w. (so probability of sampling 'Water' is w)
-# If the p argument is not numeric, or if it is not between 0 and 1, the function should return the following message:
+# If the w argument is not numeric, or if it is not between 0 and 1, the function should return the following message:
 # "Please input a probability between 0 and 1"
-<<<<<<< Updated upstream
 
 prob <- function(n, w) {
   if (!is.numeric(w) || w < 0 || w > 1) {
     return("Please input a probability between 0 and 1")
-  }
+  } else
+  listwk <- sample(c('water', 'land')), n, probh= c(w, 1-w), replace= T
+  return listwk
 
-=======
-prob <- function('Water', 'Land', 'sampled with probability w'){ for 'Water', 'Land', 'Land', 'sampled with probability w' in c(0:1), 'Land'/ }
->>>>>>> Stashed changes
+prob <- function(n, w) {
+  if (w < 0 | w > 1|!is.numeric(w))  {
+    return("Please input a probability between 0 and 1")
+  }
+  listwk <- sample(c('Water', 'Land')), n, prob= c(w, 1-w), replace= T
+  return (listwk)
+
+
+
 
 # After the if statement we can put an else statement:
 if(x-4>1){
