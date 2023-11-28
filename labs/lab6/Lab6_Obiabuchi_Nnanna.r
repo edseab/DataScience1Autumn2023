@@ -123,6 +123,7 @@ probe <- function(n, w) {
   listwk <- sample(c('Water', 'Land'), n, prob= c(w, 1-w), replace= T)
   return (listwk)}
 
+probe(10, 0)
 
 ?sample()
 
