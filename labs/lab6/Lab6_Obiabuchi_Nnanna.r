@@ -120,9 +120,11 @@ prob <- function(n, w) {
   if (w < 0 | w > 1|!is.numeric(w))  {
     return("Please input a probability between 0 and 1")
   }
-  listwk <- sample(c('Water', 'Land')), n, prob= c(w, 1-w), replace= T
+  listwk <- sample(c('Water', 'Land')), n, prob= c(w, 1-w), replace= T)
   return (listwk)
 
+  
+?sample()
 
 
 
