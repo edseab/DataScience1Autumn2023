@@ -42,6 +42,9 @@ mtcars[mtcars$cyl >= 6 & mtcars$hp >= 110, ]
 # Now select only those rows with either high efficiency (miles per gallon (mpg) of at least 25) or low weight (wt <= 2.5)
 head(mtcars)
 mtcars[mtcars$mpg >= 25 & mtcars$wt <= 2.5, ]
+
+
+
 #############################
 ####    If statements    ####
 #############################
