@@ -52,6 +52,7 @@ example("plot")
 
 # Plot() is the most basic function, and with no arguments it creates a scatterplot.
 # it can either take an x variable and a y variable as its 2 first arguments, or it can take a formula
+?plot
 plot(mtcars$wt,mtcars$mpg)
 plot(mtcars$mpg~mtcars$wt)
 
@@ -66,6 +67,8 @@ plot(mtcars$wt,mtcars$mpg,pch="✌")
 
 # To change x axis and y axis labels, and add a title you can use
 plot(mtcars$wt,mtcars$mpg, pch=20, xlab='Weight (1000 lbs)', ylab='Fuel efficiency (mpg)', main='Association between car weight and fuel efficiency')
+
+
 
 # And to change the range of the plot, use
 plot(mtcars$wt,mtcars$mpg, pch=20, ylim = c(0,40), xlim = c(0,7))
