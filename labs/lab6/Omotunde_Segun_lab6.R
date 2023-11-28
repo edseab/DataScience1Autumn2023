@@ -129,13 +129,20 @@ model <- lm(mtcars$mpg ~ mtcars$wt)
 summary(model)
 ### 5.1
 # What does the Estimate for the (Intercept) number represent?
+plot(mtcars$mpg,mtcars$wt)#it represent predicted change efficiency associated with a 1 unit change in weight(1000lbs change in weights)
+
 ### 5.2
 # What does the Estimate for the mtcars$wt number represent?
+#it is negative because bigger cars use more energy
+
 
 ### 5.3 
 # Is the relationship between these two variables positive or negative? Why do you think that might be?
 
 ### 5.4 What is the predicted average efficiency in miles per gallon of a 4000 pound (2000kg) car?
+
+37.2851 + (-5.3445)*4
+#15.9071
 
 # Let's transform the independent variable:
 mtcars$wt_centred <- mtcars$wt - mean(mtcars$wt)
@@ -147,6 +154,9 @@ mtcars$wt_centred <- mtcars$wt - mean(mtcars$wt)
 # Run a new regression with new independent variable
 # What do you notice about the estimates?
 # What is the interpretation of the (Intercept) estimate in this regression?
+model2<-lm(mtcars$mpg~mtcars$weight_centered)
+summary(model2)
+#the slope stays the same but the intercept changes
 
 ### 5.7
 # Run the following code:
@@ -161,6 +171,8 @@ x <- cbind(1,mtcars$wt)
 # (x'x)^(-1) * (x'y)
 # where ' means the transpose
 # Run the code you have written. What do you find?
+
+
 
 
 
