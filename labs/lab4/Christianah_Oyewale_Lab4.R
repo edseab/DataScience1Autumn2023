@@ -22,6 +22,8 @@
 # For now, just bear in mind that sometimes in certain statistical packages, character variables will need to be recoded as factors using factor(),
 # and other times variables that shouldn't be factors get loaded as such and need to be changed back with as.character().
 
+
+
 ########################
 ####    Datasets    ####
 ########################
@@ -32,8 +34,7 @@ data()
 
 # To load one into your environment, run for example
 data(mtcars)
-df <- data(iris)
-df
+
 ########################
 ####    Plotting    ####
 ########################
@@ -81,17 +82,15 @@ plot(dnorm(seq(-4,4,0.2)),type='o', col='red')
 # You can also use hex codes, such as:
 plot(dnorm(seq(-4,4,0.2)),type='o', col='#6D1ACF')
 
-lot(dnorm(seq(-4,4,0.2)),type='o', col='#f03b20')
 # Pick your own color and find its hex code here:
 # https://htmlcolorcodes.com/color-picker/
 
 # For turning frequencies into histograms or density plots,
 # use hist() and density() 
-hist(mtcars$wt, pch=20)
 
 # For barplots and boxplots, we use barplot() and boxplot()
-barplot(mtcars$wt, pch=20)
-boxplot(mtcars$wt, pch=10)
+
+
 # Axes can be removed from the original plot using xaxt='n' and yaxt = 'n'
 # New axes can be added using the axis() function
 # text(), segments(), arrows(), polygon(), legend(), add these respective elements to your plot. 
@@ -115,6 +114,7 @@ plot(mtcars$wt,mtcars$mpg, pch=20, ylim = c(0,40), xlim = c(0,7),
 
 # The par() function sets the graphical parameters for the device.
 # You can use it to set the margins of the graph (in inches) using mar
+par(mar=c(5,5,5,5))
 plot(mtcars$wt,mtcars$mpg)
 
 # These parameters will remain attached to the graphical device until you turn them off, with:

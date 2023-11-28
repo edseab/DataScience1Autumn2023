@@ -134,7 +134,8 @@ my.vector[4]
 my.vector[2:4]
 my.vector[c(1,4)]
 
-
+paste(my.vector)
+cat(my.vector)
 ### 1.1
 # You can assign values to specific elements. Try writing a line of code below that changes the 4th element of my.vector to the word 'test'
 my.vector[4] <- 'test'
@@ -162,7 +163,11 @@ my.vector == 'is'
 1:10 %% 2 == 0    ## %% is the remainder operator, it returns the remainder when you divide the left argument by the right argument.
 
 ### 2.1
+#Using  least amount of code possibly  write am line of code that returns only the odd values of the digit object..
+
 digits <- 0:10
+digits
+digits %% 2 == 1
 # Using the least amount of code possible, write a line of code that returns only the odd values of the digits object.
 digits[digits %% 2 == 1]
 # This can also be written as digits[digits %% 2 !=0] as tested below
@@ -194,7 +199,7 @@ f1(7)
 ex.vector <- c(2,7,4,24,13,8,12)
 f1(ex.vector)
 
-# You can write several lines of code in a function by enclosing all of the in curly brackets {}. The function 'return' can then specify what the output can be. For example:
+# You can write several lines of code in a function by enclosing all of them in curly brackets {}. The function 'return' can then specify what the output can be. For example:
 
 f2 <- function(x,y){
   z = x %% y
@@ -204,8 +209,11 @@ f2 <- function(x,y){
 f2(8,9)
 f2(14,7)
 
+
 ### 3.1 What is the purpose of function f2? Write in comments below.
 #f2 tells us whether one number is a multiple of another
+#or
+#the purpose of the function name f2 is to take two parameters x and y, which will return z==0
 
 
 ### 3.2
@@ -213,11 +221,16 @@ f2(14,7)
 
 # compare your function to the native function in R. Does it produce the same results?
 
-my.mean <- function(x) sum(x)/length(x) 
+my.mean <- function(x) {sum(x)/length(x) 
+                }
+my.vector <- c(1:100)
+my.vector
+
+my.mean(my.vector)
 
 my.mean(ex.vector)
 mean(ex.vector)
-
+mean(my.vector)
 ####################################
 ####      Randomness in R       ####
 ####################################
@@ -305,3 +318,5 @@ dunif(1.3,0,2)
 
 # Based on the results of this code and your answers above, what can you conclude about the purpose of the dunif function?
 #To calculate the probability density function
+
+

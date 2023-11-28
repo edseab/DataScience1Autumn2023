@@ -21,6 +21,11 @@
 
 # For now, just bear in mind that sometimes in certain statistical packages, character variables will need to be recoded as factors using factor(),
 # and other times variables that shouldn't be factors get loaded as such and need to be changed back with as.character().
+example <- c('a','b','c')
+ex_factor <- as.factor(example)
+ex_factor
+c(ex_factor,as.factor('d'))
+c(ex_factor,as.factor('a'))
 
 ########################
 ####    Datasets    ####
@@ -32,8 +37,7 @@ data()
 
 # To load one into your environment, run for example
 data(mtcars)
-df <- data(iris)
-df
+
 ########################
 ####    Plotting    ####
 ########################
@@ -45,8 +49,10 @@ example("plot")
 # to get a series of examples of things you can do with the plot() function
 
 # Plot() is the most basic function, and with no arguments it creates a scatterplot.
+
 # it can either take an x variable and a y variable as its 2 first arguments, or it can take a formula
 plot(mtcars$wt,mtcars$mpg)
+
 plot(mtcars$mpg~mtcars$wt)
 
 # You can change the shape of the points in a scatterplot with the 'pch' argument
@@ -62,7 +68,7 @@ plot(mtcars$wt,mtcars$mpg,pch="✌")
 plot(mtcars$wt,mtcars$mpg, pch=20, xlab='Weight (1000 lbs)', ylab='Fuel efficiency (mpg)', main='Association between car weight and fuel efficiency')
 
 # And to change the range of the plot, use
-plot(mtcars$wt,mtcars$mpg, pch=20, ylim = c(0,40), xlim = c(0,7))
+plot(mtcars$wt,mtcars$mpg, pch=20, type="l",ylim = c(0,40), xlim = c(0,7))
 
 # Instead of a scatterplot, you can change the type of the plot using 'type'
 plot(dnorm(seq(-4,4,0.2)),pch=20)
@@ -72,26 +78,26 @@ plot(dnorm(seq(-4,4,0.2)),type='b')
 plot(dnorm(seq(-4,4,0.2)),type='s')
 plot(dnorm(seq(-4,4,0.2)),type='o')
 
+
+
 # And the color using color
 plot(dnorm(seq(-4,4,0.2)),type='o', col='red')
-
+?dnorm
 # For colors you can use preloaded R colors, which you can look up here:
 # https://www.nceas.ucsb.edu/sites/default/files/2020-04/colorPaletteCheatsheet.pdf
 
 # You can also use hex codes, such as:
 plot(dnorm(seq(-4,4,0.2)),type='o', col='#6D1ACF')
 
-lot(dnorm(seq(-4,4,0.2)),type='o', col='#f03b20')
 # Pick your own color and find its hex code here:
 # https://htmlcolorcodes.com/color-picker/
 
 # For turning frequencies into histograms or density plots,
 # use hist() and density() 
-hist(mtcars$wt, pch=20)
 
 # For barplots and boxplots, we use barplot() and boxplot()
-barplot(mtcars$wt, pch=20)
-boxplot(mtcars$wt, pch=10)
+
+
 # Axes can be removed from the original plot using xaxt='n' and yaxt = 'n'
 # New axes can be added using the axis() function
 # text(), segments(), arrows(), polygon(), legend(), add these respective elements to your plot. 
@@ -100,7 +106,11 @@ boxplot(mtcars$wt, pch=10)
 # Fonts can be changed using the arguments cex (for size), family (for font type), and font (for bold or italics)
 
 # Lines can be added to plots using abline()
-plot(mtcars$wt,mtcars$mpg, pch=20, ylim = c(0,40), xlim = c(0,7),
+plot(mtcars$wt,
+     mtcars$mpg, 
+     pch=20, 
+     ylim = c(0,40), 
+     xlim = c(0,7),
      abline(v=0,h=0,lm(mpg~wt,data=mtcars)))
 
 # Other plots can be made using barplot(), 
@@ -115,6 +125,7 @@ plot(mtcars$wt,mtcars$mpg, pch=20, ylim = c(0,40), xlim = c(0,7),
 
 # The par() function sets the graphical parameters for the device.
 # You can use it to set the margins of the graph (in inches) using mar
+par(mar=c(5,5,5,5))
 plot(mtcars$wt,mtcars$mpg)
 
 # These parameters will remain attached to the graphical device until you turn them off, with:
