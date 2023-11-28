@@ -24,6 +24,7 @@ pnorm(194,170,15)
 qnorm(0.025,170,15)
 qnorm(0.025,170,15, lower.tail=FALSE)
 
+
 #141cm short  and since Amir is 194cm tall he can't be a member of TSC
 
 # 3. In response to the Tall and Short club, another group of Examplians start the Average People's Club (APC), where you have to be
@@ -47,6 +48,7 @@ pnorm(171.5,170,15)-pnorm(168.5,170,15)
 (1-0.13)^10
 dbinom(10,10,0.87) #or
 dbinom(0,10,0.13)
+
 # 5. What is the probability that exactly 2 are eligible to join the APC and the rest are not?
 dbinom(2,10,0.08)
 
@@ -54,4 +56,5 @@ dbinom(2,10,0.08)
 ## 6. What is the probability that at least 3 of them are eligible to join the TSC?
 
 1-pbinom(2,10,0.05) #or
-pbinom(10,10,0.05)-pbinom(2,10,0.05) #or
+pbinom(10,10,0.05)-pbinom(2,10,0.05)
+
