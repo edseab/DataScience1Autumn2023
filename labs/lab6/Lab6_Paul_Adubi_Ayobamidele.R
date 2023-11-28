@@ -257,3 +257,14 @@ solve(t(x) %*% x) %*% (t(x) %*% y)
 # I find that returns the Intercept on the dependent variable when the independent (wt) is zero AND
 # It also shows the slope of the regression, the coefficient of wt in the linear regression, it is
 # defined as the change in mpg per unit change in wt
+
+
+
+data(mtcars)
+
+
+model <- lm(mtcars$mpg ~ mtcars$wt)
+
+sum <- residuals(model)
+
+sum(sum)
