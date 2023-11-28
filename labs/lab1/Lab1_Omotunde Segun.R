@@ -127,7 +127,7 @@ my.vector <- c('this','is','a','vector')
 my.vector
 length(my.vector)
 class(my.vector)
-
+?paste
 # You can use square brackets to isolate elements in a vector by putting their index between the brackets:
 my.vector[1]
 my.vector[4]
@@ -250,6 +250,7 @@ cast.2.dice(20)
 # Using the function hist, create histograms of the results of double dice rolls when you roll them 10 times, 
 #then 50, then 100, then 1000, then 10000. Use breaks=1:12 as an argument within the hist function. 
 # What do you notice? Write it in comments below your code.
+?hist
 set.seed(105)
 hist(cast.2.dice(10), breaks = 1:12)
 hist(cast.2.dice(50), breaks = 1:12)
@@ -274,6 +275,7 @@ bool.22 <- function(x){
     s<- runif(x, 0, 1)
     return(s<0.22)
 }
+bool.22(10)
 o1<-bool.22(10)
 hist(as.numeric(o1))
 o2<-bool.22(1000000)
@@ -298,6 +300,7 @@ hist(as.numeric(o2))
 
 ### 4.8
 # run the following code:
+?dunif
 dunif(0.5,0,1)
 dunif(2,0,1)
 dunif(0.2,0,0.5)

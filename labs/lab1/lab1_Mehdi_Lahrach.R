@@ -8,6 +8,7 @@
 ###################################
 ###################################
 
+#Mehdi LAHRACH
 
 ## Welcome to this first lab. Here we  will learn the basics of R, an open-source programming language and software environment.
 
@@ -31,7 +32,7 @@
 sqrt(25)
 exp(3)
 
-# Often, functions take multiple inputs with different functions. Note how:
+# Often, functions take multiple inputs with different prupuses. Note how:
 rep(3,4)
 # produces a different output from
 rep(4,3)
@@ -86,7 +87,7 @@ Salaam -> y
 # One final very important class of object is the 'logical' class, a.k.a. Boolean. 
 
 # One final very important class of object is the 'logical' class, a.k.a. Boolean. 
-# Boolean objects can take one of two values
+# Boolean objects can take one of two TR
 
 TRUE
 
@@ -123,7 +124,7 @@ z
 
 my.vector <- c('this','is','a','vector')
 my.vector
-length(my.vector)
+lengtmyh(my.vector)
 class(my.vector)
 
 # You can use square brackets to isolate elements in a vector by putting their index between the brackets:
@@ -134,15 +135,15 @@ my.vector[c(1,4)]
 
 ### 1.1
 # You can assign values to specific elements. Try writing a line of code below that changes the 4th element of my.vector to the word 'test'
-my.vector[4] <- 'test'
+
 
 ### 1.2
-# You can even assign values to elements of a vector that don't exist yet, thus creating them. my.vector[5] <- 'example'
-my.vector[5] <- 'example'
+# You can even assign values to elements of a vector that don't exist yet, thus creating them. Try assigning the word 'example' to the (as yet non-existent) 5th element of my.vector.
+
 
 # Instead of indices, you can select elements of a vector using a logical vector of the same length, e.g.
 
-my.vector[c(TRUE,TRUE,FALSE,FALSE,FALSE)]
+my.vector[c(TRUE,TRUE,FALSE,FALSE,FALSE, TRUE)]
 
 
 ####################################
@@ -159,7 +160,7 @@ my.vector == 'is'
 ### 2.1
 digits <- 0:10
 # Using the least amount of code possible, write a line of code that returns only the odd values of the digits object.
-odd_digits <- digits[digits %% 2 != 0] 
+digits[digits %% 2 != 0]
 
 # Another important logical operator is the %in% operator. It tells you if the elements on the left are found in the elements on the right. E.G.
 group1 <- c('Arthur', 'Fatima', 'Suleiman', 'Marco')
@@ -170,8 +171,7 @@ group1 %in% group2
 # intersect is a function which returns the elements that all of its arguments have in common. For example:
 intersect(group1,group2)
 # Write a line of code that replicates this output using only group1, group2, square brackets, and logical operators.
-
-common_elements <- group1[group1 %in% group2]
+group1[group1 %in% group2]
 
 ####################################
 ####     Writing functions      ####
@@ -197,11 +197,16 @@ f2(8,9)
 f2(14,7)
 
 ### 3.1 What is the purpose of function f2? Write in comments below.
-
+## it determin if x is divisible by y
 ### 3.2
 # Based on the definition of the mean from today's lecture, write a function that calculates the mean of all of the elements of a vector. assign it to the object my.mean. You will find the functions 'sum' and 'length' useful here.
-#The purpose of function f2 is to check if the first argument x is divisible by the second argument y, returning TRUE if it is, and FALSE if it's not.
+
 # compare your function to the native function in R. Does it produce the same results?
+
+my.mean<- function(v){
+  return(sum(v) / length(v))
+}
+
 
 my.mean(ex.vector)
 mean(ex.vector)
@@ -222,50 +227,26 @@ sample(1:10, 3)
 # If you want to sample randomly between 1 and 10 20 times, each time choosing between all 10 numbers, you have to write:
 sample(1:10, 20, replace = TRUE)
 
+
+
 ### 4.1
 # Write a function that simulates the roll of 2 6-sided dice, where the argument x is the number of times you roll the 2 dice, 
 # and the output is a vector of length x, where each element corresponds to the sum of the two sides of the dice.
 # HINT: one way to do this is to start by writing a function for a single 6-sided die, then create a new function 
 # that repeats the first function twice and adds up the result.
-# Function to roll a single 6-sided die
-roll_die <- function() {
-  return(sample(1:6, 1, replace = TRUE))
+
+rolldice <- function(x){
+  simple(1:6, x, replace = TRUE)
 }
 
-# Function to simulate rolling two dice x times
-roll_two_dice <- function(x) {
-  results <- numeric(x)
-  for (i in 1:x) {
-    results[i] <- roll_die() + roll_die()
-  }
-  return(results)
+cast.2.dice <- function(x){
+  return(rolldice(x) + rolldice(x))
 }
 
-dicef <- function(x) {
-  rolls <- replicate(x, sample(1:6, 1) + sample(1:6, 1))
-  return(rolls)
-}
-roll_two_dice(3)
-dicef(3)
-set.seed(123)
 ### 4.2
 # Using the function hist, create histograms of the results of double dice rolls when you roll them 10 times, 
-#then 50, then 100, then 1000, then 10000. Use breaks=1:12 as an argument within the hist function. 
+#then 50, then 100, then 1000, then 10000. Use breaks=1:12 as an argument within the hist function.  # nolint
 # What do you notice? Write it in comments below your code.
-
-# Function to create a histogram of double dice rolls
-create_dice_histogram <- function(rolls) {
-  results <- roll_two_dice(rolls)
-  hist(results, breaks = 1:12, main = paste("Histogram for", rolls, "rolls"))
-}
-
-# Simulate double dice rolls for different numbers of rolls
-rolls_to_simulate <- c(10, 50, 100, 1000, 10000)
-par(mfrow = c(2, 3))  # Arrange the plots in a 2x3 grid
-
-for (rolls in rolls_to_simulate) {
-  create_dice_histogram(rolls)
-}
 
 
 # Another way to generate randomness is to sample from a pdf, which is a continuous distribution. 
@@ -279,33 +260,20 @@ runif(5,0,1)
 
 ### 4.3
 # Using runif, write a function that returns TRUE 22% of the time and FALSE 78% of the time
-generate_boolean <- function(x) {
-  s <- runif(x,0,1)
-  return(s<0.22)
-}
-
-o1 <- generate_boolean(10000)
-hist(as.numeric(o1))
-
-# Testing the function
-result <- generate_boolean()
-print(result) 
-
 
 ### 4.4
 # Based on today's lecture about pdfs, what is the probability density for a uniform pdf bounded between 
 # 0 and 1 associated with all values of x between 0 and 1? Explain why.
-#1
 
 ### 4.5
 # Similarly, what is the probability density for a uniform pdf bounded between 5 and 6 associated with all values of x between 5 and 6?
-#1
+
 ### 4.6
 # What is the probability density for a uniform pdf bounded between 0 and 0.5 associated with all values of x between 0 and 0.5?
-#2
+
 ### 4.7
 # What is the probability density for a uniform pdf bounded between 0 and 2 associated with all values of x between 0 and 2?
-#0.5
+
 ### 4.8
 # run the following code:
 dunif(0.5,0,1)
@@ -313,11 +281,4 @@ dunif(2,0,1)
 dunif(0.2,0,0.5)
 dunif(1.3,0,2)
 
-x.values <- seq(-5,+5,0.01)
-seq(1,10,by=2)
-seq(0, 1, length.out = 5)
-seq(along.with = c(10, 20, 30, 40, 50))
-
-y.values <- dunif(x.values,0,1)
-plot(x.values , y.values, type='l', ylim=c(0,5))
 # Based on the results of this code and your answers above, what can you conclude about the purpose of the dunif function?
