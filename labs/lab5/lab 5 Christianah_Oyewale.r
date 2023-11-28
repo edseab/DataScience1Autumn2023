@@ -115,7 +115,10 @@ mtcars[mtcars$cyl == 6, 1:5]
 mtcars %>%
   filter(cyl==6) %>%
   select(1:5)
-
+#same as below:
+mtcars %>%
+  select(1:5)%>%
+  filter(cyl==6)
 ### 2.1
 # using select() and filter(), create a new database of cars that are over 4000 lbs in weight, retaining only the wt and mpg columns. Save this database to an object called 'df'.
 mtcars %>%  
