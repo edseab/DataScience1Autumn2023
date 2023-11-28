@@ -66,8 +66,8 @@ mtcars %>% mutate(powerful= case_when(hp <quantile(mtcars$hp,0.25)~'low',
       hp< 96.5~'low', hp>= 96.5 & hp <= 180~'medium',
        hp>180~'high'))->mtcars
 
-mtcars
-
+mtcars<- mtcars[, colnames(mtcars)!= 'example']
+> View(mtcars)
 
 
 
