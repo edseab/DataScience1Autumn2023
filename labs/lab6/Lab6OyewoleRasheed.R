@@ -22,22 +22,27 @@
 !FALSE
 # the AND operator, &, returns TRUE only if elements on both sides of the operator are TRUE
 1==1 & 2==1
+1==1 & 6==6
 # the inclusive OR operator, |, returns TRUE if EITHER of the elements are TRUE
 1==1 | 2==1
+5==7 | 7==7
 
 # there is no operator for exclusive OR, but there is a function, xor()
-xor(1==1 , 2==2)
-
+xor(8==1 , 3==2)
+xor(1==3, 3==3)
+xor(1==1, 2==2)
 # 1.1 
 # mtcars is a database of cars with several variables such as horsepower, weight, number of cylinders etc.
 data(mtcars)
 head(mtcars)
 # Using indexing (square brackets) and the & operator, write a line of code
 # that selects only the rows of mtcars with at least 6 cylinders (mtcars$cyl >= 6) and horsepower of at least 110 (mtcars$hp >= 110). Remember to include all the columns.
-
+filtered_mtcars<-mtcars[mtcars$cyl>=6 & mtcars$hp >= 110, 1:11]
+#  & mtcars[mtcars$hp<=110,1:11]
 ### 1.2
 # Now select only those rows with either high efficiency (miles per gallon (mpg) of at least 25) or low weight (wt <= 2.5)
-
+select_mtcars<- mtcars[mtcars$mpg>=25 | mtcars$wt <=2.5, 1:11]
+select_mtcars
 #############################
 ####    If statements    ####
 #############################
@@ -57,7 +62,19 @@ if(x-4==1){
 # If the p argument is not numeric, or if it is not between 0 and 1, the function should return the following message:
 # "Please input a probability between 0 and 1"
 
+probe <- function (p,w){
+  if (w==1)print(c("Water", "Land"))
+  if(typeof(p)!= "numeric" & p < 0 | p>1){ # nolint
+    print("Please input a probability between 0 and 1")
+  }
+  # return("good")
+}
+probe(1,1)
+data(mtcars)
+mtcars
+plot(mtcars$mpg, mtcars$wt ,pch =20, ylim= c(0,50),xlim=c(0,70),main =" Car efficiency as a functiom of weight", xlab="Weight(1000 of lbs)", ylab="Fuel efficiency (Miles per gallon)" )
 
+x<-5
 # After the if statement we can put an else statement:
 if(x-4>1){
   new_object <- c('this','statement','is','also','true')
@@ -76,11 +93,11 @@ ifelse(x/2==7,print('Definitely true'),print('categorically false'))
 # paste() and strsplit() can be used to join and separate
 # character objects (strings), respectively. For example:
 
-paste('Hello','world!', sep='_')
+paste('Hello','world!', sep=' ')
 strsplit('Hello to you too. /My name is Ed.', split='/')
 
 # You'll notice that strsplit returns a list. This allows us to vectorise the function:
-strsplit(rownames(mtcars),split=' ')
+strsplit(c(rownames(mtcars)),split=' ')
 
 
 #####################
