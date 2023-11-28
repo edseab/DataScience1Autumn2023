@@ -12,14 +12,18 @@
 
 # IF/ELSE STATEMENT
 x <- sample(0:10, 1)
-x
-if (x <- sample(0:10, 1) > 5) {
-  print("High")
+cat("x:", x, "\n")
 
+
+if (x > 5) {
+  print("High")
+} else {
   y <- x * 2
-  print(x(x, y))
+  cat("y:", y, "\n")
 }
 
+print(x)
+print(y)
 # IFELSE()
 
 ifelse(sample(0:10, 1) > 5, print("HIGH"), print("LOW"))
