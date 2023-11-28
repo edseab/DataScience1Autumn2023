@@ -44,15 +44,16 @@ head(mtcars)
 mtcars[mtcars$mpg >= 25 & mtcars$wt <= 2.5, ]
 
 #Create a new categorical variable called 'powerful' that takes the value 'low' when horsepower is in the middle 2 quantiles, and high when the horsepower is in the top quantile
-mtcars$power<-NA
+mtcars$powerful<-NA #initialize
 quantile(mtcars$hp,0.5)
 median(mtcars$hp)
 summary(mtcars$hp)
-mtcars$powerful[mtcars$hp <= quantile(mtcar$hp, 0.25)] <-"low"
-mtcars$powerful[mtcars$hp <= quantile(mtcar$hp, 0.25)] <-"low"
+mtcars$powerful[mtcars$hp < quantile(mtcars$hp, 0.25)] <-"low"
+mtcars$powerful[mtcars$hp >= quantile(mtcars$hp, 0.25) & 
+              mtcars$hp <= quantile(mtcars$hp, 0.75)] <-"medium"
+mtcars$powerful[mtcars$hp >= quantile(mtcars$hp, 0.75)] <-"high"
 
-
-
+mtcars$powerful
 
 
 
