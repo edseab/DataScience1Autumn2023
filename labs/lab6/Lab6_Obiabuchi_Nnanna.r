@@ -59,12 +59,16 @@ if(x-4==1){
 # The function should return a character vector of length n, consisting of 'Water' and 'Land', sampled with probability w. (so probability of sampling 'Water' is w)
 # If the p argument is not numeric, or if it is not between 0 and 1, the function should return the following message:
 # "Please input a probability between 0 and 1"
+<<<<<<< Updated upstream
 
 prob <- function(n, w) {
   if (!is.numeric(w) || w < 0 || w > 1) {
     return("Please input a probability between 0 and 1")
   }
 
+=======
+prob <- function('Water', 'Land', 'sampled with probability w'){ for 'Water', 'Land', 'Land', 'sampled with probability w' in c(0:1), 'Land'/ }
+>>>>>>> Stashed changes
 
 # After the if statement we can put an else statement:
 if(x-4>1){
