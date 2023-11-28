@@ -15,12 +15,19 @@
 ########################
 
 # Quick note before we start on plotting. One final type of variable we haven't looked at yet is factors
-# Factors are used for categorical data. Instead of just allowing any value, like a character variable, factors only allow one of a fixed number of 'levels', with one level serving as a 'reference category'.
+# Factors are used for categorical data. Instead of just allowing any value, like a character variable, factors only allow one of a fixed number of 'levels', with one level serving as a 'reference category'. each different category is known as a levell and each level has a number attched to it. you cant add something to the character
+
 # To change the reference category, you can use 
 # relevel(x, ref=...)
 
 # For now, just bear in mind that sometimes in certain statistical packages, character variables will need to be recoded as factors using factor(),
 # and other times variables that shouldn't be factors get loaded as such and need to be changed back with as.character().
+
+example <- c("a", "b", "c")
+ex_factor <- as.factor(example)
+c(ex_factor, "d")
+c(ex_factor, as.factor("d"))
+c(ex_factor, as.factor("a"))
 
 ########################
 ####    Datasets    ####
@@ -45,6 +52,7 @@ example("plot")
 
 # Plot() is the most basic function, and with no arguments it creates a scatterplot.
 # it can either take an x variable and a y variable as its 2 first arguments, or it can take a formula
+?plot
 plot(mtcars$wt,mtcars$mpg)
 plot(mtcars$mpg~mtcars$wt)
 
@@ -59,6 +67,8 @@ plot(mtcars$wt,mtcars$mpg,pch="✌")
 
 # To change x axis and y axis labels, and add a title you can use
 plot(mtcars$wt,mtcars$mpg, pch=20, xlab='Weight (1000 lbs)', ylab='Fuel efficiency (mpg)', main='Association between car weight and fuel efficiency')
+
+
 
 # And to change the range of the plot, use
 plot(mtcars$wt,mtcars$mpg, pch=20, ylim = c(0,40), xlim = c(0,7))

@@ -55,8 +55,7 @@ if(x-4==1){
 # Write a function called probe, that takes two arguments, n and w.
 # The function should return a character vector of length n, consisting of 'Water' and 'Land', sampled with probability w. (so probability of sampling 'Water' is w)
 # If the p argument is not numeric, or if it is not between 0 and 1, the function should return the following message:
-# "Please input a probability between 0 and 1"
-
+# "Please input a probability between 0 and 100000"
 
 # After the if statement we can put an else statement:
 if(x-4>1){
@@ -127,19 +126,33 @@ while(x<100){
 # Lets run a bivariate regression of car weight (in 1000 pounds/500 kg) on miles per gallon (1mpg = 1km/L)
 model <- lm(mtcars$mpg ~ mtcars$wt)
 summary(model)
+
 ### 5.1
 # What does the Estimate for the (Intercept) number represent?
+plot(mtcars$wt,mtcars$mpg, pch=20, xlim = c(-1,6))
+abline(model)
+
+#it is the predicted fuel effieciency of a car that weighs 0 lbs
+
 ### 5.2
 # What does the Estimate for the mtcars$wt number represent?
+
+#it is the predicted  change in fuel effieciency associated with a unit chnage in weight (1000lbs change in weight)
+
 
 ### 5.3 
 # Is the relationship between these two variables positive or negative? Why do you think that might be?
 
-### 5.4 What is the predicted average efficiency in miles per gallon of a 4000 pound (2000kg) car?
+# the bigger the car, the more fuel it uses, so it is negative
 
+### 5.4 What is the predicted average efficiency in miles per gallon of a 4000 pound (2000kg) car?
+#Y= a+bx, where x=4
+37.2851 + (-5.3445) *4
+#15.9 mpg
 # Let's transform the independent variable:
 mtcars$wt_centred <- mtcars$wt - mean(mtcars$wt)
-
+mean(mtcars$wt_centred) #it is zero
+var(mtcars$wt_centred) #it is the same, coz we have not diveded
 ### 5.5
 # compare the mean and variance of the new variable with the untransformed variable. What do you notice?
 
@@ -147,7 +160,11 @@ mtcars$wt_centred <- mtcars$wt - mean(mtcars$wt)
 # Run a new regression with new independent variable
 # What do you notice about the estimates?
 # What is the interpretation of the (Intercept) estimate in this regression?
+mode12 <-lm(mtcars$mpg ~ mtcars$wt_centred)
+summary(mode12)
 
+#the slope stays the same but the intercept changes
+# the value represents the predicted fuel efficeiency for a car of an average weight
 ### 5.7
 # Run the following code:
 y <- mtcars$mpg

@@ -90,7 +90,7 @@ star_wars_matrix[3,1]
 # Write a line of code to extract the international revenue of the Phantom Menace (the 4th movie) using numbers to index the matrix
 star_wars_matrix[4,2]
 # Compare this to the following:
-star_wars_matrix["The Phantom Menace", "Total revenue"]
+star_wars_matrix["The Phantom Menace", "Total revenue"] # this will use the column and row name to bring the object
 
 # This works because our matrix has row and column names.
 
@@ -252,6 +252,7 @@ dbinom(8,10,0.7)
 # What do you conclude to the astronomer?
 set.seed(123)
 sims <- rbinom(100000,20,0.7)
+sum(sims<= 11)/100000
 pbinom(11,20,0.7)
 pbinom(9,10,0.5,lower.tail = F)
 # pbinom, pnorm, punif, pbeta, .... all calculate the area under the curve of a given distribution,
@@ -278,7 +279,8 @@ qnorm(0.1,175, 10, lower.tail=FALSE)
 # Let's compare the box office returns of the og and prequel trilogies
 og_trilogy <- star_wars_matrix[1:3,3]
 preq_trilogy <- star_wars_matrix[4:6,3]
-
+og_trilogy
+preq_trilogy
 # Write a Welch's t-test function for any two samples x1 and x2
 my_t <- function(x1,x2){
   # first, extract the means, variances and Ns of the two samples and save thel to
@@ -317,7 +319,6 @@ my_t <- function(x1,x2){
 
   return(list(t = t, df = df, p_value=p_value))
 }
-
 # compare this function to the in-built t-test
 men <- c(190,192,190,175,173,171,187,169,171,176,173)
 women <- c(163,169,165,155,159,164,164)
