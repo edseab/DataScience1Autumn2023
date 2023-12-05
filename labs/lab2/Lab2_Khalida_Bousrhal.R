@@ -156,6 +156,34 @@ unlist(my_list)
 # Most data you will work with in R will be in a data frame. 
 # Lets load one that comes automatically with your R installation:
 
+
+# Creating a data frame
+df <- data.frame(
+  Name = c("Alice", "Bob", "Charlie"),
+  Age = c(25, 30, 22),
+  Grade = c("A", "B", "C")
+)
+
+# Accessing columns
+df$Name
+df[, "Age"]
+
+# Adding row and column names
+rownames(df) <- c("Row1", "Row2", "Row3")
+colnames(df) <- c("Name", "Age", "Grade")
+
+# Summary statistics
+summary(df)
+
+# Structure of the data frame
+str(df)
+
+# Display first few rows
+head(df)
+
+
+
+
 data("iris")
 class(iris)
 
@@ -328,6 +356,26 @@ pnorm(163,mean(women), sd(women))
 
 # compare this function to the in-built t-test
 t.test(og_trilogy,preq_trilogy)
+t.test(men,women)
+
+set.seed(123)
+heights <- rnorm(1e6,175,15)
+t_test_result <- t.test(heights, mu = mean(heights), conf.level = 0.97)
+t_test_result$conf.int
+#Out put = 174.9596 175.0247
+
+sem <- sd(heights) / sqrt(length(heights))
+
+CIup <- mean(heights) + sem * qnorm(0.985)
+CIdown <- mean(heights) - sem * qnorm(0.985)
+CI <- c(CIdown,CIup)
+#Out put = 174.9596 175.0247
+
+
+CIup <- mean(heights) + sem * qt(0.985, df=length(heights)-1)
+CIdown <- mean(heights) - sem * qt(0.985, df=length(heights)-1)
+CI <- c(CIdown,CIup)
+# Out put =  168.1620 180.4249
 
 
 # One last question to ponder before next class: Why did we multiply the p-value by 2?
