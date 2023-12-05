@@ -84,13 +84,15 @@ new_data
 
 predictions<-as.data.frame(predict(tooth_growth_vc1, newdata= new_data, interval ='confidence', level =0.95))
 predictions
-plot(d$dose, d$len, psch= 20)
+
+plot(d$dose,$len, pch= 20)
+abline(tooth_growth_vc1)
 lines(new_data$dose, predictions$fit)
 lines(new_data$dose, predictions$upr, lty= 'dotf=dash')
-lines(new_data$dose, predictions$lwr,lty= 'dotdash' )
+lines(new_data$dose, predictions$lwr, lty= 'dotdash')
 
 
-
+ggplot(d, aes(dose,len)) +geom_point() + geom_smooth(method= "lm")
 
 # 1.9 Now get the confidence intervals for all possible values of the dosage between 0 and 2 mg/day, spaced out 0.01 mg/day from each other
 
