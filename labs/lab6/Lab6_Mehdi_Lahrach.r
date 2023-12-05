@@ -35,7 +35,37 @@ head(mtcars)
 # Using indexing (square brackets) and the & operator, write a line of code
 # that selects only the rows of mtcars with at least 6 cylinders (mtcars$cyl >= 6) and horsepower of at least 110 (mtcars$hp >= 110). Remember to include all the columns.
 
-mtcars[mtcars$cyl >= 6 & mtcars$hp >= 110,]
+d2 <- mtcars[mtcars$cyl >= 6 & mtcars$hp >= 110,]
+d2$newcol <- 0
+head(d2)
+
+#creatae a new categorical variable called powerful that takes the value low
+#when the horesepower is in the bottom quantile medium when the horsepower
+#is in the middle 2 quartiles, and high when the horsepower is in the top quartile.
+
+?quantile
+mtcars$powerful <- NA
+mtcars$powerful[mtcars$hp < quantile(mtcars$hp, 0.25)] <- 'low'
+mtcars$powerful[mtcars$hp >= quantile(mtcars$hp, 0.25)
+                & mtcars$hp <= quantile(mtcars$hp, 0.75)] <- 'medium'
+mtcars$powerful[mtcars$hp > quantile(mtcars$hp, 0.75)] <- 'high'
+
+mtcars$powerful
+
+
+mtcars$powerful <- cut(mtcars$hp, breaks = quantile(mtcars$hp, c(0, 0.25
+            , 0.75,1)), labels = c('low', 'meduim', 'high'))
+
+
+mtcars %>% mutate(powerful = case_when(hp < quantile(mtcars$hp,0.25) ~ 'low',
+                                      hp >= 96.5 & hp <= 100 ~ 'medium',
+                                      hp > 180 ~ 'high')) -> mtcars
+
+mtcars$powerful <- factor(mtcars$powerful, levels=c('low', 'medium', 'high', 'very high'))
+
+barplot(table(mtcars$powerful))
+
+hist(mtcars$hp, breaks=c(0, 90, 180, 270, 360))
 
 ### 1.2
 # Now select only those rows with either high efficiency (miles per gallon (mpg) of at least 25) or low weight (wt <= 2.5)
@@ -64,7 +94,7 @@ prob <- function(n, w)
 {
     if(w > 1 || w < 0 || !is.numeric(w)) return('Please input a probability between 0 and 1')
 
-    result <- sample(c('Water', 'Land'), size = n, replace = TRUE, prob = c(w, 1 - w))
+    result <- sample(c('Water', 'Land'), size=n, replace=T, prob=c(w, 1 - w))
   
     return(result)
 
