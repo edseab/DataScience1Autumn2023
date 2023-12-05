@@ -32,8 +32,42 @@ xor(1==1 , 2==2)
 # mtcars is a database of cars with several variables such as horsepower, weight, number of cylinders etc.
 data(mtcars)
 head(mtcars)
+
+
+
 # Using indexing (square brackets) and the & operator, write a line of code
 # that selects only the rows of mtcars with at least 6 cylinders (mtcars$cyl >= 6) and horsepower of at least 110 (mtcars$hp >= 110). Remember to include all the columns.
+
+d2 <- mtcars[ mtcars$cyl >= 6 & mtcars$hp >= 110,   ]
+d2$theNameOfTheNexCol <- 0
+
+#creat a new categorical variable called 'powerful' that takes the value 'low' when th horsepower is in  the bottom quartile ,'midiam' when the horspower is in the middle 2 quartiles, and high when the hoerspower is in the top quartile
+
+mtcars$powerful <- NA 
+mtcars$powerful[mtcars$hp <= (quantile(mtcars$hp,0.25))]<- 'low'
+mtcars$powerful[mtcars$hp >= (quantile(mtcars$hp,0.25))
+                & mtcars$hp <= (quantile(mtcars$hp,0.75))]<- 'medium'
+mtcars$powerful[mtcars$hp >= (quantile(mtcars$hp,0.75))]<- 'high'
+ #select a col based on another col condition 
+ newCol<- mtcars$hp[mtcars$powerful ==  'high' ]
+
+
+mtcars$powerful<- cut(mtcars$hp , breaks = c(0,96.5,180, 100000), labels= c('low','mediam','high'))
+mtcars$powerful<- cut(mtcars$hp , breaks = quantile(mtcars$hp,c(0,0.25,0.75,1)), labels= c('low','mediam','high'))
+
+install.packages('tidyverse')
+library(tidyverse)
+data(mtcars)
+
+mtcars %>% mutate(powerful = case_when(hp < 96.5 ~ 'low',
+                                       hp >= 96.5 & hp <= 180 ~ 'mediam',
+                                       hp >180 ~ 'high')) -> mtcars
+
+mtcars <- mtcars[, colnames(mtcars)!= 'theNameOfTheNexCol']
+barplot(table(mtcars$powerful))  # red 3 , green 7 , blue 10 , then it is give colore in x and number in y
+
+mtcars$powerful<- factor(mtcars$powerful, levels = c('low','mediam','high'))
+hist(mtcars$hp , breaks= c(0,96.5,180,335)) # [70, 77, 80,81,82, ...., 90,91,100 ] ghanjam3ohom f des intervalles, lihoma dok l breaks , x = intervles of breaks , y = kola intervalles ch7al fih man ra9m 
 
 ### 1.2
 # Now select only those rows with either high efficiency (miles per gallon (mpg) of at least 25) or low weight (wt <= 2.5)
@@ -56,16 +90,22 @@ if(x-4==1){
 ### 2.1
 # Write a function called probe, that takes two arguments, n and w.
 # The function should return a character vector of length n, consisting of 'Water' and 'Land', sampled with probability w. (so probability of sampling 'Water' is w)
-# If the p argument is not numeric, or if it is not between 0 and 1, the function should return the following message:
+# If the w argument is not numeric, or if it is not between 0 and 1, the function should return the following message:
 # "Please input a probability between 0 and 1"
 
-probe <- function(n,w){
-  if(w < 0 & w >1 ) return("Please input a probability between 0 and 1")
+probe <- function(n,w) {
+  if(w < 0 | w >1 | !is.numeric(w)) return("Please input a probability between 0 and 1")
  listWL <- replicate(n, sample(c("Water","Land"), 1, prob = c(w,1-w)))
  return(listWL)
 }
 
-probe(10,0.6)
+probe <- function(n,w){
+  if(w < 0 | w >1 | !is.numeric(w)){ return("Please input a probability between 0 and 1")}
+else{ listWL <-  sample(c("Water","Land"), n, prob = c(w,1-w), replace = TRUE)
+ return(listWL)
+}}
+
+probe(10,0.5)
 
 # After the if statement we can put an else statement:
 if(x-4>1){
