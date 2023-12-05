@@ -34,7 +34,37 @@ data(mtcars)
 head(mtcars)
 # Using indexing (square brackets) and the & operator, write a line of code
 # that selects only the rows of mtcars with at least 6 cylinders (mtcars$cyl >= 6) and horsepower of at least 110 (mtcars$hp >= 110). Remember to include all the columns.
+d2 <- mtcars[mtcars$cyl >=6 & mtcars$hp >=110,]
+nrow(d2)
+d2$newcolumn <- 0
+head(d2)
 
+#Create a new categorical variable called "powerful" that takes the value 'low' when the house powwer is in the button quartile,"medium" when the horsepower is in the middle 2 quartiles and high when the horsepower is in the top quartile.
+mtcars$powerful <- NA
+mtcars$powerful[mtcars$hp <= quantile(mtcars$hp,0.25)] <- 'low'
+mtcars$powerful[mtcars$hp >= quantile(mtcars$hp,0.25) & mtcars$hp <= quantile(mtcars$hp ,0.75)] <- 'medium'
+mtcars$powerful[mtcars$hp > quantile(mtcars$hp,0.75)] <- 'high'
+
+mtcars$powerful <- cut (mtcars$hp,breaks=c(0,96.5,180,1000),labels = c('low','medium','high'))
+mtcars$powerful <- cut (mtcars$hp,breaks=quantile(mtcars$hp,c(0,0.25,0.5,0.75,1)),labels = c('low','medium','high'))
+
+View(mtcars)
+
+library()
+mtcars %>% mutate(powerful=case_when(hp < 96.5 ~ 'low',
+                                        hp >= 96.5 & hp <= 180 ~'medium',
+                                        hp > 180 ~ 'high')) -> mtcars
+
+mtcars <-mtcars[,colnames(mtcars)!='example']
+plot(table(mtcars$powerful))
+
+mtcars$powerful <- factor(mtcars$powerful,levels = c('low','medium','high'))
+plot(table(mtcars$powerful))
+barplot(table(mtcars$powerful))
+
+head(mtcars)
+quantile(mtcars$hp,0.5)
+summary(mtcars$hp)
 ### 1.2
 # Now select only those rows with either high efficiency (miles per gallon (mpg) of at least 25) or low weight (wt <= 2.5)
 
