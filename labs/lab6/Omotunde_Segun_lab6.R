@@ -32,8 +32,66 @@ xor(1==1 , 2==2)
 # mtcars is a database of cars with several variables such as horsepower, weight, number of cylinders etc.
 data(mtcars)
 head(mtcars)
+
 # Using indexing (square brackets) and the & operator, write a line of code
 # that selects only the rows of mtcars with at least 6 cylinders (mtcars$cyl >= 6) and horsepower of at least 110 (mtcars$hp >= 110). Remember to include all the columns.
+
+df2<-mtcars[mtcars$cyl>=6 & mtcars$hp >=110,]
+df2$newcolumn<-0
+df2
+df2$newcolumn
+
+#create a new categorical variable called powerful that takes the value 'low' when the horsepower is in the bottom quartile, 'medium' when the horse power is in the middle 2 quartiles, and high when the horse power is in the top quartile#
+
+
+quantile(mtcars$hp, 0.5)
+quantile(mtcars$hp, 0.25)
+quantile(mtcars$hp, 0,75)
+summary(mtcars$hp)
+
+#rewrite as below
+
+mtcars$powerful <- NA
+head(mtcars)
+mtcars$powerful[mtcars$hp <= quantile(mtcars$hp,0.25)]<- 'low'
+mtcars$powerful[mtcars$hp >= quantile(mtcars$hp,0.25)
+                & mtcars$hp <= quantile(mtcars$hp, 0.75)] <- 'medium'
+mtcars$powerful[mtcars$hp > quantile(mtcars$hp, 0.75)] <- 'high'
+head(mtcars)
+View(mtcars) 
+
+#METHOD 2: Use the cut() function
+?cut
+mtcars$powerful <- cut(mtcars$hp, breaks = c(0, 96.5, 180, 1000), labels = c('low','medium','high'))
+
+View(mtcars)
+
+#or
+library(tidyverse)
+mtcars<-mtcars %>% mutate(powerful = case_when(hp <= 96.5 ~ 'low',
+                                       hp>= 96.5 & hp<= 180 ~ 'medium',
+                                       hp>180 ~ 'high'))
+View(mtcars)                                        
+
+#note
+mtcars<- mtcars[, colnames(mtcars != 'example')] #delete the example column incase we have done that before#
+
+barplot(table(mtcars$powerful))
+hist(mtcars$hp, breaks = c(0,96.5,180,335))
+#for equal inttervals
+mtcars<-mtcars %>% mutate(powerful = case_when(hp < 90 ~ 'low',
+                                       hp>= 90 & hp<= 180 ~ 'medium',
+                                       hp>180 & hp<=270 ~ 'high',
+                                       hp>270 ~ 'very high'))
+hist(mtcars$hp, breaks = c(0,90,180,270, 360))
+#table shows frequency
+table(mtcars$powerful)
+
+#Reodering factors#
+mtcars$powerful<-factor(mtcars$powerful, levels = c('low', 'medium', 'high', 'very high'))
+hist(mtcars$hp, breaks = c(0,90,180,270, 360))
+barplot(table(mtcars$powerful))
+
 
 ### 1.2
 # Now select only those rows with either high efficiency (miles per gallon (mpg) of at least 25) or low weight (wt <= 2.5)
@@ -56,6 +114,17 @@ if(x-4==1){
 # The function should return a character vector of length n, consisting of 'Water' and 'Land', sampled with probability w. (so probability of sampling 'Water' is w)
 # If the p argument is not numeric, or if it is not between 0 and 1, the function should return the following message:
 # "Please input a probability between 0 and 1"
+
+probe<- function(n,w){
+ if(w<0|w>1| !is.numeric(w)){
+  return("please input a probability between 0 and 1")
+ }
+  listwl <- sample(c("Water", "Land"), n, prob = c(w, 1-w), replace =T)
+  return(listwl)
+ }
+
+probe(10,0.2)
+
 
 
 # After the if statement we can put an else statement:
@@ -129,15 +198,18 @@ model <- lm(mtcars$mpg ~ mtcars$wt)
 summary(model)
 ### 5.1
 # What does the Estimate for the (Intercept) number represent?
-plot(mtcars$mpg,mtcars$wt)#it represent predicted change efficiency associated with a 1 unit change in weight(1000lbs change in weights)
+plot(mtcars$mpg,mtcars$wt, pch=20, xlim =c(-1,6))
+abline(model)
+#it represent the predicted fuel efficiency of a car that weighs 0 lbs)
 
 ### 5.2
 # What does the Estimate for the mtcars$wt number represent?
-#it is negative because bigger cars use more energy
+#The predicted change in fuel efficiency associated with a unit change in weight(1000 lbs change in weigh)
 
 
 ### 5.3 
 # Is the relationship between these two variables positive or negative? Why do you think that might be?
+#negative because bigger cars use more energy
 
 ### 5.4 What is the predicted average efficiency in miles per gallon of a 4000 pound (2000kg) car?
 
