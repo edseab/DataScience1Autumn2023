@@ -37,7 +37,71 @@ head(mtcars)
 # Using indexing (square brackets) and the & operator, write a line of code
 # that selects only the rows of mtcars with at least 6 cylinders (mtcars$cyl >= 6) and horsepower of at least 110 (mtcars$hp >= 110). Remember to include all the columns.
 
-mtcars[mtcars$cyl >= 6 & mtcars$hp >= 110, ]
+d2 <- mtcars[mtcars$cyl >= 6 & mtcars$hp >= 110, ]
+dr$newcolumn <- 0
+
+
+# Create a new categorical variable called 'powerful' that takes the valua 'low' when the horsepower is in the bottom quartile, 'medium' when the horsepower is in the middle 2 quartiles, and high when the horsepower is in the top quartile.
+
+mtcars$powerful <- NA
+
+mtcars$powerful[mtcars$hp < (quantile(mtcars$hp, 0.25))] <- "LOW"
+
+mtcars$powerful[mtcars$hp >= (quantile(mtcars$hp, 0.5)) & mtcars$hp <= (quantile(mtcars$hp, 0.75))] <- "MEDIUM"
+
+mtcars$powerful[mtcars$hp > (quantile(mtcars$hp, 0.75))] <- "HIGH"
+
+
+
+
+?cut
+
+
+# OR
+
+mtcars$powerful <- cut(mtcars$hp, breaks = c(0, quantile(mtcars$hp, c(0, 0.25, 0.75, 1)), labels = c("low", "medium", "high")))
+
+
+mtcars$powerful <- cut(mtcars$hp, breaks = c(0, 0.25, 0.75, 1), labels = c("low", "medium", "high"))
+
+
+# Tidyverse
+
+
+mtcars %>% mutate(
+    powerful = cut(mtcars$hp, breaks = c(0, 0.25, 0.75, 1), labels = c("low", "medium", "high"))
+)
+
+
+# OR
+library(tidyverse)
+mtcars %>% mutate(
+    powerful = case_when(
+        hp < 90 ~ "low",
+        hp >= 90 & hp <= 180 ~ "medium",
+        hp > 180 & hp <= 270 ~ "high",
+        hp > 270 ~ "VERY HIGH"
+    )
+) -> mtcars
+
+
+mtcars$powerful <- factor(mtcars$powerful, levels = c("low", "medium", "high", "very high"))
+
+
+barplot(table(mtcars$powerful))
+
+
+hist(mtcars$hp, breaks = c(0, 90, 180, 270, 360))
+
+View(mtcars)
+
+
+quantile(mtcars$hp, 0.5)
+quantile(mtcars$hp, 0.25)
+quantile(mtcars$hp, 0.75)
+
+summary(mtcars$hp)
+
 
 ### 1.2
 # Now select only those rows with either high efficiency (miles per gallon (mpg) of at least 25) or low weight (wt <= 2.5)
@@ -60,13 +124,15 @@ if (x - 4 == 1) {
 ### 2.1
 # Write a function called probe, that takes two arguments, n and w.
 # The function should return a character vector of length n, consisting of 'Water' and 'Land', sampled with probability w. (so probability of sampling 'Water' is w)
-# If the p argument is not numeric, or if it is not between 0 and 1, the function should return the following message:
+# If the w argument is not numeric, or if it is not between 0 and 1, the function should return the following message:
 # "Please input a probability between 0 and 1"
 
 
 ?length()
 ?sample()
 sample(x, size, replace = FALSE, prob = NULL)
+
+
 probe <- function(n, w) {
     if (!is.numeric(w) || w < 0 || w > 1) {
         return("Please input a probability between 0 and 1")
