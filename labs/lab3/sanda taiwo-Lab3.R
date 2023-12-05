@@ -26,6 +26,7 @@ qnorm(0.025, 170,15)
 #140 means you need to be 140cm to be accepted to the club
 #to get the top 2.5
 qnorm(1-0.025, 170,15)
+qnorm(0.025, 170,15, lower.tail= F)
 #so, he will no be accepted because he is
 
 # 3. In response to the Tall and Short club, another group of Examplians start the Average People's Club (APC), where you have to be
@@ -51,3 +52,5 @@ dbinom(2,10,0.08) #it is 14.8%
 
 #OR
 sum (dbinom(3:10,10,0.05))
+
+

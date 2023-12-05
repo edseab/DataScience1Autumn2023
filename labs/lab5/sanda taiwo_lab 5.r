@@ -168,7 +168,7 @@ mtcars <- mtcars %>%
                 ))
 
 
-                #it means you can go very far with them if the eiificiency is high, turining a numerical variable into a numerical variable
+                #it means you can go very far with them if the eiificiency is high, turining a numerical variable into a categorical variable
 
 # Next, summarise (or summarize) is a useful function which collapses a dataframe into a single row and can calculate summary statistics, eg:
 #summarise will collapse the datset into a songle column and summarise it.

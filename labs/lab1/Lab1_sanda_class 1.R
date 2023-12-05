@@ -133,6 +133,7 @@ my.vector[4]
 my.vector[2:4]
 my.vector[c(1,4)] 
 
+
 ### 1.1
 # You can assign values to specific elements. Try writing a line of code below that changes the 4th element of my.vector to the word 'test'
 my.vector[4]<- 'test'
@@ -163,18 +164,21 @@ my.vector == 'is'
 
 ### 2.1
 digits <- 0:10
-digits %% 2 =! 0
+digits %% 2 != 0
+
 # Using the least amount of code possible, write a line of code that returns only the odd values of the digits object.
 
 # Another important logical operator is the %in% operator. It tells you if the elements on the left are found in the elements on the right. E.G.
 group1 <- c('Arthur', 'Fatima', 'Suleiman', 'Marco')
 group2 <- c('Marco','Maria', 'Victor','Fatima', 'Antonio')
+intersect(group1,group2)
 group1 %in% group2
 
 ## 2.2 
 # intersect is a function which returns the elements that all of its arguments have in common. For example:
 intersect(group1,group2)
 # Write a line of code that replicates this output using only group1, group2, square brackets, and logical operators.
+group1[group1 %in% group2] -> intersect_group
 
 
 ####################################
@@ -243,6 +247,7 @@ sample(1:10, 20, replace = TRUE)
 # and the output is a vector of length x, where each element corresponds to the sum of the two sides of the dice.
 # HINT: one way to do this is to start by writing a function for a single 6-sided die, then create a new function 
 # that repeats the first function twice and adds up the result.
+
 dice1 <- function (y) {
   sample(length(y))
 }
@@ -295,9 +300,12 @@ hist(as.numeric(o2))
 sum (o2==TRUE)
 o2 <- generate.bool.22(100000)
 sum (o2==TRUE)
+
+
 ### 4.4
 # Based on today's lecture about pdfs, what is the probability density for a uniform pdf bounded between 
 # 0 and 1 associated with all values of x between 0 and 1? Explain why.
+
 
 ##the answer is 1 because the total area under the curve is 1 and the square of ine i.e 1^2 is 1.
 
@@ -312,16 +320,25 @@ sum (o2==TRUE)
 
 ### 4.8
 # run the following code:
-dunif(0.5,0,1)
+punif(1,0,5)
+dunif(-2,7,0,5)
+punif(4,0,10)
 dunif(2,0,1)
 dunif(0.2,0,0.5)
 dunif(1.3,0,2)
+
+#F is a pdf with boundary parameters(0,5)
+#...plot F between x=-2 and x=7, do not omit the y axis
+
+plot(x=-2:7, y= dunif(-2:7, 0,5), type = "l")
+?plot
+
 
 # Based on the results of this code and your answers above, what can you conclude about the purpose of the dunif function?
 ##The purpose of the dunif function is to give the value of the y axis for the value of the x axis, which means it is the probability density function
 
 x.values <- seq(-5,+5,0.1)
 y.values <- dunif(x.values,0,1) 
-plot(x.values,y.values,pch=20, ylim=c(0,5))
+plot(x.values,y.values,type = "l", ylim=c(0,5))
 ##Thank you for the class ED
 
