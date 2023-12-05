@@ -394,3 +394,17 @@ mean(men)
 sd(men)
 pnorm(176, mean(men), sd(men))
 # One last question to ponder before next class: Why did we multiply the p-value by 2?
+
+
+
+pnorm(175, 145, 20, lower.tail = FALSE)
+pnorm(2.5)
+pnorm(1)
+pnorm(-1)
+pnorm(0)
+pnorm(1.5,lower.tail= F)
+pnorm(1.96)
+set.seed(123)
+heights<-norm(30,175,15)
+mean(heights)
+sd(hei)
