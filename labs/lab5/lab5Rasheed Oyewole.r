@@ -21,10 +21,10 @@
 # It signifies: take the element on the left and use it as the first argument in the function on the right
 
 # Example
-set.seed(123)
+
 hist(rnorm(200), breaks=seq(-4,4,0.5))
 # is equivalent to
-
+rnorm(200) |> hist(breaks= seq(-5,5,2))
 rnorm(200) |> hist(breaks=seq(-4,4,0.5))
 
 # The purpose of the pipe is mostly aesthetic, in particular to avoid large numbers of parentheses when something needs to be transformed using multiple functions:
@@ -34,30 +34,18 @@ rnorm(200) |> hist(breaks=seq(-4,4,0.5))
 ### 1.1 Rewrite the following expression using pipes:
 set.seed(123)
 round(sqrt(log(runif(10,1,10))),2)
-
 set.seed(123)
-object_name <- 10 |> runif(1,10) |> log() |> sqrt() |> round(2)
-object_name  
+10 |> 
+runif(1,10)|> 
+log() |>
+sqrt()|> 
+round(2) -> object_name
+object_name
 
-'Hello World' -> object
-function(x)sum(x)/length(x = ) -> func
-View(func)
+              
 # Pipes were initially created in a package called magrittr, part of the 'tidyverse' group of packages
 
-########################
-####    IF/ELSE    ####
-########################
-x <- sample(0:10, 1)
-if (x>5){ 
-  print('HIGH')
-  y <- x*2
-  print(c(x,y))
-}else {
-   print('LOW')
-}
-x
 
-ifelse(sample(0:10,1)>5,print('HIGH'),print('LOW'))
 ########################
 ####    Packages    ####
 ########################
@@ -108,23 +96,21 @@ runif(10,1,10) %>%
 # Instead we use the functions 'select', to choose specific columns in a data frame, and 'filter', to choose specific rows.
 
 data(mtcars)
-
+mtcars$cyl==6
 # so instead of:
 mtcars[mtcars$cyl == 6, 1:5]
+mtcars
 # we would write:
 mtcars %>%
   filter(cyl==6) %>%
   select(1:5)
-#same as below:
-mtcars %>%
-  select(1:5)%>%
-  filter(cyl==6)
+
 ### 2.1
 # using select() and filter(), create a new database of cars that are over 4000 lbs in weight, retaining only the wt and mpg columns. Save this database to an object called 'df'.
-mtcars %>%  
-  filter(wt>4) %>% 
-  select(mpg,wt) -> df
 
+df<- mtcars %>%
+filter(cyl==6) %>%
+select(1:10)
 df
 # After you have selected the rows and columns you are interested in, you can 
 # change the order of the rows using arrange
@@ -142,6 +128,7 @@ df
 mtcars <- mtcars %>%
             mutate(wt_class = ifelse(wt>=4, 'Oversized','Standard'))
 mtcars
+
 # We can even do a sultiple ifelse statment using case_when()
 mtcars <- mtcars %>%
             mutate(
@@ -150,8 +137,7 @@ mtcars <- mtcars %>%
                 mpg>15 & mpg<=20 ~ 'medium',
                 mpg>20 ~ 'high'
                 ))
-
-mtcars[,c('mpg', 'efficiency')]
+mtcars
 # Next, summarise (or summarize) is a useful function which collapses a dataframe into a single row and can calculate summary statistics, eg:
 
 mtcars %>% 
@@ -179,10 +165,8 @@ mtcars %>%
   ) %>%
   arrange(
     c('high','medium','low')
-  ) %>%
-  ungroup()-> summary_table_efficiency
+  )
 
-View(summary_table_efficiency)
 # You can group by multiple variables
 
 mtcars %>% 
@@ -191,32 +175,49 @@ mtcars %>%
     wt_kg=mean(wt),
     n=length(hp)
   )
-
+ungroup()
 # After grouping a tibble, remember to ungroup it later using ungroup(), or you may have issues down the line.
 
 # 3.1
 data(iris)
-View(iris)
+iris
 # using the dplyr functions do the following:
 # create a new column called Petal.Area which is the product of the petal width and petal length columns.
 # For each of the different species of iris, present the mean and standard deviation for the sepal length, sepal width, and petal area, as well as the number of samples (n)
-# Order this database in decreasing order of average petal area.
-dff <- iris %>% mutate(Petal.Area=Petal.Length*Petal.Width) %>%
-                group_by(Species) %>%
-                summarise(
-                  mn_sepal_length=mean(Sepal.Length),
-                  sd_sepal_length=sd(Sepal.Length),
-                  mn_sepal_width=mean(Sepal.Width),
-                  sd_sepal_width=sd(Sepal.Width),
-                  mn_petal_area=mean(Petal.Area),
-                  sd_petal_area=sd(Petal.Area),
-                  n=n()
-                ) %>%
-                arrange(desc(mn_petal_area))
+# Order this database in decreasing order of average petal length.
 
-View(dff)
-?sd
+iris %>% mutate(Petal.Area = Petal.Length*Petal.Width) %>%
+group_by(Species) %>% 
+summarise(mn_sepal_length = mean(Sepal.Length),
+          sd_sepal_length = sd(Sepal.Length),
+          mn_sepal_width = mean(Sepal.Width),
+          sd_sepal_width = sd(Sepal.Width),mn_petal_area = mean(Petal.Area),
+          sd_petal_area = sd(Petal.Area),
+          n = n()) %>%
+          arrange(desc(mn_petal_area)) -> final_iris_db
 
+
+iris
+iris %>% mutate(Petal.Area= Petal.Width * Petal.Length) %>% summarise(
+  mn_sepal.Length <- mean(Sepal.Length),
+  sd_sepal_length = sd(Sepal.Length),
+  mn_sepal_width = mean(Sepal.Width),
+  sd_sepal_width = sd(Sepal.Width),
+  mn_petal_area= mean(Petal.Area),
+  sd_petal_area = sd(Petal.Area),
+  n=n()
+
+) %>% arrange(desc(mn_petal_area)) -> final_iris_db
+final_iris_db
+
+test <- function(x){
+  tets_num<- 4
+  return (paste(tets_num, "is a number"))
+}
+test(2)
+
+tets_num
+mn_sepal.Length
 
 #######################
 ####    ggplot2    ####
@@ -228,8 +229,22 @@ View(dff)
 
 # The gold standard resource for learning ggplot2 is Hadley Wickham's 'ggplot2: Elegant graphics for data analysis'
 # which is available for FREE here: https://ggplot2-book.org/
-
+library(ggplot2)
 # I can provide no better introduction to ggplot2 than the 'First Steps' section of this book. 
+mpg
+ggplot(mpg,aes(x=displ, y=hwy)) + geom_point()
+ggplot(mpg, aes(displ,hwy, colour=class)) + geom_point()
+ggplot(mpg, aes(cty, hwy)) + geom_line()
+diamonds
+economics
+ggplot(mpg, aes(model, manufacturer)) + geom_point()
+ggplot(diamonds, aes(carat, price)) + geom_point()
+ggplot(economics, aes(date, unemploy)) + geom_line()
+ggplot(mpg, aes(cty)) + geom_histogram()
+ggplot(mpg, aes(displ, hwy)) + geom_point(aes(colour = "blue"))
+ggplot(mpg, aes(displ, hwy)) + geom_point(colour = "blue")
+
+
 
 # You can also find a cheat sheet here: https://rstudio.github.io/cheatsheets/html/data-visualization.html
 

@@ -34,30 +34,27 @@ rnorm(200) |> hist(breaks=seq(-4,4,0.5))
 ### 1.1 Rewrite the following expression using pipes:
 set.seed(123)
 round(sqrt(log(runif(10,1,10))),2)
+10 |> runif(1,10) |> log() |> sqrt() |> round(2) 
 
-set.seed(123)
-object_name <- 10 |> runif(1,10) |> log() |> sqrt() |> round(2)
-object_name  
-
-'Hello World' -> object
-function(x)sum(x)/length(x = ) -> func
-View(func)
+              
 # Pipes were initially created in a package called magrittr, part of the 'tidyverse' group of packages
 
 ########################
-####    IF/ELSE    ####
+####    IF\ELSE     ####
 ########################
-x <- sample(0:10, 1)
-if (x>5){ 
-  print('HIGH')
-  y <- x*2
+
+x <- sample(0:10,1)
+if (x>5){
+  print("high")
+  y<- x*2
   print(c(x,y))
 }else {
-   print('LOW')
+   print("low")
 }
-x
 
-ifelse(sample(0:10,1)>5,print('HIGH'),print('LOW'))
+
+ifelse(x>5,print("HIGH"),print("low"))
+
 ########################
 ####    Packages    ####
 ########################
@@ -108,24 +105,26 @@ runif(10,1,10) %>%
 # Instead we use the functions 'select', to choose specific columns in a data frame, and 'filter', to choose specific rows.
 
 data(mtcars)
+view(mtcars)
 
 # so instead of:
 mtcars[mtcars$cyl == 6, 1:5]
 # we would write:
 mtcars %>%
-  filter(cyl==6) %>%
-  select(1:5)
-#same as below:
-mtcars %>%
-  select(1:5)%>%
-  filter(cyl==6)
+  filter(cyl==6) %>%  #rows
+  select(1:5)         #colomes
+
+select(filter(mtcars,(cyl==6)),1:5)
+
 ### 2.1
 # using select() and filter(), create a new database of cars that are over 4000 lbs in weight, retaining only the wt and mpg columns. Save this database to an object called 'df'.
-mtcars %>%  
-  filter(wt>4) %>% 
-  select(mpg,wt) -> df
 
+df <- mtcars%>%
+      filter(wt > 4) %>%
+      select(1, 6)
+     
 df
+
 # After you have selected the rows and columns you are interested in, you can 
 # change the order of the rows using arrange
 
@@ -137,11 +136,11 @@ df %>% arrange(desc(wt))
 # To change variables, we can use mutate()
 df <- df %>% mutate(wt_kg=wt*453.592,
                     km_per_l = mpg*1.60934/3.78541)
-df
+
 # And we can use ifelse() within mutate()
 mtcars <- mtcars %>%
-            mutate(wt_class = ifelse(wt>=4, 'Oversized','Standard'))
-mtcars
+            mutate(transmission = ifelse(am==4, 'Automatic','Manual'))
+
 # We can even do a sultiple ifelse statment using case_when()
 mtcars <- mtcars %>%
             mutate(
@@ -151,7 +150,6 @@ mtcars <- mtcars %>%
                 mpg>20 ~ 'high'
                 ))
 
-mtcars[,c('mpg', 'efficiency')]
 # Next, summarise (or summarize) is a useful function which collapses a dataframe into a single row and can calculate summary statistics, eg:
 
 mtcars %>% 
@@ -170,7 +168,7 @@ mtcars %>% group_by(efficiency)
 # Tibbles are basically tidyverse dataframes, that display information slightly differently, and are a bit more particular about certain things like not wanting empty cells.
 # Tibbles can also be grouped, which allows for further operations down the line
 # For example:
-
+mtcars$mpg
 mtcars %>% 
   group_by(efficiency) %>%
   summarise(
@@ -179,10 +177,8 @@ mtcars %>%
   ) %>%
   arrange(
     c('high','medium','low')
-  ) %>%
-  ungroup()-> summary_table_efficiency
+  ) %>% View()
 
-View(summary_table_efficiency)
 # You can group by multiple variables
 
 mtcars %>% 
@@ -191,32 +187,29 @@ mtcars %>%
     wt_kg=mean(wt),
     n=length(hp)
   )
-
+ungroup()
 # After grouping a tibble, remember to ungroup it later using ungroup(), or you may have issues down the line.
 
 # 3.1
 data(iris)
-View(iris)
 # using the dplyr functions do the following:
 # create a new column called Petal.Area which is the product of the petal width and petal length columns.
+
+iris <- iris %>% mutate(Petal.Area = Petal.Width*Petal.Length )
+
 # For each of the different species of iris, present the mean and standard deviation for the sepal length, sepal width, and petal area, as well as the number of samples (n)
-# Order this database in decreasing order of average petal area.
-dff <- iris %>% mutate(Petal.Area=Petal.Length*Petal.Width) %>%
-                group_by(Species) %>%
-                summarise(
-                  mn_sepal_length=mean(Sepal.Length),
-                  sd_sepal_length=sd(Sepal.Length),
-                  mn_sepal_width=mean(Sepal.Width),
-                  sd_sepal_width=sd(Sepal.Width),
-                  mn_petal_area=mean(Petal.Area),
-                  sd_petal_area=sd(Petal.Area),
-                  n=n()
-                ) %>%
-                arrange(desc(mn_petal_area))
 
-View(dff)
-?sd
+iris %>% group_by(Species) %>% summarise(
+ mnSL= mean(Sepal.Length),
+ mnSW = mean(Sepal.Width),
+ mnPA = mean(Petal.Area),
+ sdSL= sd(Sepal.Length),
+ sdSW = sd(Sepal.Width),
+ sdPA = sd(Petal.Area),
+ n=n()) %>% arrange(desc(mnPA)) -> final_iris_db
 
+View(final_iris_db)
+# Order this database in decreasing order of average petal length.
 
 #######################
 ####    ggplot2    ####
