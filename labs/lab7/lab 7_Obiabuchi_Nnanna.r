@@ -50,16 +50,47 @@ summary(tooth_growth_vc1)
 
 #The estimate for the intercept is 7.4mm. This means that predicted tooth length
 # of a Guinea pig that was NOT given any 7.4mm
-#The estimate of the slope is 9.8.mm The guinea pigs are  predicted to grow an additional 9.8mm.
+#The estimate of the slope is 9.8.mm. YTjis means that for each additional mg/day  of th VC administered The guinea pigs are  predicted to grow an additional 9.8mm.
 
 
 # 1.5 Extract the 96 % confidence intervals for the slope and the intercepts and interpret them
+confint(tooth_growth_vc1, level=0.96)
+#we 96% CONFIDENCE  that the true VALUES intersect falls between  4.7mm and 10.1m
+#and THAT THE TRUE VALUE OF THE EFFECT OF 1mg/day of VC is betwwen 7.8 and 11.8m
 
 # 1.6 Interpret the p-values of the slope and intercept estimates. 
+#the probability of seeing a slope as steep as the one we have observed ( a number as extreme as 9.76). 
+#If the true slope was 0 is 10^(-14).
+#We can say therefore that  theat we reject the null hypothesis at a 0.0001 level and 
+#that his  study provides the support for the hypthesis that affects tooth growth in guinea pig
 
 # 1.7 What is the connection between the confidence intervals and the p-values? 
+#If an X% confidence interval does not contain 0, then the pvalue for that estimate will be significant at the (1-x)% level
+
+
+E.G if a 97 % of CI does not  contain ), the p-value will be smaller than 0.03
 
 # 1.8 Using the function predict() calculate the estimate and confidence interval for the predicted rate of tooth growth when the prescribed dose is 1mg/day
+new_data <- data.frame(dose= 1.2)
+new_data
+predict(tooth_growth_vc1, newdata= new_data, interval ='confidence', level =0.95)
+
+at bx=
+7.4225 +9.7636*1.2
+
+new_data <- data.frame(dose=seq(0,2,0.01))
+
+new_data
+
+predictions<-as.data.frame(predict(tooth_growth_vc1, newdata= new_data, interval ='confidence', level =0.95))
+predictions
+plot(d$dose, d$len, psch= 20)
+lines(new_data$dose, predictions$fit)
+lines(new_data$dose, predictions$upr, lty= 'dotf=dash')
+lines(new_data$dose, predictions$lwr,lty= 'dotdash' )
+
+
+
 
 # 1.9 Now get the confidence intervals for all possible values of the dosage between 0 and 2 mg/day, spaced out 0.01 mg/day from each other
 
