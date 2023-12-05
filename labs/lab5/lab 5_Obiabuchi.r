@@ -21,10 +21,12 @@
 # It signifies: take the element on the left and use it as the first argument in the function on the right
 
 # Example
+
 set.seed(123)
 hist(rnorm(200), breaks=seq(-4,4,0.5))
 # is equivalent to
 
+set.seed(123)
 rnorm(200) |> hist(breaks=seq(-4,4,0.5))
 
 # The purpose of the pipe is mostly aesthetic, in particular to avoid large numbers of parentheses when something needs to be transformed using multiple functions:
@@ -36,28 +38,28 @@ set.seed(123)
 round(sqrt(log(runif(10,1,10))),2)
 
 set.seed(123)
-object_name <- 10 |> runif(1,10) |> log() |> sqrt() |> round(2)
-object_name  
-
-'Hello World' -> object
-function(x)sum(x)/length(x = ) -> func
-View(func)
+10 |> runif(1,10) |> 
+      log() |> 
+      sqrt() |> 
+      round(2) -> object_name
+              
 # Pipes were initially created in a package called magrittr, part of the 'tidyverse' group of packages
 
 ########################
-####    IF/ELSE    ####
+####    IF/ELSE     ####
 ########################
-x <- sample(0:10, 1)
-if (x>5){ 
-  print('HIGH')
-  y <- x*2
-  print(c(x,y))
-}else {
-   print('LOW')
-}
-x
 
-ifelse(sample(0:10,1)>5,print('HIGH'),print('LOW'))
+x <- sample(0:10, 1)
+if (x>5){
+     print('HIGH')
+     y <- x*2
+     print(c(x,y))
+}else{
+    print("LOW")
+}
+
+ifelse(sample(0:10,1)>5, print('HIGH'), print('LOW'))
+
 ########################
 ####    Packages    ####
 ########################
@@ -115,17 +117,14 @@ mtcars[mtcars$cyl == 6, 1:5]
 mtcars %>%
   filter(cyl==6) %>%
   select(1:5)
-#same as below:
-mtcars %>%
-  select(1:5)%>%
-  filter(cyl==6)
+
 ### 2.1
 # using select() and filter(), create a new database of cars that are over 4000 lbs in weight, retaining only the wt and mpg columns. Save this database to an object called 'df'.
-mtcars %>%  
-  filter(wt>4) %>% 
-  select(mpg,wt) -> df
 
-df
+mtcars %>%
+  filter(wt>4) %>%
+  select('wt','mpg') -> df
+
 # After you have selected the rows and columns you are interested in, you can 
 # change the order of the rows using arrange
 
@@ -137,29 +136,28 @@ df %>% arrange(desc(wt))
 # To change variables, we can use mutate()
 df <- df %>% mutate(wt_kg=wt*453.592,
                     km_per_l = mpg*1.60934/3.78541)
-df
+
 # And we can use ifelse() within mutate()
 mtcars <- mtcars %>%
             mutate(wt_class = ifelse(wt>=4, 'Oversized','Standard'))
-mtcars
+
 # We can even do a sultiple ifelse statment using case_when()
 mtcars <- mtcars %>%
             mutate(
               efficiency = case_when(
                 mpg<=15 ~ 'low',
                 mpg>15 & mpg<=20 ~ 'medium',
-                mpg>20 ~ 'high'
+                mpg>20 ~ 'high'   
                 ))
 
-mtcars[,c('mpg', 'efficiency')]
 # Next, summarise (or summarize) is a useful function which collapses a dataframe into a single row and can calculate summary statistics, eg:
 
 mtcars %>% 
   summarise(
     mean_wt = mean(wt),
     sd_wt = sd(wt),
-    n = length(mpg)
-  )
+    n = n()
+  ) -> summary_table
 
 # We can also use summarise to collapse a data frame not into one single row, but into as many rows as we have groups of interest. 
 # To do this, first we need to use group_by()
@@ -174,50 +172,44 @@ mtcars %>% group_by(efficiency)
 mtcars %>% 
   group_by(efficiency) %>%
   summarise(
-    wt_kg=mean(wt),
-    n=length(hp)
+    avg_wt=mean(wt),
+    n=n()
   ) %>%
   arrange(
     c('high','medium','low')
   ) %>%
-  ungroup()-> summary_table_efficiency
+  ungroup()-> summary_table_efficiency  
 
-View(summary_table_efficiency)
+
+
 # You can group by multiple variables
 
 mtcars %>% 
   group_by(efficiency,cyl) %>%
   summarise(
-    wt_kg=mean(wt),
-    n=length(hp)
-  )
+    avg_wt=mean(wt),
+    n=n()
+  ) %>% View()
 
 # After grouping a tibble, remember to ungroup it later using ungroup(), or you may have issues down the line.
 
 # 3.1
 data(iris)
-View(iris)
 # using the dplyr functions do the following:
 # create a new column called Petal.Area which is the product of the petal width and petal length columns.
 # For each of the different species of iris, present the mean and standard deviation for the sepal length, sepal width, and petal area, as well as the number of samples (n)
 # Order this database in decreasing order of average petal area.
-dff <- iris %>% mutate(Petal.Area=Petal.Length*Petal.Width) %>%
-                group_by(Species) %>%
-                summarise(
-                  mn_sepal_length=mean(Sepal.Length),
-                  sd_sepal_length=sd(Sepal.Length),
-                  mn_sepal_width=mean(Sepal.Width),
-                  sd_sepal_width=sd(Sepal.Width),
-                  mn_petal_area=mean(Petal.Area),
-                  sd_petal_area=sd(Petal.Area),
-                  n=n()
-                ) %>%
-                arrange(desc(mn_petal_area))
 
-View(dff)
-?sd
-
-
+iris %>% mutate(Petal.Area = Petal.Length*Petal.Width) %>%
+group_by(Species) %>% 
+summarise(mn_sepal_length = mean(Sepal.Length),
+          sd_sepal_length = sd(Sepal.Length),
+          mn_sepal_width = mean(Sepal.Width),
+          sd_sepal_width = sd(Sepal.Width),mn_petal_area = mean(Petal.Area),
+          sd_petal_area = sd(Petal.Area),
+          n = n()) %>%
+          arrange(desc(mn_petal_area)) -> final_iris_db
+view(final_iris_db)
 #######################
 ####    ggplot2    ####
 #######################
@@ -233,6 +225,8 @@ View(dff)
 
 # You can also find a cheat sheet here: https://rstudio.github.io/cheatsheets/html/data-visualization.html
 
+data(mpg)
+
 
 # MIDTERM revisions:
 
@@ -247,5 +241,5 @@ View(dff)
 # Data standardization (scaling, centering, z-scoring)
 
 # Data manipulation and visualisation
-
+#lab
 

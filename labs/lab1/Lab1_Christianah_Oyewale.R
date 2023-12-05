@@ -278,6 +278,7 @@ generate.bool.22 <- function(x){
 }
 
 o1 <- generate.bool.22(10)
+o1
 hist(as.numeric(o1))
 
 o2 <- generate.bool.22(1000)
