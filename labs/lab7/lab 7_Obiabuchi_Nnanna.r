@@ -122,14 +122,47 @@ useless_function <- function(n){
 useless_function(7)
 
 ### 2.1 
-data(iris)
-
+dfNew<-iris
+#?data(iris)
+View(dfNew)
 # Write a for loop that iterates over the column names of the iris dataset and print each together with the number of characters in the column name in parenthesis. Example output: Sepal.Length (12). To get the number of characters use the function nchar().
-
+#loading the dataset
+dfNew <- iris
+dfNew
+# Get column names
+colnames<-colname(dfNew)
+colnames
+# Iterate over column names and print
+for (colname in colnames){col_len<-nchar(colname)
+  print(paste(colname,'(',col_len, ')'), sep= " ")}
+?nchar()
+?paste
 
 # Next, WHILE loops continue to loop until the boolean statment in the defining parentheses, e.g.
+#loading the data
+colnames<-colname(dfNew)
+# Initialize index
+index<-1
+# Use a while loop
+while(index<=length(colnames)){
+  colname <-colnames[index]
+  col_len<-nchar(colname) 
+  print(paste(colname,"(", col_len,")" , sep=" "))
+# Increment the index
+index <- index + 1}
 
 ### 2.2 How many numbers do you need in the sequence 1*2*3*4*5*... before the product exceeds 10 million?
 # Use a while loop to get the answer
+# Initialize variables
+product <- 1
+counter <- 1
 
+# Use a while loop to calculate the product
+while (product <= 10000000) {
+  product <- product * counter
+  counter <- counter + 1
+}
+
+# Print the result
+cat("The product exceeds 10 million after", counter - 1, "terms.\n")
 
