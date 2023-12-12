@@ -130,11 +130,17 @@ useless_function <- function(n){
 }
 useless_function(7)
 
+paste("hello", "world", sep ='')
+paste0("hello", "world")
+
 ### 2.1 
 data(iris)
 
 # Write a for loop that iterates over the column names of the iris dataset and print each together with the number of characters in the column name in parenthesis. Example output: Sepal.Length (12). To get the number of characters use the function nchar().
 
+for(i in colnames(iris)){
+    print(colnames(iris)[i], '(', nchar)
+}
 
 # Next, WHILE loops continue to loop until the boolean statment in the defining parentheses, e.g.
 
