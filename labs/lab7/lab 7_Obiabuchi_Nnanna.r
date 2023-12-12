@@ -178,4 +178,17 @@ x<-0
 while(x<100){print(x)
 x<- x+sample(1:20,1)}
 
+i=1
+x=1
+while(x<10000000){
+  print(i)
+  print(x)
+  i<-i+1
+  x<-x*i
+}
 
+
+i<-1
+while(factorial(1)<1000000){
+  
+}
