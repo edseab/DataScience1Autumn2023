@@ -100,7 +100,7 @@ ggplot(d, aes(dose,len)) +geom_point() + geom_smooth(method= "lm")
 
 # 1.11 Compare this to using geom_smooth(method=lm) using ggplot2
 
-
+#HOME WORK
 
 #####################
 ####    Loops    ####
