@@ -166,3 +166,16 @@ while (product <= 10000000) {
 # Print the result
 cat("The product exceeds 10 million after", counter - 1, "terms.\n")
 
+for (i in 1:5){print(i)}
+for (i in c('hellow', 'world')){print(i)}
+
+uselses<- function(n){ for (i in 1:n){print(paste0(i, 'This number is :', c('even', 'odd')))}}
+
+for(i in colnames(iris)){print(paste0(i,"(", nchar(i), ')'))}
+
+set.seed(123)
+x<-0
+while(x<100){print(x)
+x<- x+sample(1:20,1)}
+
+
