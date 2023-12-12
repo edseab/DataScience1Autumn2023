@@ -150,8 +150,9 @@ install.packages('DAAG')
 library(DAAG)
 data(toycars)
 # This dataset contains information about experiments launching toy cars at different angles and measuring the distances they travel before falling to the ground.
-# Learn more about this dataset by looking up ?toycars
-
+# Learn more about this dataset by looking up 
+?toycars
+View(toycars)
 # There are 3 different types of toy cars, numbered 1, 2, and 3
 
 # We want to model the relationship between the type of car and the distance they travel. 
