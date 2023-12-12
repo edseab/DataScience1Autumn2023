@@ -49,6 +49,8 @@ linreg
 ?abline()
 summary(linreg)
 
+
+
 abline(linreg, col = "red")
 # 1.3 Which variable did you use as your outcome variable? Why?
 # ... We used tooth growth as the outcome variable because the hypothesis is that tooth is causally affected by the dosage of vitamin C
@@ -98,6 +100,8 @@ confint(linreg, level = 0.96)
 
 new_data <- data.frame(dose = 1.2)
 new_data
+
+
 predict(linreg, new_data, interval = "confidence", level = 0.95)
 
 # 1.9 Now get the confidence intervals for all possible values of the dosage between 0 and 2 mg/day, spaced out 0.01 mg/day from each other
@@ -106,16 +110,22 @@ new_new_data <- data.frame(dose = seq(0, 2, 0.01))
 new_new_data
 
 
-predictions <- as.data.frame(predict(linreg, new_data, interval = "confidence", level = 0.95))
+predictions <- as.data.frame(predict(linreg, new_new_data, interval = "confidence", level = 0.95))
 predictions
 # 1.10 plot the predicted values, upper, and lower confidence intervals as lines on the data
 
-plot(d$dose, d$len, psch = 20)
 
+
+plot(d$dose, d$len, pch = 20, xlab = "The dosage of VC or OJ in milligrams/day", ylab = "The len of odontoblasts in mm", main = "The plot of VC or OJ against the len of odontoblasts")
+
+
+?lines()
 lines(new_new_data$dose, predictions$fit)
-lines(new_new_data$dose, predictions$upr, lty = "dotdash")
-lines(new_new_data$dose, predictions$lwr, lty = "dotdash")
+lines(new_new_data$dose, predictions$upr, lty = "dotdash", col = "red")
+lines(new_new_data$dose, predictions$lwr, lty = "dotdash", col = "red")
 
+
+abline(linreg, col = "red")
 # 1.11 Compare this to using geom_smooth(method=lm) using ggplot2
 
 ggplot(d, aes(dose, len)) +
@@ -141,18 +151,60 @@ useless_function <- function(n) {
 }
 useless_function(7)
 
+# odd_even <- function(x) {
+#   for (i in 1:x) {
+#     y = ifelse (i %% 2 == 0, "even", "odd")
+#     print(paste0(i, ". This number is: ", y))
+#   }
+# }
+
+# odd_even(7)
 ### 2.1
 data(iris)
 
 # Write a for loop that iterates over the column names of the iris dataset and print each together with the number of characters in the column name in parenthesis. Example output: Sepal.Length (12). To get the number of characters use the function nchar().
 
+data(iris)
+
+str(iris)
+
+
+iris_var <- c(colnames(iris))
+iris_var
+
+for (i in iris_var) {
+  print(paste(i, " ", "(", nchar(i), ")", sep = ""))
+}
 
 # Next, WHILE loops continue to loop until the boolean statment in the defining parentheses, e.g.
 
 ### 2.2 How many numbers do you need in the sequence 1*2*3*4*5*... before the product exceeds 10 million?
 # Use a while loop to get the answer
 
+store <- c(1)
+start <- 1
+stop <- 50
+while (start * (start + 1) < stop) {
+  store <- append(store, start * (start + 1))
+  start <- start + 1
+  # print(length(store))
+  print(store)
+}
 
+
+
+iter <- function(target) {
+  start <- 1
+  product <- 1
+
+  while (product <= target) {
+    product <- product * start
+    start <- start + 1
+  }
+  return(start - 1)
+}
+
+iter(100)
 
 
 # NOTE
