@@ -263,8 +263,12 @@ summary(model2)
 
 # 3.9 Plot the results of this model using ggplot with 90% confidence intervals and appropriate colors
 
+library(ggplot2)
 
 
+ggplot(toycars, aes(x = angle, y = distance, color = car, shape = car)) +
+geom_point() +
+geom_smooth (method = "lm", level = 0.90)
 
 
 
