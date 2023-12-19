@@ -121,6 +121,7 @@ geom_smooth(method='lm')
 # There are two main kinds:
 # FOR loops iterate over a predetermined set (vector, list, etc)
 fruits <- c('apple','banana', 'pineapple','mango','orange')
+
 for(i in fruits){
   print(paste('My favourite fruit is',i,sep=': '))
 }
@@ -132,15 +133,44 @@ useless_function <- function(n){
 }
 useless_function(7)
 
+paste("hello","world", sep='')
+paste0("hello","world")
+
 ### 2.1 
 data(iris)
-
+d <- iris
 # Write a for loop that iterates over the column names of the iris dataset and print each together with the number of characters in the column name in parenthesis. Example output: Sepal.Length (12). To get the number of characters use the function nchar().
+
+for (i in colnames(iris)){
+  print(paste0(i, ' (', nchar(i),')'))
+}
 
 
 # Next, WHILE loops continue to loop until the boolean statment in the defining parentheses, e.g.
 
+set.seed(123)
+x <- 0
+while(x<100){
+  print(x)
+  x <- x+sample(1:20,1)
+}
+
 ### 2.2 How many numbers do you need in the sequence 1*2*3*4*5*... before the product exceeds 10 million?
 # Use a while loop to get the answer
 
+i <- 1
+x <- 1
+while (x<10000000){
+  print(i)
+  print(x)
+  i <- i+1
+  x <- x*i
+}
+
+i <- 1
+while (factorial(i)<10000000){
+  print(i)
+  print(factorial(i))
+  i <- i+1
+}
 
