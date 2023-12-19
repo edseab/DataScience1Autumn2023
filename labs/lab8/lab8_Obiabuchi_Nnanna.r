@@ -174,6 +174,24 @@ View(toycars)
 
 
 
+N<-1000000
+sample<-runif(N,3,7)
+sample
+hist(sample)
+sum(sample<5)/N
+sample<5
+punif(4,3,7)
+qunif(.5,3,7)
 
+pnorm(67,60,5, lower.tail = F)
 
+qn
 
+barrel <-0
+i<-0
+while(barrel<=100){
+    bucket<-sample(3:5,1)    
+    barrel <- barrel + bucket
+    i<-i+1
+}
+print(i)
