@@ -18,7 +18,8 @@ data("ToothGrowth")
 ?ToothGrowth
 d <- ToothGrowth
 d
-
+View(d)
+nrow <- nrow(d)
 library(ggplot2)
 # 1.1
 # Plot the tooth growth against the dose of vitamin C given
@@ -181,15 +182,38 @@ for (i in iris_var) {
 ### 2.2 How many numbers do you need in the sequence 1*2*3*4*5*... before the product exceeds 10 million?
 # Use a while loop to get the answer
 
-store <- c(1)
-start <- 1
-stop <- 50
-while (start * (start + 1) < stop) {
-  store <- append(store, start * (start + 1))
-  start <- start + 1
-  # print(length(store))
-  print(store)
+
+set.seed(123)
+x <- 0
+
+while (x < 100) {
+  print(x)
+  x <- x + sample(1:20, 1)
 }
+
+
+x <- 1
+product <- 1
+while (
+  product < 1e7
+) {
+  print(x)
+  print(product)
+  x <- x + 1
+  product <- product * x
+}
+
+print(x)
+
+
+x <- 1
+
+while (factorial(x) < 1e7) {
+  print(x)
+  print(factorial(x))
+  x <- x + 1
+}
+
 
 
 
