@@ -212,23 +212,34 @@ abline(model)
 #negative because bigger cars use more energy
 
 ### 5.4 What is the predicted average efficiency in miles per gallon of a 4000 pound (2000kg) car?
-
+#This can be done using the model y= a+bx
 37.2851 + (-5.3445)*4
 #15.9071
 
 # Let's transform the independent variable:
 mtcars$wt_centred <- mtcars$wt - mean(mtcars$wt)
+#meaning that we have centred the variable on the mean.mean(mtcars$wt_centred)
+ . 
 
 ### 5.5
 # compare the mean and variance of the new variable with the untransformed variable. What do you notice?
+
+mean(mtcars$wt)
+#They have different means
+var(mtcars$wt)
+var(mtcars$wt_centred)
+#The variance are the same
 
 ### 5.6
 # Run a new regression with new independent variable
 # What do you notice about the estimates?
 # What is the interpretation of the (Intercept) estimate in this regression?
-model2<-lm(mtcars$mpg~mtcars$weight_centered)
+model2<-lm(mtcars$mpg~mtcars$wt_centred)
 summary(model2)
-#the slope stays the same but the intercept changes
+#The slope stays the same but the intercept changes
+
+#The new value of the intercept represent the predicted fuel efficiency of a car for average weight = 0
+
 
 ### 5.7
 # Run the following code:
