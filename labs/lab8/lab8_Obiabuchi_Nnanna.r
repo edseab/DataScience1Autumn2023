@@ -54,7 +54,7 @@ for (i in 1:60){
 }
 
 sum(p<0.05)
-
+p
 # Next (still within the for loop), run a t-test comparing the y-values corresponding to treatment == 1 with the y-values corresponding to treatment ==0
 
 # extract the p-value for that t-test and save it to the vector of p-values
@@ -84,7 +84,6 @@ for (i in 1:60){
 
 n_significant[j] <- sum(p<0.05)
 }
-
 
 # 1.9 Plot the histogram of the number of significant results you get for each multiple comparisons experiment. What is the average number?
 
@@ -132,13 +131,11 @@ n_significant[j] <- sum(p<0.05/60)
 }
 
 # 1.12 What does your new histogram look like?
-
+hist(n_significant[j])
 # 1.13 This (dividing the p-value required for significance by the number of comparisons made) is called Bonferroni correction for multiple comparisons.
 # Why is it important?
 
 # It's important because otherwise we can almost guarantee significant results by doing lots of tests
-
-
 
 
 # 2. Partitioned regression
@@ -151,7 +148,7 @@ n_significant[j] <- sum(p<0.05/60)
 mult_mod <- lm(mpg~wt + cyl,data=mtcars)
 
 summary(mult_mod)
-
+ dim(mtcars)
 # 2.2 save the residuals of the regression with formula (mpg ~ wt) into an object called mpg_wt_residuals
 
 mpg_wt_residuals <- residuals(lm(mpg ~ wt, data=mtcars))
@@ -202,14 +199,27 @@ library(DAAG)
 data(toycars)
 # This dataset contains information about experiments launching toy cars at different angles and measuring the distances they travel before falling to the ground.
 # Learn more about this dataset by looking up ?toycars
-
+View(toycars)
+dim(toycars)
+str(toycars)
+summary(toycars)
+colnames(toycars)
 # There are 3 different types of toy cars, numbered 1, 2, and 3
+Unique_Car_type<- unique(toycars$car)
+Unique_Car_type
+d<-toycars[toycars$car==1,]
+d
+
+sum(toycars$car)
+sum(toycars[toycars$car==1,]$car)
+sum(toycars[toycars$car==2,]$car)
+sum(toycars[toycars$car==3,]$car)
 
 # We want to model the relationship between the type of car and the distance they travel. 
 # 3.2 Which variable should be the outcome (independent) variable? Why?
 
 # 3.3 Run a regression model with the formula distance ~ car. How would you interpret the regression coefficient? What is the problem with this model? How would you rectify this problem?
-
+9
 # 3.4 Recode the 'car' variable so that car 1 is coded as 'green', car 2 is 'yellow', and car 3 is 'red'
 
 # 3.5 Rerun the regression model using this recoded variable and interpret the coefficients. What does this model say about whether how choosing different cars affects the distances they travel?
