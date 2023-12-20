@@ -247,14 +247,44 @@ summary(model_recoded)
 # 3.6 Rerun the model again, this time including 'angle' as an independent variable. Interpret all 4 coefficients.
 
 
-model_with <- lm(distance ~ car + angel, data = toycars)
+model_with_angel <- lm(distance ~ car + angle, data = toycars)
+summary(model_with_angel)
+
+#Intercept (0.092524): The estimated intercept represents the expected distance when the car color is at its reference level green and the angle is at its reference value 0.
+
+#Coefficient for yellow car (0.111111): This coefficient represents the change in the expected distance when the car color changes from green to yellow, holding the angle co#nstant. 
+#The coefficient is statistically significant (p-value = 0.00204), suggesting that the color of the toy car significantly influences the distance traveled.
+
+#Coefficient for red car (-0.082222): This coefficient represents the change in the expected distance when the car color changes from green to red, holding the angle constant. 
+#The coefficient is statistically significant (p-value = 0.01699), suggesting that the color of the toy car significantly influences the distance traveled.
+
+#Coefficient for angle (0.188541): This coefficient represents the change in the expected distance for a one-unit change in the angle, 
+#holding the car color constant. The coefficient is highly statistically significant (p-value = 1.55e-15), indicating that the angle significantly influences the distance traveled.
+
 
 # 3.7 What is the predicted distance traveled by a red car launched at 3 degrees?
 
+new_data <- data.frame(car = "red", angle = 3)
+
+# Use the predict function with the model to get the predicted distance
+predicted_distance <- predict(model_with_angel, newdata = new_data)
+
+predicted_distance
+
 # 3.8 What is the predicted distance traveled by a white car launched at 2.5 degrees?
+
 
 # 3.9 Plot the results of this model using ggplot with 90% confidence intervals and appropriate colors
 
+library(ggplot2)
+ggplot(toycars, aes(x = angle, y = distance, color = car)) +
+  geom_point() +  # Scatter plot
+  geom_smooth(method = "lm", se = TRUE, level = 0.90) +  # Regression line with 90% confidence intervals
+  scale_color_manual(values = c("green" = "green", "yellow" = "yellow", "red" = "red")) +
+  labs(title = "Regression Model: Distance ~ Car + Angle",
+       x = "Launch Angle",
+       y = "Distance Traveled") +
+  theme_minimal() 
 
 
 
