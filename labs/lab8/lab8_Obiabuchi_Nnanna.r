@@ -252,11 +252,14 @@ summary(model2)
 ?factor()
 # 3.6 Rerun the model again, this time including 'angle' as an independent variable. Interpret all 4 coefficients.
 
-model3<-lm(distance~car+angle,data=df_toycars)
+model3<-lm(distance~car+angle,data=toycars)
 model3
 summary(model3)
 
 # 3.7 What is the predicted distance traveled by a red car launched at 3 degrees?
+predicted_angle_3 <- predict(model3, angle =3)
+
+predicted_angle_3
 
 # 3.8 What is the predicted distance traveled by a white car launched at 2.5 degrees?
 
