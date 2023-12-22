@@ -38,7 +38,7 @@ treatment <- c(rep(0, N/2), rep(1, N/2))
 for(i in 1:60){
     y<-runif(N,60,150)
    test <- t.test(y[treatment==1], y[treatment==0])
-   test$p.value-> p[i]
+   #test$p.value-> p[i]
 }
 
 # 1.4 Next, write a for loop for a total of 60 loops
@@ -121,6 +121,7 @@ summary(lm(mpg_wt_residuals ~ cyl_wt_residuals, data=mtcars))
 #############################
 
 library(dplyr)
+library(tidyverse)
 
 # 3.1 Load the dataset 'toycars' from the package 'DAAG'
 install.packages('DAAG')
@@ -139,7 +140,9 @@ View(toycars)
 # There are 3 different types of toy cars, numbered 1, 2, and 3
 
 # We want to model the relationship between the type of car and the distance they travel. 
+
 # 3.2 Which variable should be the outcome (dependent) variable? Why?
+
 # Our outcome variable is the distance travelled by the cars,this is because the distance travelled can be easily measured.
 
 # We want to see if the type of car will have an affect on the distance covered.
@@ -148,38 +151,47 @@ View(toycars)
 
 model<- lm(distance ~ car, data=toycars)
 summary(model)
-plot(toycars$car,toycars$distance,pch=20, main="A plot of dstance travelled by car and the car type", xlab="Car Type",ylab="Distance Covered (meters)" )>abline(model)
+
+plot(toycars$car,toycars$distance,pch=20, main="A plot of dstance travelled by car and the car type", xlab="Car Type",ylab="Distance Covered (meters)" )
+
+abline(model)
 
 # The intercept value of 0.68296 is the distance covered when there is no car.
 
-# The slope indicates the change in distance travelled when we move from one car type to another is -0.04111 meters
+# The slope indicates there is -0.04111 meters  change in distance travelled when we move from one car type to another.
+
+#The problem with this model is that R is seeing the car variable as a numerical variable whereas it is a categorical data.
+
+# This can be corrected  by recoding it into a categorical variable 
+
 
 # 3.4 Recode the 'car' variable so that car 1 is coded as 'green', car 2 is 'yellow', and car 3 is 'red'
+  toycars <- toycars %>%
+            mutate(car = case_when(car==1 ~'green',
+            car==2~ "yellow", car==3~"red"))
 
-toycars <- toycars %>%
-  mutate(car = recode(car, '1' = 'green', '2' = 'yellow', '3' = 'red'))
-summary(new_model)
-  View(toycars)
-  plot(toycars$car,toycars$distance,pch=20, main="A plot of dstance travelled by car and the car type", xlab="Car Type",ylab="Distance Covered (meters)" )>abline(new_model)
+  library(ggplot2)
+
+ggplot(toycars, aes(x=car,y= distance)) +
+    geom_point() 
 
 # 3.5 Rerun the regression model using this recoded variable and interpret the coefficients. What does this model say about whether how choosing different cars affects the distances they travel?
 
-new_model <-lm(distance~car, data=toycars)
+ model2  <-lm(distance~car,data=toycars)
+ summary(model2)
+# The intercept value of 0.59111 meters is the distance travelled by the green car when other cars are at rest.
+#The greem car travelss 0.5911 meters more than other cars
 
 # 3.6 Rerun the model again, this time including 'angle' as an independent variable. Interpret all 4 coefficients.
 
-new_model2 <-lm(distance~car + angle, data=toycars)
+new_model2 <-lm(distance~car + angle, data=toycarss)
 summary(new_model2)
 # 3.7 What is the predicted distance traveled by a red car launched at 3 degrees?
 
-new_data <-data.frame(angle=3)
 
-predict(new_model,new_data=new_data)
 
 # 3.8 What is the predicted distance traveled by a white car launched at 2.5 degrees?
-new_data_w <-data.frame(c(angle=2.5,car='white'))
 
-predict(new_model,new_data_w=new_data_w)
 # 3.9 Plot the results of this model using ggplot with 90% confidence intervals and appropriate colors
 
 
