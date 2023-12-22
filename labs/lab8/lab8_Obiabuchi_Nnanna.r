@@ -271,9 +271,26 @@ new_data1
 
 predicted_angle_2.5 <- predict(model3, newdata = new_data1)
 predicted_angle_2.5
+?predict()
 # 3.9 Plot the results of this model using ggplot with 90% confidence intervals and appropriate colors
 
+# Assuming model is your linear regression model and df_toycars is your data frame
+# Load the ggplot2 library
+library(ggplot2)
 
+# Create a plot
+plot <- ggplot(df_toycars, aes(x = angle, y = car, color = car)) +
+  geom_point() +  # Scatter plot of data points
+  geom_smooth(method = "lm", se = TRUE, level = 0.90) +  # Regression line with confidence intervals
+
+plot
+
+# Customize the plot
+plot + 
+  labs(title = "Regression Model Results",
+       x = "Launch Angle",
+       y = "Miles Per Gallon") +
+  theme_minimal()
 
 
 
