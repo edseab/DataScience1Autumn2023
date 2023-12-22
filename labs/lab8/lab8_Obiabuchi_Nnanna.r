@@ -220,19 +220,19 @@ plot(toycars$distance,toycars$car)
 ?cor()
 cor(toycars$distance,toycars$car)
 # We want to model the relationship between the type of car and the distance they travel. 
-model_car_dist <- lm(toycars$car~toycars$distance, data=toycars)
-model_car_dist
-summary(model_car_dist)
+model_dist_car <- lm(toycars$distance~toycars$car, data=toycars)
+model_dist_car
+summary(model_dist_car)
 
 ?lm()
 # 3.2 Which variable should be the outcome (independent) variable? Why?
 
-#The outcome variable is the car type because I want to explain the distance travelled by the type of car.
+#The outcome variable is the distance, because the goal would be to quantify the relationship and potentially make predictions about the distance traveled based on the type of car.
 
 
 # 3.3 Run a regression model with the formula distance ~ car. How would you interpret the regression coefficient? What is the problem with this model? How would you rectify this problem?
 
-model_dist_car<- lm(toycars$distance~toycars$car, data=toycars)
+model_dist_car<- lm(distance~car, data=toycars)
 model_dist_car
 summary(model_dist_car)
 
@@ -246,7 +246,7 @@ df_toycars
 
 # 3.5 Rerun the regression model using this recoded variable and interpret the coefficients. What does this model say about whether how choosing different cars affects the distances they travel?
 df_toycars$car
-model2<-lm(df_toycars$distance~df_toycars$car,data=df_toycars)
+model2<-lm(distance~car,data=df_toycars)
 model2
 summary(model2)
 ?factor()
@@ -269,6 +269,8 @@ predicted_angle_3
 new_data1 <- data.frame(car = 'white', angle = 2.5)
 new_data1
 
+new_data1$car <- factor(new_data1$car, levels = c(3), labels = c('white'))
+new_data1
 predicted_angle_2.5 <- predict(model3, newdata = new_data1)
 predicted_angle_2.5
 ?predict()
