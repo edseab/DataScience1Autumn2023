@@ -269,8 +269,8 @@ summary(model2)
 model3<-lm(distance~car+angle,data=df_toycars)
 model3
 summary(model3)
-#Intercept  is 0.092524 which estimate the predicted distance when all other variables are zero.
-#That is to say When angle is zero, and the car color is the reference color (not specified in the output), the predicted distance is approximately 0.092524.
+#Intercept  is 0.092524 which estimate the predicted distance  for green  car when the angle is zero.
+#That is to say When angle is zero, and the car color is the reference color-green (not specified in the output), the predicted distance is approximately 0.092524.
 #The p-value indicates that this difference is statistically significant.
 
 #The coefficient  for the caryellow 0.111111,means that the distnace of yellow  car will increase by 0.111111 more than other colors,when other variables are held constant
