@@ -183,7 +183,28 @@ mod_rescyl_resmpg <- lm(mpg_wt_residuals~cyl_wt_residuals)
 
 # 2.9 Use the same method to get the estimate of cyl from the original model using only simple linear regressions.
 
+#####Revision##
+N<-1000000
+sample<-runif(N,3,7)
+sample
+hist(sample)
+sum(sample<5)/N
+sample<5
+punif(4,3,7)
+qunif(.5,3,7)
 
+pnorm(67,60,5, lower.tail = F)
+
+qn
+
+barrel <-0
+i<-0
+while(barrel<=100){
+    bucket<-sample(3:5,1)    
+    barrel <- barrel + bucket
+    i<-i+1
+}
+print(i)
 
 #############################
 ##                         ##
@@ -207,8 +228,7 @@ colnames(toycars)
 # There are 3 different types of toy cars, numbered 1, 2, and 3
 Unique_Car_type<- unique(toycars$car)
 Unique_Car_type
-d<-toycars[toycars$car==1,]
-d
+
 sum(toycars$car)
 sum(toycars[toycars$car==1,]$car)
 sum(toycars[toycars$car==2,]$car)
@@ -216,15 +236,9 @@ sum(toycars[toycars$car==3,]$car)
 
 #To check whether the dependent variable follows a normal distribution, use the hist() function.
 hist(toycars$distance) #the distance variable almost shows  normal distrubutin
-plot(toycars$distance,toycars$car) 
-?cor()
+
 cor(toycars$distance,toycars$car)
 # We want to model the relationship between the type of car and the distance they travel. 
-model_dist_car <- lm(toycars$distance~toycars$car, data=toycars)
-model_dist_car
-summary(model_dist_car)
-
-?lm()
 # 3.2 Which variable should be the outcome (independent) variable? Why?
 
 #The outcome variable is the distance, because the goal would be to quantify the relationship and potentially make predictions about the distance traveled based on the type of car.
@@ -239,6 +253,7 @@ summary(model_dist_car)
 # 3.4 Recode the 'car' variable so that car 1 is coded as 'green', car 2 is 'yellow', and car 3 is 'red'
 
 df_toycars<- data.frame(toycars)
+df_toycars
 
 df_toycars$car <- factor(df_toycars$car, levels = c(1, 2, 3), labels = c('green', 'yellow', 'red'))
 df_toycars$car
@@ -249,7 +264,6 @@ df_toycars$car
 model2<-lm(distance~car,data=df_toycars)
 model2
 summary(model2)
-?factor()
 # 3.6 Rerun the model again, this time including 'angle' as an independent variable. Interpret all 4 coefficients.
 
 model3<-lm(distance~car+angle,data=df_toycars)
@@ -263,8 +277,8 @@ new_data <- data.frame(car = 'red', angle = 3)
 new_data
 # Predict the distance traveled
 
-predicted_angle_3 <- predict(model3, newdata = new_data)
-predicted_angle_3
+predicted_distance_red_angle_3 <- predict(model3, newdata = new_data)
+predicted_distance_red_angle_3
 # 3.8 What is the predicted distance traveled by a white car launched at 2.5 degrees?
 new_data1 <- data.frame(car = 'white', angle = 2.5)
 new_data1
@@ -274,25 +288,36 @@ new_data1
 predicted_angle_2.5 <- predict(model3, newdata = new_data1)
 predicted_angle_2.5
 ?predict()
+
+par(mfrow=c(2,2))
+plot(model3)
+par(mfrow=c(1,1))
+
 # 3.9 Plot the results of this model using ggplot with 90% confidence intervals and appropriate colors
 
 # Assuming model is your linear regression model and df_toycars is your data frame
+
+
+df_toycars$predicted.distance <- predict.lm(model3, newdata=df_toycars)
+
+df_toycars
+
 # Load the ggplot2 library
 library(ggplot2)
 
+
 # Create a plot
 plot <- ggplot(df_toycars, aes(x = angle, y = car, color = car)) +
-  geom_point() +  # Scatter plot of data points
-  geom_smooth(method = "lm", se = TRUE, level = 0.90) +  # Regression line with confidence intervals
+  geom_point() + geom_smooth(method = "lm", se = TRUE, level = 0.90)
+plot 
 
-plot
+
+plot <-plot+geom_line(data=df_toycars, aes(x=angle, y=df_toycars$predicted.distance, color=car), size=1.25)
 
 # Customize the plot
-plot + 
-  labs(title = "Regression Model Results",
-       x = "Launch Angle",
-       y = "Miles Per Gallon") +
-  theme_minimal()
+plot + labs(title = "Regression Model Results",
+       x = "Angle",
+       y = "Car") + theme_minimal()
 
 
 
@@ -301,24 +326,3 @@ plot +
 
 
 
-N<-1000000
-sample<-runif(N,3,7)
-sample
-hist(sample)
-sum(sample<5)/N
-sample<5
-punif(4,3,7)
-qunif(.5,3,7)
-
-pnorm(67,60,5, lower.tail = F)
-
-qn
-
-barrel <-0
-i<-0
-while(barrel<=100){
-    bucket<-sample(3:5,1)    
-    barrel <- barrel + bucket
-    i<-i+1
-}
-print(i)
