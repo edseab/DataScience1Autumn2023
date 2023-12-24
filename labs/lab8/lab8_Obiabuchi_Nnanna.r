@@ -269,6 +269,28 @@ summary(model2)
 model3<-lm(distance~car+angle,data=df_toycars)
 model3
 summary(model3)
+#Intercept  is 0.092524 which estimate the predicted distance when all other variables are zero.
+#That is to say When angle is zero, and the car color is the reference color (not specified in the output), the predicted distance is approximately 0.092524.
+#The p-value indicates that this difference is statistically significant.
+
+#The coefficient  for the caryellow 0.111111,means that the distnace of yellow  car will increase by 0.111111 more than other colors,when other variables are held constant
+#The p-value indicates that this difference is statistically significant.
+
+#The coefficient  for the carred -0.082222, means that the distnace of red car will decrease by -0.082222 less than other colors,when other variables are held constant
+#The p-value indicates that this difference is statistically significant.
+
+#Coefficient for angle is 0.188541:For every one-unit increase in angle, the mean distance is estimated to increase by approximately 0.188541.
+#The p-value suggests this effect is highly statistically significant.
+
+#Overall Model:
+
+#Residual Standard Error: 0.06778
+#Multiple R-squared: 0.9451
+#Adjusted R-squared: 0.938
+#F-statistic: 132.1 with 3 and 23 degrees of freedom.
+#p-value for F-statistic is 1.219e-14 (indicating that the overall model is statistically significant).
+#The model appears to be a good fit, as indicated by the high R-squared value and the statistical significance of the F-statistic. 
+#The coefficients for caryellow, carred, and angle are statistically significant, suggesting that these variables have a significant impact on the predicted distance.
 
 # 3.7 What is the predicted distance traveled by a red car launched at 3 degrees?
 
@@ -279,25 +301,25 @@ new_data
 
 predicted_distance_red_angle_3 <- predict(model3, newdata = new_data)
 predicted_distance_red_angle_3
+
+# The predicted distance traveled by a red car launched at 3 degrees is 0.5759258 units
+
 # 3.8 What is the predicted distance traveled by a white car launched at 2.5 degrees?
-new_data1 <- data.frame(car = 'white', angle = 2.5)
+new_data1 <- data.frame(angle = 2.5, car = 'white')
 new_data1
+new_data1$car <- factor("white", levels = levels(new_data1$car))
+new_data2$car 
 
-new_data1$car <- factor(new_data1$car, levels = c(3), labels = c('white'))
-new_data1
-predicted_angle_2.5 <- predict(model3, newdata = new_data1)
-predicted_angle_2.5
-?predict()
+predicted_dist<- predict(model3, newdata = new_data2)
+predicted_dist_2.5
 
-par(mfrow=c(2,2))
-plot(model3)
-par(mfrow=c(1,1))
+#The predicted distance traveled by a white car launched at 2.5 degrees is return NA,
+#because White was not part of the original data set used to build the model.
+
 
 # 3.9 Plot the results of this model using ggplot with 90% confidence intervals and appropriate colors
 
 # Assuming model is your linear regression model and df_toycars is your data frame
-
-
 df_toycars$predicted.distance <- predict.lm(model3, newdata=df_toycars)
 
 df_toycars
@@ -307,7 +329,7 @@ library(ggplot2)
 
 
 # Create a plot
-plot <- ggplot(df_toycars, aes(x = angle, y = car, color = car)) +
+plot <- ggplot(df_toycars, aes(x = angle, y = distance, color = car)) +
   geom_point() + geom_smooth(method = "lm", se = TRUE, level = 0.90)
 plot 
 
@@ -317,7 +339,7 @@ plot <-plot+geom_line(data=df_toycars, aes(x=angle, y=df_toycars$predicted.dista
 # Customize the plot
 plot + labs(title = "Regression Model Results",
        x = "Angle",
-       y = "Car") + theme_minimal()
+       y = "distance") + theme_minimal()
 
 
 
