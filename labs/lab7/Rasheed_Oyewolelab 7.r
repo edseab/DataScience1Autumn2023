@@ -15,14 +15,18 @@
 
 
 data('ToothGrowth')
+data('ToothGrowth')
 ?ToothGrowth
 d <- ToothGrowth
-d
+d <- ToothGrowth
 
+view(ToothGrowth)
 # 1.1
 # Plot the tooth growth against the dose of vitamin C given
 
+library(ggplot2)
 
+ggplot(d, aes(dose, len)) + geom_point() + labs(x="Dose of vitamin C (mg/d)", y = "Length of tooth (mm)", title ="A plot of Dose of Vitamin C against the length of the tooth")
 
 plot(d$dose,d$len, ylab="Length of tooth (mm)",pch=20, xlab="Dose of Vitamin C (mg/day)", main="A plot of Vitamin C dose against length of cell growth")
 
@@ -31,8 +35,8 @@ plot(d$dose,d$len, ylab="Length of tooth (mm)",pch=20, xlab="Dose of Vitamin C (
 model<-lm(d$len ~ d$dose)
 
 
-
-
+model <- lm(len~dose, data =d)
+summary(model)
 plot(d$dose,d$len,pch=20)>abline(model)
 # 1.3 Which variable did you use as your outcome variable? Why?
 
@@ -52,6 +56,8 @@ summary(model)
 confint(model, level=0.96)
 ?confint.default
 
+confint(model, level= 0.96)
+
 #We have 96% CONFIDENCE that the true value of the intercept is between 4.8 and 10.1mm,  and that the true value of the effect of 1mg/day of VC is between 7.8 and 11.8mm
 
 
@@ -64,6 +70,10 @@ confint(model, level=0.96)
 # 1.7 What is the connection between the confidence intervals and the p-values? 
 
 #Tf an X% of CI doesn't contain 0, then the p-value for that estimate will be significant at the (1-X)% level 
+
+#if a 97% CONFIDENCE INTERVAL does not contain 0, then the p- value for that estimate is significant at a level of 0.03
+
+#if a 95% cinfidence interval does contain zero, then the p-value is not significant as it is  greater than 0.05
 
 # 1.8 Using the function predict() calculate the estimate and confidence interval for the predicted rate of tooth growth when the prescribed dose is 1.2mg/day
 

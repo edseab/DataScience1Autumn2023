@@ -184,18 +184,30 @@ ggplot(toycars, aes(x=car,y= distance)) +
 
 # 3.6 Rerun the model again, this time including 'angle' as an independent variable. Interpret all 4 coefficients.
 
-new_model2 <-lm(distance~car + angle, data=toycarss)
+new_model2 <-lm(distance~car + angle, data=toycars)
 summary(new_model2)
 # 3.7 What is the predicted distance traveled by a red car launched at 3 degrees?
+
+new_df <- data.frame(car="red",angle= 3)
+
+predict(new_model2, new_df, interval ='confidence')
+
+#The predicted distance travelled by a red car launched at 3 degrees is 0.576 meters
 
 
 
 # 3.8 What is the predicted distance traveled by a white car launched at 2.5 degrees?
 
+new_df2 <- data.frame(car="white",angle= 2.5)
+
+predict(new_model2, new_df2, interval ='confidence')
+
+# We cannot use this dataset to predict the distance travelled by a white car bnecause non of the cars in the dataset is white
+
 # 3.9 Plot the results of this model using ggplot with 90% confidence intervals and appropriate colors
 
 
-
+ggplot(toycars, aes(angle, distance, color = car)) + geom_point() + labs(title = "A plot of distance vs angle vs car type", y = " Distance travleled (meters)", x = "Angle (degrees)") + geom_smooth(method = lm , level = 0.90)
 
 
 
