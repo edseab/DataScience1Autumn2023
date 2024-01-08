@@ -85,12 +85,22 @@ predict(model,new_data=new_data,interval='confidence',level=0.95)
 # 1.9 Now get the confidence intervals for all possible values of the dosage between 0 and 2 mg/day, spaced out 0.01 mg/day from each other
 
 
-new_data<- data.frame(..., )
+new_dataa<- data.frame(dose = seq(0,2,0.01 ))
 
+predictions <- as.data.frame(predict(model, new_dataa, interval ='confidence')
+) 
 # 1.10 plot the predicted values, upper, and lower confidence intervals as lines on the data
+
+plot(d$dose, d$len, pch =20)
+
+lines(new_dataa$dose, predictions$fit)
+lines(new_dataa$dose, predictions$upr, lty = "dotdash")
+lines(new_dataa$dose, predictions$lwr, lty = "dotdash")
+predictions$fit
 
 # 1.11 Compare this to using geom_smooth(method=lm) using ggplot2
 
+ggplot(d, aes(dose,len)) + geom_point() + geom_smooth(method = 'lm', levels= 0.95)
 
 
 #####################
