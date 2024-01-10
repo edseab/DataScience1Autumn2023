@@ -199,6 +199,9 @@ f2(14,7)
 ### 3.1 What is the purpose of function f2? Write in comments below.
 
 #The purpose of the function in f2 above is to know when two numbers divide each other is their a remainder.
+my_mean <- function(x) {sum(x)/length(x)}
+my_mean(c(2,3,5,6,78))
+mean(c(2,3,5,6,78))
 
 ### 3.2
 # Based on the definition of the mean from today's lecture, write a function that calculates the mean of all of the elements of a vector. assign it to the object my.mean. You will find the functions 'sum' and 'length' useful here.
@@ -287,16 +290,16 @@ hist(as.numeric(s4))
 ### 4.4
 # Based on today's lecture about pdfs, what is the probability density for a uniform pdf bounded between 
 # 0 and 1 associated with all values of x between 0 and 1? Explain why.
-
+dunif(0:1,0,1)
 ### 4.5
 # Similarly, what is the probability density for a uniform pdf bounded between 5 and 6 associated with all values of x between 5 and 6?
-
+dunif(5:6,5,6)
 ### 4.6
 # What is the probability density for a uniform pdf bounded between 0 and 0.5 associated with all values of x between 0 and 0.5?
-
+dunif(0:0.5,0,0.5)
 ### 4.7
 # What is the probability density for a uniform pdf bounded between 0 and 2 associated with all values of x between 0 and 2?
-
+dunif(0:2,0,2)
 ### 4.8
 # run the following code:
 dunif(0.5,0,1)

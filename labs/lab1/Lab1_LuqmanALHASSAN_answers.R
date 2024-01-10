@@ -54,7 +54,7 @@ rep(times=4, x=3)
 # Functions are one example of OBJECTS, which are stored within the main (global) ENVIRONMENT of the console. We can create new objects by using the 'assign' operator:
 
 x <- 4
- x = 4
+x = 4
 
 # You can now see in the 'Environment' tab below that the object 'x'  is stored with the value 4.
 
