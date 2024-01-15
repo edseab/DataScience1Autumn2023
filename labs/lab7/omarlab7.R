@@ -79,7 +79,7 @@ m
 new_data<-data.frame(dose=1.2)
 new_data
 predict(tooth_growth_vc  , newdata=new_data , interval="confidence" , level=0.95)
-7.4225 + 9.7636*1.2
+7.4225 + 9.7636*1.2 #
 
 # 1.9 Now get the confidence intervals for all possible values of the dosage between 0 and 2 mg/day, spaced out 0.01 mg/day from each other
 new_data<-data.frame(dose=seq(0 , 2 ,  0.01))
