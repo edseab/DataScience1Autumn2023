@@ -181,6 +181,9 @@ summary(model)
 plot(mtcars$wt,mtcars$mpg, pch=20, xlim = c(-1,6))
 abline(model)
 
+
+
+
 #it is the predicted fuel effieciency of a car that weighs 0 lbs
 
 ### 5.2
@@ -196,7 +199,7 @@ abline(model)
 
 ### 5.4 What is the predicted average efficiency in miles per gallon of a 4000 pound (2000kg) car?
 #Y= a+bx, where x=4
-37.2851 + (-5.3445) *4
+37.2851 + (-5.3445) * 4
 #15.9 mpg
 # Let's transform the independent variable:
 mtcars$wt_centred <- mtcars$wt - mean(mtcars$wt)

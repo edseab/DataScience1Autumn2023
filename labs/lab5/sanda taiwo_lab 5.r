@@ -98,7 +98,7 @@ runif(10,1,10) %>%
 # For example, in dplyr we no longer use indexing.
 # Instead we use the functions 'select', to choose specific columns in a data frame, and 'filter', to choose specific rows.
 
-+
+
 # so instead of: note that mtcars$cyl == 6 is the rows while 1:5 is the column, so it is the cars where the cyl(cylinder)is equals to 6 and thein the first five columns
 mtcars[mtcars$cyl == 6, 1:5]
 # we would write:
