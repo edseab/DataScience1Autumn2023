@@ -42,7 +42,7 @@ cat("the range should be from : ", lower , " to" , higher )
 dbinom(0,10,0.13)
 dbinom(2,10,0.08)
 # 5. What is the probability that exactly 2 are eligible to join the APC and the rest are not?
-dbinom(2,10,0.08)
+dbinom(2,10,0.08) #
 # 6. What is the probability that at least 3 of them are eligible to join the TSC?
 
 sum(dbinom(3:10,10,0.05)) 
