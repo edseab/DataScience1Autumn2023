@@ -39,9 +39,11 @@ cat("the range should be from : ", lower , " to" , higher )
 # 4. If we selected 10 Examplians at random from the population, what is the probability that none of them are eligible to join either
 #    the TSC or the APC? 
 
-pnorm()
-
+dbinom(0,10,0.13)
+dbinom(2,10,0.08)
 # 5. What is the probability that exactly 2 are eligible to join the APC and the rest are not?
-
+dbinom(2,10,0.08)
 # 6. What is the probability that at least 3 of them are eligible to join the TSC?
 
+sum(dbinom(3:10,10,0.05)) 
+1 - pbinom(2,10,0.05)
