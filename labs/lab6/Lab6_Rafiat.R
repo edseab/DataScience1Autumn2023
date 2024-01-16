@@ -32,63 +32,41 @@ xor(1==1 , 2==2)
 # mtcars is a database of cars with several variables such as horsepower, weight, number of cylinders etc.
 data(mtcars)
 head(mtcars)
-
-library('dplyr')
 # Using indexing (square brackets) and the & operator, write a line of code
 # that selects only the rows of mtcars with at least 6 cylinders (mtcars$cyl >= 6) and horsepower of at least 110 (mtcars$hp >= 110). Remember to include all the columns.
 
-mtcars[mtcars$cyl >= 6 & mtcars$hp >= 110, ]
+d2 <- mtcars[mtcars$cyl >= 6 & mtcars$hp >= 110, ]
+d2$newcolumn <- 0
+
+# create a new categorical variables called 'powerful' that takes the value 'low' when the horsepower is in the bottom quartile 'medium' when the horsepower is in the middle 2 quartile, and high when the horsepower is in the top quartile.
+mtcars$powerful <- NA
+mtcars$powerful[mtcars$hp < quantile(mtcars$hp,0.25)] <- 'low'
+mtcars$powerful[mtcars$hp >= quantile(mtcars$hp,0.25)
+                & mtcars$hp <= quantile(mtcars$hp,0.75)] <- 'medium'
+mtcars$powerful[mtcars$hp > quantile(mtcars$hp,0.75)] <- 'high'
+head(mtcars$powerful)
+
+# another way to do this is to use cut
+mtcars$powerful <- cut(mtcars$hp, breaks = c(0, 96.5, 180, 1000), labels = c('low', 'medium', 'high'))
+mtcars$powerful <- cut(mtcars$hp, breaks = quantile(mtcars$hp, c(0, 0.25, 0.75,1)), labels = c('low', 'medium', 'high'))
+head(mtcars)
+plot(table(mtcars$powerful))
+barplot(table(mtcars$powerful)) # the table is added so it can turn the meium, high & low to a varible
+
+# you can also make use of tidyverse
+
+mtcars %>% mutate(powerful = case_when (hp < 90 ~ 'low',
+                                        hp >= 90 & hp <= 180 ~ 'medium',
+                                        hp>180 & hp <= 270~ 'high',
+                                        hp>270 ~ 'very high')) -> mtcars
+
+tcars$powerful <- factor(mtcars$powerful, levels=c('low','medium', 'high', 'very high'))
+
+barplot(table(mtcars$powerful))
+hist(mtcars$hp, breaks=c(0, 90,180,270,360) )
+
 ### 1.2
 # Now select only those rows with either high efficiency (miles per gallon (mpg) of at least 25) or low weight (wt <= 2.5)
-head(mtcars)
-mtcars[mtcars$mpg >= 25 & mtcars$wt <= 2.5, ]
-
-#Create a new categorical variable called 'powerful' that takes the value 'low' when horsepower is in the middle 2 quantiles, and high when the horsepower is in the top quantile
-mtcars$powerful<-NA #initialize
-quantile(mtcars$hp,0.5)
-median(mtcars$hp)
-summary(mtcars$hp)
-mtcars$powerful[mtcars$hp < quantile(mtcars$hp, 0.25)] <-"low"
-mtcars$powerful[mtcars$hp >= quantile(mtcars$hp, 0.25) & 
-              mtcars$hp <= quantile(mtcars$hp, 0.75)] <-"medium"
-mtcars$powerful[mtcars$hp >= quantile(mtcars$hp, 0.75)] <-"high"
-
-mtcars$powerful
-
-#Cut
-mtcars$powerful<- cut(mtcars$hp, breaks= c(0,96.5, 180,1000), labels= c('low', 'medium'))
-mtcars$powerful
-
-mtcars$powerful<- cut(mtcars$hp, breaks= c(0,0.25, 0.75,1), labels= c('low', 'medium'))
-mtcars$powerful
-
-mtcars %>% mutate(powerful= case_when(hp <quantile(mtcars$hp,0.25)~'low',
-      hp< 96.5~'low', hp>= 96.5 & hp <= 180~'medium',
-       hp>180~'high'))->mtcars
-
-mtcars<- mtcars[, colnames(mtcars)!= 'example']
-View(mtcars)
-
-mtcars<- mtcars[, colnames(mtcars)!= 'powerfull']
-View(mtcars)
-
-barplot(table(mtcars$powerful))
-summary(mtcars$hp)
-hist(mtcars$hp, breaks= c(0,96.5,180,335))
-
-barplot(table(mtcars))
-
-mtcars %>% mutate(powerful= case_when(hp <90~'low',
-      hp >90 & hp <= 180 ~'medium', hp >180 & hp <= 270 ~'high',
-       hp>270~'very high'))->mtcars
-
-mtcars$powerful <- factor(mtcars$powerful, levels =c('l
-ow', 'medium', ' high', 'very high'))
-
-
-barplot(table(mtcars$powerful))
-
-hist(mtcars$hp, breaks =c(0,90,180,270,360))
 
 #############################
 ####    If statements    ####
@@ -106,29 +84,20 @@ if(x-4==1){
 ### 2.1
 # Write a function called probe, that takes two arguments, n and w.
 # The function should return a character vector of length n, consisting of 'Water' and 'Land', sampled with probability w. (so probability of sampling 'Water' is w)
-# If the w argument is not numeric, or if it is not between 0 and 1, the function should return the following message:
+# If the p argument is not numeric, or if it is not between 0 and 1, the function should return the following message:
 # "Please input a probability between 0 and 1"
 
-prob <- function(n, w) {
-  if (!is.numeric(w) || w < 0 || w > 1) {
+probe <- function(n,w){
+  if(w<0 | w>1 | !is.numeric(w)){
     return("Please input a probability between 0 and 1")
-  } else
-  listwk <- sample(c('water', 'land')), n, probh= c(w, 1-w), replace= T
-  return listwk
-
-probe <- function(n, w) {
-  if (w < 0 | w > 1|!is.numeric(w))  {
-    return("Please input a probability between 0 and 1")
-  } else
-  listwk <- sample(c('Water', 'Land'), n, prob= c(w, 1-w), replace= T)
-  return (listwk)}
-
-probe(10, 0)
-
-?sample()
-
-
-
+  } 
+    listwl <- sample(c("Water", "Land"), n, prob = c(w, 1-w), replace=T)
+    return(listwl)
+  }
+ probe(10,2)
+ probe(10,1)
+ probe(10, 0)
+ 
 # After the if statement we can put an else statement:
 if(x-4>1){
   new_object <- c('this','statement','is','also','true')
@@ -200,21 +169,46 @@ model <- lm(mtcars$mpg ~ mtcars$wt)
 summary(model)
 ### 5.1
 # What does the Estimate for the (Intercept) number represent?
+
+plot(mtcars$wt, mtcars$mpg, pch=20, xlim = c(-1, 6))
+abline(model) 
+# the intercept (37.2851)  is the predicted fuel efficiency of a car that weighs 0 lbs
 ### 5.2
 # What does the Estimate for the mtcars$wt number represent?
+
+# this estimate represent the predicted change in fuel efficiency associated with a 1 unit change in weight (1000lbs change in weight) (ANSWERED IN CLASS)
+
 
 ### 5.3 
 # Is the relationship between these two variables positive or negative? Why do you think that might be?
 
+# it is negative (slope is negative i.e -5.3445) because bigger cars use more energy it takes to move.
+
 ### 5.4 What is the predicted average efficiency in miles per gallon of a 4000 pound (2000kg) car?
+# use y=a+bx to answer where a= intercept, b=slope and x is 4
+37.2851 + (-5.3445)*4 # where 37.2851 is the intercept and -5.3445 is the slope 
+# = 15.9071mpg
 
 # Let's transform the independent variable:
+
 mtcars$wt_centred <- mtcars$wt - mean(mtcars$wt)
 
 ### 5.5
 # compare the mean and variance of the new variable with the untransformed variable. What do you notice?
 
+mean(mtcars$wt) # 3.21725
+var(mtcars$wt)  # 0.957379
+mean(mtcars$wt_centred) # equal to 0
+var(mtcars$wt_centred) #0.957379 it is still the same because we have not done anything with the variance
+
 ### 5.6
+model2 <- lm(mtcars$mpg ~ mtcars$wt_centred) # run a linear model that predict mpg from wt centered 
+summary(model2)
+
+
+# the slope stays the same but the intercept changes(which is the predicted change in fuel effeiciency when the centered weight is 0 i.e when the weight is equal to the average weight(mean))
+# The new value of the intercept represent the predicted fuel efficiency of a car of average weight
+
 # Run a new regression with new independent variable
 # What do you notice about the estimates?
 # What is the interpretation of the (Intercept) estimate in this regression?
