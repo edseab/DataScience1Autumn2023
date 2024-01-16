@@ -18,7 +18,9 @@ data('ToothGrowth')
 
 d <- ToothGrowth
 ?ToothGrowth
-
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
 # 1.1
 # Plot the tooth growth against the dose of vitamin C given
 
@@ -34,7 +36,7 @@ geom_point() +
 labs(x="vitamins C dossage(mg/day)", 
 y="Length of growth cells (mn)", 
 title= "Effect of Vitamin C on Guinea Pig Tooth Growth", subtitle="plot") + 
-geom_smooth(method="lm", level=0.90)
+geom_smooth(method="lm", level=0.90) 
 
 library('ggplot2')
 library(tidyverse)
@@ -176,12 +178,17 @@ x <- 1
 while(x<10000000) {
   print(i)
   print(x)
-  x
+  i <- i+1
+  x <- x*i
+}
+
+i <- 1
+while (factorial(i)<10000000){
+  print(i)
+  print(factorial(i))
+  i <- i+1
 }
 
 
 
 
-
-d<- data("state")
-head(d)
