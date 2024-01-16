@@ -27,18 +27,30 @@
 
 # Could they have gotten these results purely by chance?
 
+
+
 # Let's simulate the cold-water therapy experiment
 # 1.1 Start by saving a sample size of 100 to an object N
 
+N <- 100
 # 1.2 Next, create a vector of 1s and 0s, so that half of your sample receives the treatement (coded 1), and the other half doesn't (coded 0)
 
-
+treatment <- c(rep(1, N/2),rep(0, N/2))
 # Next we will run 60 different t-tests using a for loop, and save the p-value for each of these tests
 # 1.3 start by initializing an empty vector for your p-values using an empty c() function. 
 
+p<- c()
 # 1.4 Next, write a for loop for a total of 60 loops
 # For each loop, save a new y-variable that you have sampled completely at random
 # your y-variable should be of length N, but otherwise you can sample it however you like (rnorm,runif,rbinom... any probability distribution you like with any parameter values you like)
+
+for(i in 1:60){
+    y <- runif(N, 60, 150)
+    test <- t.test(y[treatment==1],y[treatment==0])
+    test$p.value -> p[i]
+}
+
+sum(p<0.05)
 
 # Next (still within the for loop), run a t-test comparing the y-values corresponding to treatment == 1 with the y-values corresponding to treatment ==0
 
@@ -54,14 +66,39 @@
 
 # 1.8 Write a for loop that runs the previous for-loop multiple times, and save the number of significant results you get each time. Run this for loop at least 100 times
 
+N <- 100
+n_sign <- c()
+
+for(j in 1:150){
+    
+for(i in 1:60){
+    y <- runif(N, 60, 150)
+    test <- t.test(y[treatment==1],y[treatment==0])
+    test$p.value -> p[i]
+}
+
+n_sign[j] <-sum(p<0.05)
+}
 
 # 1.9 Plot the histogram of the number of significant results you get for each multiple comparisons experiment. What is the average number?
 
-
+hist(n_sign)
 # 1.10 Run this whole code again, but this time increase the sample size N. Does your histogram look any different? why?
 
 # 1.11 Run the code again, but this time instead of counting how many results are less than 0.05, divide this threshold by the total number of comparisons (60).
+N <- 100
+n_sign <- c()
 
+for(j in 1:150){
+    
+for(i in 1:60){
+    y <- runif(N, 60, 150)
+    test <- t.test(y[treatment==1],y[treatment==0])
+    test$p.value -> p[i]
+}
+
+n_sign[j] <-sum(p<0.05/60)
+}
 
 
 # 1.12 What does your new histogram look like?
@@ -70,23 +107,43 @@
 # Why is it important?
 
 
+
+
 # 2. Partitioned regression
+
+data(mtcars)
 
 # 2.1 Run a multiple regression using the mtcars database with fuel efficiency (mpg)
 # as the dependent (outcome) variable and weight (wt) and number of cylinders (cyl)
 # as independent (predictor) variables
 # Look at the output of this regression and note the value of the parameter estimates for the effects of wt and cyl.
 
+mult_mod <- lm(mpg~wt + cyl , data= mtcars)
+summary(mult_mod)
+
 # 2.2 save the residuals of the regression with formula (mpg ~ wt) into an object called mpg_wt_residuals
+
+mpg_wt_res <- residuals(lm(mpg~wt, data = mtcars))
 
 # 2.3 Interpret this object. What does it represent?
 
+#it is the difference between the prediction of mpg from the wt , and the actual observed fuel efficiency 
+#It is what remains of the fuel efficiency , after the effect of wt has been accounted for 
+
 # 2.4 Save the residuals of the regression with formula (cyl ~ wt) into an object called cyl_wt_residuals
+
+cyl_wt_residuals <- residuals(lm(cyl~wt, data = mtcars))
 
 # 2.5 Interpret this object. What does it represent?
 
+
+#the differnects between the predicted number of cylindres as a function of wt and the actiual number of cyl
+#It is wat remains of the number of cyl after the effecer if wt has been accounted for 
+
 # 2.6 Run a regression with the formula (mpg_wt_residuals ~ cyl_wt_residuals)
 
+mod_res <- lm(mpg_wt_res~cyl_wt_residuals)
+summary(mod_res)
 # 2.7 Based on your answers to 2.3 and 2.5, how do you interpret the slope estimate of the previous regression?
 
 # 2.8 Compare this estimate to the estimate of wt in the original full model. 
@@ -108,6 +165,7 @@ library(dplyr)
 install.packages('DAAG')
 library(DAAG)
 data(toycars)
+
 # This dataset contains information about experiments launching toy cars at different angles and measuring the distances they travel before falling to the ground.
 # Learn more about this dataset by looking up ?toycars
 

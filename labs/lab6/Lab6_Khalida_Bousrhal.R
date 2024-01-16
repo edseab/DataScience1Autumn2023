@@ -245,7 +245,9 @@ x <- cbind(1,mtcars$wt)
 # Run the code you have written. What do you find?
 
 xT <- solve( t(x) %*% x) %*% (t(x) %*% y)
-
+test  <- solve( t(x) %*% x)*9.278116
+sqrt(3.525757)
+sqrt(0.3126182)
 # 37.285126
 # -5.344472
 
