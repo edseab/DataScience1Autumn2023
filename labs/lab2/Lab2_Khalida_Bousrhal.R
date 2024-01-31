@@ -358,6 +358,7 @@ pnorm(163,mean(women), sd(women))
 t.test(og_trilogy,preq_trilogy)
 t.test(men,women)
 
+ (178.0833 -162.7143)/sqrt((sd(men)^2)/length(men)+(sd(women)^2)/length(women))
 set.seed(123)
 heights <- rnorm(1e6,175,15)
 t_test_result <- t.test(heights, mu = mean(heights), conf.level = 0.97)
